@@ -15,3 +15,18 @@ EasyAi-uniapp—前端优化（二开）版本
 ### 4.修改了绘画历史的展示方式
 ### 5.绘画历史可以显示：图+文、视频、图片的
 ### 6.新添加了微信客服的功能
+### 7.添加了工作流展示
+![image](https://github.com/chinahu-woker/easyai2work/blob/master/%E5%BE%AE%E4%BF%A1%E6%88%AA%E5%9B%BE_20250208193439.png)
+![image](https://github.com/chinahu-woker/easyai2work/blob/master/%E5%BE%AE%E4%BF%A1%E6%88%AA%E5%9B%BE_20250208193548.png)
+![image](https://github.com/chinahu-woker/easyai2work/blob/master/%E5%BE%AE%E4%BF%A1%E6%88%AA%E5%9B%BE_20250208193616.png)
+![image](https://github.com/chinahu-woker/easyai2work/blob/master/%E5%BE%AE%E4%BF%A1%E6%88%AA%E5%9B%BE_20250208193623.png)
+![image](https://github.com/chinahu-woker/easyai2work/blob/master/%E5%BE%AE%E4%BF%A1%E6%88%AA%E5%9B%BE_20250208193627.png)
+![image](https://github.com/chinahu-woker/easyai2work/blob/master/%E5%BE%AE%E4%BF%A1%E6%88%AA%E5%9B%BE_20250208193635.png)
+
+
+
+
+
+
+
+
