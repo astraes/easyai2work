@@ -1,0 +1,1 @@
+<text catchtap="{{b}}" style="{{c + ';' + d + ';' + virtualHostStyle}}" class="{{['u-link', 'data-v-dedad317', virtualHostClass]}}">{{a}}</text>

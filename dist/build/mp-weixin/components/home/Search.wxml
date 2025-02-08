@@ -1,0 +1,1 @@
+<view class="{{['searchColor', virtualHostClass]}}" style="{{virtualHostStyle}}"><up-search wx:if="{{b}}" u-i="6af37b5a-0" bind:__l="__l" bindupdateModelValue="{{a}}" u-p="{{b}}"></up-search></view>
