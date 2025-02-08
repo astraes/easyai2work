@@ -6,9 +6,11 @@ EasyAi-uniapp—前端优化（二开）版本
 （！！！因为历史遗留问题，本人使用了闭源组件，商用的话需要找本人盖一个合同...为啥不用开源的，因为当时的钱不能白花了啊！！！这感觉谁懂？？ 什么？为什么要盖合同，懂得都懂）
 
 <img src="https://github.com/chinahu-woker/easyai2work/blob/master/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20250208181944.jpg" width="210px">
-##安装教程
-【官网文档】：https://doc.51easyai.com/getting-started/quickstart    
-使用方法:    
+
+## 安装教程  
+【官网文档】：https://doc.51easyai.com/getting-started/quickstart
+
+#### 使用方法:  
 1.直接创建一个文件夹，然后把项目解压或者克隆进去  
 2. 用管理员身份打开命令行窗口，输入npm -i   
 3.安装完成后，打开hbuilderX，右键，导入本地项目  
