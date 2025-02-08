@@ -7,12 +7,12 @@ EasyAi-uniapp—前端优化（二开）版本
 
 <img src="https://github.com/chinahu-woker/easyai2work/blob/master/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20250208181944.jpg" width="210px">
 ##安装教程
-【官网文档】：https://doc.51easyai.com/getting-started/quickstart  
-使用方法:  
-1.直接创建一个文件夹，然后把项目解压或者克隆进去
-2. 用管理员身份打开命令行窗口，输入npm -i 
-3.安装完成后，打开hbuilderX，右键，导入本地项目
-4.然后进入src/pages/index/index,运行到微信开发者工具即可
+【官网文档】：https://doc.51easyai.com/getting-started/quickstart    
+使用方法:    
+1.直接创建一个文件夹，然后把项目解压或者克隆进去  
+2. 用管理员身份打开命令行窗口，输入npm -i   
+3.安装完成后，打开hbuilderX，右键，导入本地项目  
+4.然后进入src/pages/index/index,运行到微信开发者工具即可  
 
 ## 2025/2/8第一次更新;
 ### 1.重新设计了官方的ui设计
