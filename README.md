@@ -6,8 +6,7 @@ EasyAi-uniapp—前端优化（二开）版本
 大家如果有什么问题可以加作者微信：hdmlgzs
 如果你觉得这个项目帮到你了，可以请作者喝个咖啡，我肯定会熬夜赶进度的
 
-![image](https://github.com/chinahu-woker/easyai2work/blob/master/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20250208181944.jpg)
-
+<img src="https://github.com/chinahu-woker/easyai2work/blob/master/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20250208181944.jpg" width="210px">
 
 
 ## 2025/2/8第一次更新;
@@ -18,12 +17,8 @@ EasyAi-uniapp—前端优化（二开）版本
 ### 5.绘画历史可以显示：图+文、视频、图片的
 ### 6.新添加了微信客服的功能
 ### 7.添加了工作流展示
-![image](https://github.com/chinahu-woker/easyai2work/blob/master/%E5%BE%AE%E4%BF%A1%E6%88%AA%E5%9B%BE_20250208193439.png)
-![image](https://github.com/chinahu-woker/easyai2work/blob/master/%E5%BE%AE%E4%BF%A1%E6%88%AA%E5%9B%BE_20250208193548.png)
-![image](https://github.com/chinahu-woker/easyai2work/blob/master/%E5%BE%AE%E4%BF%A1%E6%88%AA%E5%9B%BE_20250208193616.png)
-![image](https://github.com/chinahu-woker/easyai2work/blob/master/%E5%BE%AE%E4%BF%A1%E6%88%AA%E5%9B%BE_20250208193623.png)
-![image](https://github.com/chinahu-woker/easyai2work/blob/master/%E5%BE%AE%E4%BF%A1%E6%88%AA%E5%9B%BE_20250208193627.png)
-![image](https://github.com/chinahu-woker/easyai2work/blob/master/%E5%BE%AE%E4%BF%A1%E6%88%AA%E5%9B%BE_20250208193635.png)
+<img src="https://github.com/chinahu-woker/easyai2work/blob/master/%E5%BE%AE%E4%BF%A1%E6%88%AA%E5%9B%BE_20250208193439.png" width="210px"/><img src="https://github.com/chinahu-woker/easyai2work/blob/master/%E5%BE%AE%E4%BF%A1%E6%88%AA%E5%9B%BE_20250208193548.png" width="210px"><img src="https://github.com/chinahu-woker/easyai2work/blob/master/%E5%BE%AE%E4%BF%A1%E6%88%AA%E5%9B%BE_20250208193616.png" width="210px"><img src="https://github.com/chinahu-woker/easyai2work/blob/master/%E5%BE%AE%E4%BF%A1%E6%88%AA%E5%9B%BE_20250208193623.png" width="210px"><img src="https://github.com/chinahu-woker/easyai2work/blob/master/%E5%BE%AE%E4%BF%A1%E6%88%AA%E5%9B%BE_20250208193627.png" width="210px"><img src="https://github.com/chinahu-woker/easyai2work/blob/master/%E5%BE%AE%E4%BF%A1%E6%88%AA%E5%9B%BE_20250208193635.png" width="210px">
+
 
 
 
