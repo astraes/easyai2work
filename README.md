@@ -11,7 +11,7 @@ EasyAi-uniapp—前端优化（二开）版本
 【官网文档】：https://doc.51easyai.com/getting-started/quickstart
 
 #### 使用方法:  
-物料准备：微信小程序开发工具、HbX(https://www.dcloud.io/hbuilderx.html)
+物料准备：微信小程序开发工具、HbX(https://www.dcloud.io/hbuilderx.html)  
 0. 使用小程序前，请按照官方的文档把相关配置配置好，小程序如果要部署，需要https，已经配置合法域名。  
 0.1 修改.env文件中的域名或ip(体验的话可以暂时使用作者的服务器)  
 0.2 编译使用该工具（https://www.dcloud.io/hbuilderx.html）直接运行到小程序即可，如果要发布建议点发布-运行  
