@@ -5,7 +5,7 @@ EasyAi-uniapp—前端优化（二开）版本
 如果你觉得这个项目帮到你了，可以请作者喝个咖啡，我肯定会熬夜赶进度的    
 ## 另外，作者还支持该小程序的定制修改，以及Comfyui的定制节点，有需要可以加作者微信咨询：hdmlgzs  
 
-<img src="https://github.com/chinahu-woker/easyai2work/blob/master/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20250208181944.jpg" width="210px">
+<img src="https://github.com/chinahu-woker/easyai2work/blob/master/%E5%BE%AE%E4%BF%A1%E6%88%AA%E5%9B%BE_20250216113853.png" width="210px">
 
 ## 安装教程  
 【官网文档】：https://doc.51easyai.com/getting-started/quickstart
