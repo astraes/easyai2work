@@ -1,7 +1,7 @@
 "use strict";
+const common_vendor = require("../common/vendor.js");
 const utils_request = require("../utils/request.js");
 const stores_appStore = require("../stores/appStore.js");
-const common_vendor = require("../common/vendor.js");
 const types_event_types = require("../types/event.types.js");
 const utils_emitter = require("../utils/emitter.js");
 const loginByWechatCode = (code) => utils_request.request(`auth/loginByWechatMiniProgram?code=${code}`);
@@ -18,6 +18,8 @@ const refreshUserInfo = (user = getLoginInfo()) => utils_request.request(`/users
 });
 const isLogin = common_vendor.computed(() => {
   const { user } = common_vendor.storeToRefs(stores_appStore.useAppStore());
+  console.log("storeToRefs(useAppStore())", user.value);
+  common_vendor.index.setStorageSync("refreshToken", user.value.refresh_token);
   return !!user.value.refresh_token;
 });
 const getUserVipInfo = () => utils_request.request("/member/topLevel", { method: "POST" });

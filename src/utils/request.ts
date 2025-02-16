@@ -18,6 +18,7 @@ export const request=<T>(apiUrl:string,options:IRequestOptions={},retry=true):Pr
                     //将刷新后的token保存到user中
                     saveLoginInfo({token})
                     console.log('刷新后获取的token',token)
+					// uni.setStorageSync('token', token)
                     if (token){
                         options.header={
                             Authorization: `Bearer ${token}`
@@ -78,9 +79,14 @@ export const refreshToken = async (
                     data: { refreshToken },
                     timeout,
                     success: (res) => {
+						
                         if(res.statusCode>=400){
-                            reject(res)
+							// uni.setStorageSync('refreshToken', res);
+							console.log('refreshToken', res)
+                            reject(res);
                         }else {
+							// uni.setStorageSync('refreshToken', res.data);
+							console.log('refreshToken', res)
                             resolve(res.data); // 如果没有data字段，返回整个res.data
                         }
                     },
@@ -130,6 +136,7 @@ export  const uploadFile=<T>(filePath:string,options:IRequestOptions={},apiUrl='
                         reject(res);
                     }
                     const {token}=await refreshToken(_refreshToken)
+
                     //将刷新后的token保存到user中
                     saveLoginInfo({token})
                     console.log('刷新后获取的token',token)
@@ -168,6 +175,7 @@ export  const uploadFile=<T>(filePath:string,options:IRequestOptions={},apiUrl='
                     //将刷新后的token保存到user中
                     saveLoginInfo({token})
                     console.log('刷新后获取的token',token)
+					
                     if (token){
                         options.header={
                             Authorization: `Bearer ${token}`

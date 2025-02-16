@@ -62,8 +62,10 @@ const refreshToken = async (refreshToken2, apiUrl = "/auth/refreshTokens", maxRe
           timeout,
           success: (res) => {
             if (res.statusCode >= 400) {
+              console.log("refreshToken", res);
               reject(res);
             } else {
+              console.log("refreshToken", res);
               resolve(res.data);
             }
           },

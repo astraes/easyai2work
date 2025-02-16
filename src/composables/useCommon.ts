@@ -30,9 +30,14 @@ export const updateUserInfo=(data:Partial<User>)=>request<User>('/users/update',
 /** 重新获取用户信息 */
 export const refreshUserInfo=(user=getLoginInfo())=>request<User>(`/users/${user._id}`).then(res=>{useAppStore().setUser(res)})
 
+
 /** 是否为登录状态 */
 export const isLogin =computed(()=>{
+	
     const {user}=storeToRefs(useAppStore())
+	console.log("storeToRefs(useAppStore())",user.value)
+	uni.setStorageSync('refreshToken', user.value.refresh_token)
+	
     return !!user.value.refresh_token
 })
 /** 获取用户的会员信息,获取用户最高的权限等级会员信息*/

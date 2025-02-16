@@ -7,30 +7,41 @@ const utils_common = require("../../utils/common.js");
 const stores_appStore = require("../../stores/appStore.js");
 const types_event_types = require("../../types/event.types.js");
 const utils_emitter = require("../../utils/emitter.js");
+const composables_aiChat = require("../../composables/aiChat.js");
 if (!Array) {
   const _easycom_fui_tabs2 = common_vendor.resolveComponent("fui-tabs");
   const _easycom_fui_nav_bar2 = common_vendor.resolveComponent("fui-nav-bar");
   const _easycom_up_gap2 = common_vendor.resolveComponent("up-gap");
   const _easycom_up_status_bar2 = common_vendor.resolveComponent("up-status-bar");
   const _easycom_fui_footer2 = common_vendor.resolveComponent("fui-footer");
+  const _easycom_fui_avatar2 = common_vendor.resolveComponent("fui-avatar");
+  const _easycom_fui_load_ani2 = common_vendor.resolveComponent("fui-load-ani");
+  const _easycom_fui_icon2 = common_vendor.resolveComponent("fui-icon");
+  const _easycom_fui_picker2 = common_vendor.resolveComponent("fui-picker");
+  const _easycom_fui_safe_area2 = common_vendor.resolveComponent("fui-safe-area");
   const _easycom_up_avatar2 = common_vendor.resolveComponent("up-avatar");
   const _easycom_up_icon2 = common_vendor.resolveComponent("up-icon");
   const _easycom_up_cell2 = common_vendor.resolveComponent("up-cell");
   const _easycom_up_cell_group2 = common_vendor.resolveComponent("up-cell-group");
   const _component_template = common_vendor.resolveComponent("template");
-  (_easycom_fui_tabs2 + _easycom_fui_nav_bar2 + _easycom_up_gap2 + _easycom_up_status_bar2 + _easycom_fui_footer2 + _easycom_up_avatar2 + _easycom_up_icon2 + _easycom_up_cell2 + _easycom_up_cell_group2 + _component_template)();
+  (_easycom_fui_tabs2 + _easycom_fui_nav_bar2 + _easycom_up_gap2 + _easycom_up_status_bar2 + _easycom_fui_footer2 + _easycom_fui_avatar2 + _easycom_fui_load_ani2 + _easycom_fui_icon2 + _easycom_fui_picker2 + _easycom_fui_safe_area2 + _easycom_up_avatar2 + _easycom_up_icon2 + _easycom_up_cell2 + _easycom_up_cell_group2 + _component_template)();
 }
 const _easycom_fui_tabs = () => "../../components/firstui/fui-tabs/fui-tabs.js";
 const _easycom_fui_nav_bar = () => "../../components/firstui/fui-nav-bar/fui-nav-bar.js";
 const _easycom_up_gap = () => "../../node-modules/uview-plus/components/u-gap/u-gap.js";
 const _easycom_up_status_bar = () => "../../node-modules/uview-plus/components/u-status-bar/u-status-bar.js";
 const _easycom_fui_footer = () => "../../components/firstui/fui-footer/fui-footer.js";
+const _easycom_fui_avatar = () => "../../components/firstui/fui-avatar/fui-avatar.js";
+const _easycom_fui_load_ani = () => "../../components/firstui/fui-load-ani/fui-load-ani.js";
+const _easycom_fui_icon = () => "../../components/firstui/fui-icon/fui-icon.js";
+const _easycom_fui_picker = () => "../../components/firstui/fui-picker/fui-picker.js";
+const _easycom_fui_safe_area = () => "../../components/firstui/fui-safe-area/fui-safe-area.js";
 const _easycom_up_avatar = () => "../../node-modules/uview-plus/components/u-avatar/u-avatar.js";
 const _easycom_up_icon = () => "../../node-modules/uview-plus/components/u-icon/u-icon.js";
 const _easycom_up_cell = () => "../../node-modules/uview-plus/components/u-cell/u-cell.js";
 const _easycom_up_cell_group = () => "../../node-modules/uview-plus/components/u-cell-group/u-cell-group.js";
 if (!Math) {
-  (_easycom_fui_tabs + _easycom_fui_nav_bar + fuiBackgroundImage + AppSwiper + _easycom_up_gap + AppTags + AppWaterFall + _easycom_up_status_bar + MyGraphicCard + BaseLayout + _easycom_fui_footer + _easycom_up_avatar + UserMemberInfo + GetUserInfoPopup + _easycom_up_icon + _easycom_up_cell + _easycom_up_cell_group + TnIcon)();
+  (_easycom_fui_tabs + _easycom_fui_nav_bar + fuiBackgroundImage + AppSwiper + _easycom_up_gap + AppTags + AppWaterFall + _easycom_up_status_bar + MyGraphicCard + BaseLayout + _easycom_fui_footer + _easycom_fui_avatar + _easycom_fui_load_ani + _easycom_fui_icon + _easycom_fui_picker + _easycom_fui_safe_area + _easycom_up_avatar + UserMemberInfo + GetUserInfoPopup + _easycom_up_icon + _easycom_up_cell + _easycom_up_cell_group + TnIcon)();
 }
 const BaseLayout = () => "../../layouts/BaseLayout.js";
 const GetUserInfoPopup = () => "../../components/GetUserInfoPopup.js";
@@ -45,6 +56,212 @@ const backGroundImage = "https://chinahu-ai-server.oss-cn-chengdu.aliyuncs.com/a
 const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
   __name: "index",
   setup(__props) {
+    global.TextEncoder = common_vendor.TextEncoder;
+    global.TextDecoder = common_vendor.TextDecoder;
+    let items = common_vendor.ref("");
+    function copyText(text) {
+      common_vendor.index.setClipboardData({
+        data: text,
+        success: () => {
+          console.log("复制成功");
+          common_vendor.index.showToast({
+            title: "复制成功",
+            icon: "none"
+          });
+        },
+        fail: (err) => {
+          console.error("复制失败", err);
+          common_vendor.index.showToast({
+            title: "复制失败，请稍后再试",
+            icon: "none"
+          });
+        }
+      });
+    }
+    async function chatAiGetToken() {
+      const requestTask = common_vendor.ref();
+      const userInfo = common_vendor.ref();
+      await composables_aiChat.getUserToken().then((res) => {
+        requestTask.value = res.data;
+      }).catch((err) => {
+        console.error("获取getUserToken失败:", err);
+      });
+      console.log("getUserToken执行完毕");
+      await composables_aiChat.getUserInfo(requestTask.value).then((res) => {
+        userInfo.value = res.data;
+      }).catch((err) => {
+        console.error("获取getUserInfo失败:", err);
+      });
+      console.log("getUserInfo执行完毕");
+      await composables_aiChat.getModelList(requestTask.value.token).then((res) => {
+        modelList.value = res.data;
+        chooseModel.value = res.data[0];
+      }).catch((err) => {
+        console.error("获取getModelList失败:", err);
+      });
+      console.log("getModelList执行完毕");
+      await composables_aiChat.getUserKey(userInfo.value, requestTask.value.refresh_token).then((res) => {
+        console.log("获取到的getUserKey信息:", res.data);
+        userkey.value = res.data.key;
+      }).catch((err) => {
+        console.error("获取getUserKey失败:", err);
+      });
+      console.log("getUserKey执行完毕");
+    }
+    const popup = common_vendor.ref(false);
+    const modelList = common_vendor.ref([]);
+    const chooseModel = common_vendor.ref("");
+    function change(e) {
+      popup.value = false;
+      chooseModel.value = e.value;
+    }
+    function cancel() {
+      popup.value = false;
+    }
+    function popupMth() {
+      if (!composables_useCommon.isLogin.value) {
+        common_vendor.index.showToast({
+          icon: "error",
+          title: "您还没有登录",
+          duration: 2e3
+        });
+        return 0;
+      }
+      popup.value = true;
+    }
+    const content = common_vendor.ref("");
+    const msgList = common_vendor.ref([
+      {
+        "content": "你好我是Ai聊天助手，有什么问题问我吧！(温馨提示：长按消息可以复制文本哦)",
+        "role": "system"
+      }
+    ]);
+    const userkey = common_vendor.ref("");
+    const StreamRequest = (content2) => {
+      return new Promise((resolve, reject) => {
+        const requestTask = common_vendor.index.request({
+          url: composables_aiChat.ChatAPiUrl(),
+          // 请求地址
+          method: "POST",
+          data: {
+            "messages": content2,
+            "model": chooseModel.value,
+            "stream": true,
+            "features": {
+              "thinking_enabled": false
+            }
+          },
+          dataType: "json",
+          header: {
+            "Authorization": "Bearer sk-" + userkey.value
+          },
+          responseType: "text",
+          enableChunked: true,
+          // 开启流传输
+          success: (res) => {
+            resolve(res);
+          },
+          // 请求成功回调
+          fail: (err) => {
+            reject(err);
+            common_vendor.index.showToast({
+              icon: "error",
+              title: "请求失败",
+              duration: 2e3
+            });
+            console.log("请求失败", err);
+          }
+          // 请求失败回调
+        });
+        requestTask.onChunkReceived((chunk) => {
+          try {
+            const base64 = common_vendor.wx$1.arrayBufferToBase64(chunk.data);
+            const arrayBuffer = common_vendor.wx$1.base64ToArrayBuffer(base64);
+            const text = new common_vendor.TextDecoder().decode(arrayBuffer, { stream: true });
+            handleStreamData(text);
+          } catch (error) {
+            console.error("处理数据块失败", error);
+          }
+        });
+        requestTask.onHeadersReceived(() => {
+          console.log("请求完成");
+        });
+      });
+    };
+    const msg = common_vendor.ref("");
+    function handleStreamData(responseText) {
+      const messages = responseText.split("\n").filter((line) => line.startsWith("data:"));
+      for (const message of messages) {
+        if (message.trim() === "data: [DONE]") {
+          msgStatu.value = true;
+          return;
+        }
+        try {
+          const data = JSON.parse(message.substring(5).trim());
+          if (data.choices && data.choices[0] && data.choices[0].delta && data.choices[0].delta.content) {
+            msg.value += data.choices[0].delta.content;
+          }
+        } catch (error) {
+          console.log("解析错误:", error);
+        }
+      }
+      const index = msgList.value.length - 1;
+      msgList.value[index].content = msg.value;
+      items.value = "items-" + (msgList.value.length - 1);
+      msgStatu.value = false;
+    }
+    const msgStatu = common_vendor.ref(true);
+    function msgSend() {
+      if (!composables_useCommon.isLogin.value) {
+        common_vendor.index.showToast({
+          icon: "error",
+          title: "您还没有登录",
+          duration: 2e3
+        });
+        return 0;
+      }
+      if (chooseModel.value == void 0) {
+        common_vendor.index.showToast({
+          icon: "error",
+          title: "您没有选择模型",
+          duration: 2e3
+        });
+        return 0;
+      }
+      if (msgStatu.value != true) {
+        common_vendor.index.showToast({
+          icon: "error",
+          title: "请等待消息结束",
+          duration: 2e3
+        });
+        return 0;
+      }
+      msgList.value.push(
+        {
+          "content": content.value,
+          "role": "user"
+        }
+      );
+      content.value = "";
+      StreamRequest(msgList.value);
+      msgList.value.push({
+        "content": "",
+        "role": "system"
+      });
+      msg.value = "";
+    }
+    common_vendor.onReady(() => {
+      socketInit();
+      utils_emitter.on(types_event_types.EventType.PAY_SUCCESS, ({ order_id }) => handlePayMessage(order_id));
+      wode_loging();
+      chatAiGetToken();
+    });
+    common_vendor.onMounted(() => {
+      getTestImageData();
+    });
+    common_vendor.onUnmounted(() => {
+      imageData.value = [];
+    });
     function img2pay() {
       pageindex.value = 2;
       showPay.value = true;
@@ -54,7 +271,9 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
     const pageindex = common_vendor.ref(0);
     const changeHomePage = (index) => {
       pageindex.value = index.index;
-      console.log("index", pageindex.value);
+      if (index.index == 2) {
+        chatAiGetToken();
+      }
     };
     const name_value = common_vendor.ref("我的");
     function wode_loging() {
@@ -67,12 +286,17 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
     const tabbarData = [
       {
         name: "首页",
-        to: "/pages/index/index",
+        // to: '/pages/index/index',
         onClick: tabbarIndex
       },
       {
         name: "创意",
-        to: "/pages/creative/creative",
+        // to: '/pages/creative/creative',
+        onClick: tabbarIndex
+      },
+      {
+        name: "AI助手",
+        // to: '/pages/creative/creative',
         onClick: tabbarIndex
       },
       {
@@ -80,12 +304,6 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
         onClick: tabbarIndex
       }
     ];
-    common_vendor.onMounted(() => {
-      getTestImageData();
-    });
-    common_vendor.onUnmounted(() => {
-      imageData.value = [];
-    });
     const getTestImageData = async () => {
       imageData.value = await utils_request.request("draw/history/findMany", {
         method: "POST",
@@ -150,7 +368,6 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
       if (uniPlatform !== "web") {
         handleLoginByWechat();
       } else {
-        console.log("dev");
         const user2 = await composables_useCommon.loginByUsername({
           username: "test456",
           password: "123456"
@@ -158,6 +375,7 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
         composables_useCommon.saveLoginInfo(user2);
         common_vendor.index.hideLoading();
       }
+      chatAiGetToken();
       name_value.value = "我的";
     };
     const handleLoginByWechat = () => {
@@ -166,6 +384,8 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
           const result = await composables_useCommon.loginByWechatCode(code);
           composables_useCommon.saveLoginInfo(result);
           common_vendor.index.hideLoading();
+          console.log("------------result--------", result);
+          common_vendor.index.setStorageSync("refreshToken", result.refresh_token);
         },
         fail: function(err) {
           common_vendor.index.showToast({
@@ -174,13 +394,9 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
           });
         }
       });
+      chatAiGetToken();
     };
     const { socketInit } = composables_useWorkFlow.useWorkFlow();
-    common_vendor.onReady(() => {
-      socketInit();
-      utils_emitter.on(types_event_types.EventType.PAY_SUCCESS, ({ order_id }) => handlePayMessage(order_id));
-      wode_loging();
-    });
     const handlePayMessage = async (order_id) => {
       console.log("收到支付成功消息", order_id);
       const order = await composables_useCommon.getOrderInfoById(order_id);
@@ -269,59 +485,122 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
         n: common_vendor.p({
           src: backGroundImage
         }),
-        o: common_vendor.p({
+        o: common_vendor.f(msgList.value, (item, index, i0) => {
+          return common_vendor.e({
+            a: "83a5a03c-14-" + i0,
+            b: common_vendor.p({
+              background: "#fff",
+              src: item.role == "system" ? "https://wangbo0808.oss-cn-shanghai.aliyuncs.com/assets/gpt4.png" : common_vendor.unref(user).avatar_url
+            }),
+            c: item.content.length > 1
+          }, item.content.length > 1 ? {
+            d: common_vendor.t(item.content),
+            e: common_vendor.o(($event) => copyText(item.content), index)
+          } : {}, {
+            f: item.content.length < 1
+          }, item.content.length < 1 ? {
+            g: "83a5a03c-15-" + i0,
+            h: common_vendor.p({
+              type: "3",
+              color: " #7f7d79"
+            })
+          } : {}, {
+            i: `items-${index}`,
+            j: common_vendor.n(item.role == "user" ? "fui-chat__right" : "fui-chat__left"),
+            k: common_vendor.o(($event) => _ctx.getCopyMsg(1, item.msg, $event), index),
+            l: common_vendor.o(($event) => _ctx.getCopyMsg(2, item.content, $event), index),
+            m: index
+          });
+        }),
+        p: common_vendor.unref(items),
+        q: common_vendor.t(chooseModel.value || modelList.value[0]),
+        r: common_vendor.o(popupMth),
+        s: common_vendor.p({
+          name: "message",
+          color: "#3b3ee9"
+        }),
+        t: -1,
+        v: common_vendor.o(msgSend),
+        w: content.value,
+        x: common_vendor.o(($event) => content.value = $event.detail.value),
+        y: content.value.length == 0
+      }, content.value.length == 0 ? {
+        z: common_vendor.p({
+          name: "clear",
+          color: "#3b3ee9"
+        })
+      } : {
+        A: common_vendor.o(msgSend)
+      }, {
+        B: common_vendor.o(change),
+        C: common_vendor.o(cancel),
+        D: common_vendor.p({
+          options: modelList.value,
+          show: popup.value
+        }),
+        E: !_ctx.focus
+      }, !_ctx.focus ? {
+        F: common_vendor.p({
+          background: "#f8f8f8"
+        })
+      } : {}, {
+        G: pageindex.value == 2,
+        H: common_vendor.p({
+          src: backGroundImage
+        }),
+        I: common_vendor.p({
           src: common_vendor.unref(user).avatar_url,
           size: "80"
         }),
-        p: !common_vendor.unref(composables_useCommon.isLogin)
+        J: !common_vendor.unref(composables_useCommon.isLogin)
       }, !common_vendor.unref(composables_useCommon.isLogin) ? {} : {}, {
-        q: common_vendor.unref(composables_useCommon.isLogin)
+        K: common_vendor.unref(composables_useCommon.isLogin)
       }, common_vendor.unref(composables_useCommon.isLogin) ? {
-        r: common_vendor.t(common_vendor.unref(user).nickname)
+        L: common_vendor.t(common_vendor.unref(user).nickname)
       } : {}, {
-        s: common_vendor.unref(composables_useCommon.isLogin)
+        M: common_vendor.unref(composables_useCommon.isLogin)
       }, common_vendor.unref(composables_useCommon.isLogin) ? {
-        t: common_vendor.t(common_vendor.unref(user).balance)
+        N: common_vendor.t(common_vendor.unref(user).balance)
       } : {}, {
-        v: common_vendor.p({
+        O: common_vendor.p({
           name: "scan",
           color: "#969799",
           size: "28"
         }),
-        w: common_vendor.o(toEmpty),
-        x: common_vendor.p({
+        P: common_vendor.o(toEmpty),
+        Q: common_vendor.p({
           name: "arrow-right",
           color: "#969799",
           size: "28"
         }),
-        y: common_vendor.o(toEmpty),
-        z: common_vendor.o(handleLogin),
-        A: common_vendor.o(($event) => showPay.value = true),
-        B: common_vendor.p({
+        R: common_vendor.o(toEmpty),
+        S: common_vendor.o(handleLogin),
+        T: common_vendor.o(($event) => showPay.value = true),
+        U: common_vendor.p({
           icon: "rmb-circle",
           title: "算力充值",
           border: false
         }),
-        C: common_vendor.o(handleGotoHistory),
-        D: common_vendor.p({
+        V: common_vendor.o(handleGotoHistory),
+        W: common_vendor.p({
           border: false,
           icon: "photo",
           title: "绘图历史"
         }),
-        E: common_vendor.p({
+        X: common_vendor.p({
           name: "logout"
         }),
-        F: common_vendor.o(handleLoginOut),
-        G: common_vendor.p({
+        Y: common_vendor.o(handleLoginOut),
+        Z: common_vendor.p({
           border: false,
           icon: "setting",
           title: "退出登录"
         }),
-        H: common_vendor.p({
+        aa: common_vendor.p({
           icon: "chat-fill",
           title: "微信客服"
         }),
-        I: pageindex.value == 2
+        ab: pageindex.value == 3
       });
     };
   }

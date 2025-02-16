@@ -3,6 +3,7 @@
   "projectname": "FuziAI",
   "setting": {
     "compileHotReLoad": true,
-    "autoAudits": true
+    "autoAudits": false,
+    "preloadBackgroundData": false
   }
 }
