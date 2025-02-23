@@ -4,6 +4,7 @@ EasyAi-uniapp—前端优化（二开）版本
 大家如果有什么问题可以加作者微信：hdmlgzs  
 如果你觉得这个项目帮到你了，可以请作者喝个咖啡，我肯定会熬夜赶进度的    
 ## 另外，作者还支持该小程序的定制修改，以及Comfyui的定制节点，有需要可以加作者微信咨询：hdmlgzs  
+## 关于小程序不能链接 xxxxxxxx/websocket的报错，需要在nginx后台中再以3002端口配置一个/websocket的反向代理就可以了
 
 <img src="https://github.com/chinahu-woker/easyai2work/blob/master/%E5%BE%AE%E4%BF%A1%E6%88%AA%E5%9B%BE_20250216113853.png" width="210px">
 
