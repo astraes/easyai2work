@@ -28,7 +28,7 @@ EasyAi-uniapp—前端优化（二开）版本
 ## 2025/2/24第3次更新  
 ### 0. 优化了绘画历史图片显示，新增加画廊  
 ### 1. 优化了个人主页的ui 
-<img src="https://github.com/chinahu-woker/easyai2work/blob/master/%E5%BE%AE%E4%BF%A1%E6%88%AA%E5%9B%BE_20250216113853.png" width="210px"/><img src="https://github.com/chinahu-woker/easyai2work/blob/master/pic.png" width="210px"/>
+<img src="https://github.com/chinahu-woker/easyai2work/blob/master/20250224myself.png" width="210px"/><img src="https://github.com/chinahu-woker/easyai2work/blob/master/pic.png" width="210px"/>
 
   
   
