@@ -9,6 +9,7 @@ if (!Array) {
   const _easycom_fui_tabs2 = common_vendor.resolveComponent("fui-tabs");
   const _easycom_fui_sticky2 = common_vendor.resolveComponent("fui-sticky");
   const _easycom_fui_section2 = common_vendor.resolveComponent("fui-section");
+  const _easycom_fui_gallery2 = common_vendor.resolveComponent("fui-gallery");
   const _easycom_fui_icon2 = common_vendor.resolveComponent("fui-icon");
   const _easycom_fui_load_ani2 = common_vendor.resolveComponent("fui-load-ani");
   const _easycom_fui_collapse_item2 = common_vendor.resolveComponent("fui-collapse-item");
@@ -16,12 +17,13 @@ if (!Array) {
   const _easycom_fui_timeaxis2 = common_vendor.resolveComponent("fui-timeaxis");
   const _easycom_fui_waterfall_item2 = common_vendor.resolveComponent("fui-waterfall-item");
   const _easycom_fui_waterfall2 = common_vendor.resolveComponent("fui-waterfall");
-  (_easycom_fui_background_image2 + _easycom_fui_tabs2 + _easycom_fui_sticky2 + _easycom_fui_section2 + _easycom_fui_icon2 + _easycom_fui_load_ani2 + _easycom_fui_collapse_item2 + _easycom_fui_timeaxis_node2 + _easycom_fui_timeaxis2 + _easycom_fui_waterfall_item2 + _easycom_fui_waterfall2)();
+  (_easycom_fui_background_image2 + _easycom_fui_tabs2 + _easycom_fui_sticky2 + _easycom_fui_section2 + _easycom_fui_gallery2 + _easycom_fui_icon2 + _easycom_fui_load_ani2 + _easycom_fui_collapse_item2 + _easycom_fui_timeaxis_node2 + _easycom_fui_timeaxis2 + _easycom_fui_waterfall_item2 + _easycom_fui_waterfall2)();
 }
 const _easycom_fui_background_image = () => "../../../components/firstui/fui-background-image/fui-background-image.js";
 const _easycom_fui_tabs = () => "../../../components/firstui/fui-tabs/fui-tabs.js";
 const _easycom_fui_sticky = () => "../../../components/firstui/fui-sticky/fui-sticky.js";
 const _easycom_fui_section = () => "../../../components/firstui/fui-section/fui-section.js";
+const _easycom_fui_gallery = () => "../../../components/firstui/fui-gallery/fui-gallery.js";
 const _easycom_fui_icon = () => "../../../components/firstui/fui-icon/fui-icon.js";
 const _easycom_fui_load_ani = () => "../../../components/firstui/fui-load-ani/fui-load-ani.js";
 const _easycom_fui_collapse_item = () => "../../../components/firstui/fui-collapse-item/fui-collapse-item.js";
@@ -30,7 +32,7 @@ const _easycom_fui_timeaxis = () => "../../../components/firstui/fui-timeaxis/fu
 const _easycom_fui_waterfall_item = () => "../../../components/firstui/fui-waterfall-item/fui-waterfall-item.js";
 const _easycom_fui_waterfall = () => "../../../components/firstui/fui-waterfall/fui-waterfall.js";
 if (!Math) {
-  (_easycom_fui_background_image + _easycom_fui_tabs + _easycom_fui_sticky + _easycom_fui_section + _easycom_fui_icon + _easycom_fui_load_ani + _easycom_fui_collapse_item + _easycom_fui_timeaxis_node + _easycom_fui_timeaxis + _easycom_fui_waterfall_item + _easycom_fui_waterfall)();
+  (_easycom_fui_background_image + _easycom_fui_tabs + _easycom_fui_sticky + _easycom_fui_section + _easycom_fui_gallery + _easycom_fui_icon + _easycom_fui_load_ani + _easycom_fui_collapse_item + _easycom_fui_timeaxis_node + _easycom_fui_timeaxis + _easycom_fui_waterfall_item + _easycom_fui_waterfall)();
 }
 const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
   __name: "history_fui",
@@ -113,8 +115,15 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
       currentTabIndex.value = e.index;
     }
     const show = common_vendor.ref(false);
-    function showGallery() {
+    common_vendor.ref();
+    const GalleryPic = common_vendor.ref();
+    function showGallery(data) {
       show.value = true;
+      GalleryPic.value = data;
+      console.log(GalleryPic.value);
+    }
+    function hideGallery() {
+      show.value = false;
     }
     function linkType(url) {
       if (typeof url !== "string")
@@ -190,12 +199,17 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
         }),
         f: currentTabIndex.value == 0
       }, currentTabIndex.value == 0 ? {
-        g: common_vendor.f(historyData.value, (item, index, i0) => {
+        g: common_vendor.o(hideGallery),
+        h: common_vendor.p({
+          urls: GalleryPic.value,
+          show: show.value
+        }),
+        i: common_vendor.f(historyData.value, (item, index, i0) => {
           var _a, _b, _c, _d, _e;
           return common_vendor.e({
             a: item.status == 2
           }, item.status == 2 ? {
-            b: "56f14cc7-6-" + i0 + "," + ("56f14cc7-5-" + i0),
+            b: "56f14cc7-7-" + i0 + "," + ("56f14cc7-6-" + i0),
             c: common_vendor.p({
               name: "clear-fill",
               size: 28,
@@ -204,7 +218,7 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
           } : {}, {
             d: item.status == 1
           }, item.status == 1 ? {
-            e: "56f14cc7-7-" + i0 + "," + ("56f14cc7-5-" + i0),
+            e: "56f14cc7-8-" + i0 + "," + ("56f14cc7-6-" + i0),
             f: common_vendor.p({
               name: "face",
               size: 28,
@@ -213,96 +227,98 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
           } : {}, {
             g: item.status == 0
           }, item.status == 0 ? {
-            h: "56f14cc7-8-" + i0 + "," + ("56f14cc7-5-" + i0),
+            h: "56f14cc7-9-" + i0 + "," + ("56f14cc7-6-" + i0),
             i: common_vendor.p({
               type: "3"
             })
           } : {}, {
             j: linkType(item.output[0]) == 0
           }, linkType(item.output[0]) == 0 ? {
-            k: "56f14cc7-9-" + i0 + "," + ("56f14cc7-5-" + i0),
+            k: "56f14cc7-10-" + i0 + "," + ("56f14cc7-6-" + i0),
             l: common_vendor.p({
               title: "提示词",
               descr: (_a = item.params) == null ? void 0 : _a.positive,
               descrSize: "32",
               descrColor: "#000000"
             }),
-            m: common_vendor.o(showGallery, index),
-            n: _ctx.scaleToFill,
-            o: item.output[0],
-            p: common_vendor.o(($event) => removeHistoryRecord(item._id), index),
-            q: "56f14cc7-10-" + i0 + "," + ("56f14cc7-5-" + i0),
-            r: common_vendor.p({
+            m: common_vendor.f(item.output, (pic, picIndex, i1) => {
+              return {
+                a: pic
+              };
+            }),
+            n: common_vendor.o(($event) => showGallery(historyData.value[index].output)),
+            o: common_vendor.o(($event) => removeHistoryRecord(item.id), index),
+            p: "56f14cc7-11-" + i0 + "," + ("56f14cc7-6-" + i0),
+            q: common_vendor.p({
               color: "#ff0000",
               name: "delete"
             })
           } : linkType(item.output[0]) == 1 ? {
-            t: "56f14cc7-11-" + i0 + "," + ("56f14cc7-5-" + i0),
-            v: common_vendor.p({
+            s: "56f14cc7-12-" + i0 + "," + ("56f14cc7-6-" + i0),
+            t: common_vendor.p({
               title: "提示词",
               descr: (_b = item.params) == null ? void 0 : _b.positive
             }),
-            w: item.output[0],
-            x: common_vendor.o(($event) => removeHistoryRecord(item._id), index),
-            y: "56f14cc7-12-" + i0 + "," + ("56f14cc7-5-" + i0),
-            z: common_vendor.p({
+            v: item.output[0],
+            w: common_vendor.o(($event) => removeHistoryRecord(item._id), index),
+            x: "56f14cc7-13-" + i0 + "," + ("56f14cc7-6-" + i0),
+            y: common_vendor.p({
               color: "#ff0000",
               name: "delete"
             }),
-            A: common_vendor.o(($event) => dowonVideo(item.output[0]), index),
-            B: "56f14cc7-13-" + i0 + "," + ("56f14cc7-5-" + i0),
-            C: common_vendor.p({
+            z: common_vendor.o(($event) => dowonVideo(item.output[0]), index),
+            A: "56f14cc7-14-" + i0 + "," + ("56f14cc7-6-" + i0),
+            B: common_vendor.p({
               color: "#e0e0e0",
               name: "pulldown"
             })
           } : {
-            D: "56f14cc7-14-" + i0 + "," + ("56f14cc7-5-" + i0),
-            E: common_vendor.p({
+            C: "56f14cc7-15-" + i0 + "," + ("56f14cc7-6-" + i0),
+            D: common_vendor.p({
               title: "提示词",
               descrSize: "32",
               descrColor: "#000000",
               descr: (_c = item.params) == null ? void 0 : _c.positive
             }),
-            F: ((_d = item.params) == null ? void 0 : _d.image_path_mask) || ((_e = item.params) == null ? void 0 : _e.image_path_origin) || testData,
-            G: common_vendor.o(($event) => removeHistoryRecord(item._id), index),
-            H: "56f14cc7-15-" + i0 + "," + ("56f14cc7-5-" + i0),
-            I: common_vendor.p({
+            E: ((_d = item.params) == null ? void 0 : _d.image_path_mask) || ((_e = item.params) == null ? void 0 : _e.image_path_origin) || testData,
+            F: common_vendor.o(($event) => removeHistoryRecord(item.id), index),
+            G: "56f14cc7-16-" + i0 + "," + ("56f14cc7-6-" + i0),
+            H: common_vendor.p({
               color: "#ff0000",
               name: "delete"
             }),
-            J: common_vendor.o(($event) => handleClick(item.output[0]), index),
-            K: common_vendor.t(item.output[0]),
-            L: "56f14cc7-16-" + i0 + "," + ("56f14cc7-5-" + i0),
-            M: common_vendor.p({
+            I: common_vendor.o(($event) => handleClick(item.output[0]), index),
+            J: common_vendor.t(item.output[0]),
+            K: "56f14cc7-17-" + i0 + "," + ("56f14cc7-6-" + i0),
+            L: common_vendor.p({
               background: "transparent "
             })
           }, {
-            s: linkType(item.output[0]) == 1,
-            N: index,
-            O: "56f14cc7-5-" + i0 + ",56f14cc7-4"
+            r: linkType(item.output[0]) == 1,
+            M: index,
+            N: "56f14cc7-6-" + i0 + ",56f14cc7-5"
           });
         }),
-        h: common_vendor.p({
+        j: common_vendor.p({
           padding: ["32rpx", "16rpx"]
         })
       } : {}, {
-        i: currentTabIndex.value == 1
+        k: currentTabIndex.value == 1
       }, currentTabIndex.value == 1 ? {
-        j: common_vendor.f(historyData.value, (item, index, i0) => {
+        l: common_vendor.f(historyData.value, (item, index, i0) => {
           var _a, _b;
           return common_vendor.e({
             a: linkType(item.output[0]) == 0
           }, linkType(item.output[0]) == 0 ? {
-            b: _ctx.scaleToFill,
-            c: item.output[0]
+            b: item.output[0]
           } : linkType(item.output[0]) == 1 ? {
-            e: item.output[0]
+            d: item.output[0]
           } : {
-            f: ((_a = item.params) == null ? void 0 : _a.image_path_mask) || ((_b = item.params) == null ? void 0 : _b.image_path_origin) || testData
+            e: ((_a = item.params) == null ? void 0 : _a.image_path_mask) || ((_b = item.params) == null ? void 0 : _b.image_path_origin) || testData
           }, {
-            d: linkType(item.output[0]) == 1,
-            g: index,
-            h: "56f14cc7-18-" + i0 + ",56f14cc7-17"
+            c: linkType(item.output[0]) == 1,
+            f: index,
+            g: "56f14cc7-19-" + i0 + ",56f14cc7-18"
           });
         })
       } : {});

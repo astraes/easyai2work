@@ -1,12 +1,12 @@
 <template>
 
 	<view class="fuiNavBar">
-		<fui-nav-bar custom background>
+		<fui-nav-bar custom background='transparent'>
 			<view class="fui-search__box ">
 				<fui-tabs class="tabs_class" direction='column' color='#ACB0D0' :isSlider='false'
 					selectedColor='#17135F' :tabs="tabbarData" scale='1.5' @change="changeHomePage" :center="false"
 					:short="true" :scroll='false' itemPadding="25" :current="pageindex" size='28' fontWeight='900'
-					background></fui-tabs>
+					background='transparent'></fui-tabs>
 			</view>
 		</fui-nav-bar>
 
@@ -24,12 +24,12 @@
 		<!-- // 下面链接改成你的背景图片，求求大家用自己的，作者oss按量付费，开源不易！
 		
 		// 背景图片和用到的素材我都给大家放在/src/static里了 -->
-		<image @click="img2pay"
+	<!-- 	<image @click="img2pay"
 			style="width: 320rpx; height: 106rpx; background-color: transparent; display:inline-block; box-sizing:border-box; position:relative; left:40rpx;"
 			mode="scaleToFill" src="https://chinahu-ai-server.oss-cn-chengdu.aliyuncs.com/画板 2 (1).png"></image>
 		<image @click="handleGotoHistory"
 			style="width: 320rpx; height: 106rpx; background-color: transparent; display:inline-block; box-sizing:border-box; position:relative; left:70rpx;"
-			mode="scaleToFill" src="https://chinahu-ai-server.oss-cn-chengdu.aliyuncs.com/画板 3.png"></image>
+			mode="scaleToFill" src="https://chinahu-ai-server.oss-cn-chengdu.aliyuncs.com/画板 3.png"></image> -->
 
 		<up-gap height="10"></up-gap>
 		<AppTags />
@@ -76,10 +76,11 @@
 
 			<scroll-view scroll-y="true" class="scroll-Y" scroll-with-animation :scroll-into-view="items">
 				<view class="fui-chat__box" ref="chatBox">
-					<view v-for="(item,index) in msgList" :key="index" >
-						<view :id="`items-${index}`" class="fui-chat__item" :class="[item.role=='user'?'fui-chat__right':'fui-chat__left']"
+					<view v-for="(item,index) in msgList" :key="index">
+						<view :id="`items-${index}`" class="fui-chat__item"
+							:class="[item.role=='user'?'fui-chat__right':'fui-chat__left']"
 							@tap="getCopyMsg(1,item.msg,$event)" @longpress="getCopyMsg(2,item.content,$event)">
-							<fui-avatar background="#fff"
+							<fui-avatar background="#f9f9f9"
 								:src="item.role=='system'?'https://wangbo0808.oss-cn-shanghai.aliyuncs.com/assets/gpt4.png':user.avatar_url">
 							</fui-avatar>
 							<view class="fui-chat__content">
@@ -90,7 +91,7 @@
 								</view>
 							</view>
 						</view>
-						
+
 
 
 					</view>
@@ -117,7 +118,7 @@
 
 						<view v-if="content.length == 0">
 							<!-- 选择图片 -->
-							<fui-icon name="clear" color="#3b3ee9" ></fui-icon>
+							<fui-icon name="clear" color="#3b3ee9"></fui-icon>
 						</view>
 						<!-- <view v-if="msgStatu == true ">
 							
@@ -136,13 +137,11 @@
 						上传图片
 					</view>
 				</fui-bottom-popup> -->
-				<fui-safe-area background="#f8f8f8" v-if="!focus"></fui-safe-area>
+				<fui-safe-area background="#f8f8f8"></fui-safe-area>
 			</view>
 
 
-			<!-- #ifdef VUE2 -->
-			<fui-safe-area background="transparent"></fui-safe-area>
-			<!-- #endif -->
+
 		</view>
 
 
@@ -180,6 +179,7 @@
 							<GetUserInfoPopup />
 
 						</view>
+
 						<view class="u-m-l-10 u-p-10" @click='toEmpty'>
 							<up-icon name="scan" color="#969799" size="28"></up-icon>
 						</view>
@@ -188,25 +188,62 @@
 						</view>
 					</view>
 
-					<view class="u-m-t-20">
+					<!-- <view class="u-m-t-20">
 						<up-cell-group class="trans_back">
 							<up-cell icon="rmb-circle" title="算力充值" @click="showPay=true" :border='false'> </up-cell>
 						</up-cell-group>
-					</view>
-
-					<view class="u-m-t-20">
-						<up-cell-group class="trans_back">
+					</view> -->
+					<image @click="img2pay"
+						style="width: 675rpx; margin-bottom: -1%; height: 130rpx; background-color: transparent; display:inline-block; box-sizing:border-box; position:relative; margin-left:5%;"
+						mode="scaleToFill" src="https://chinahu-ai-server.oss-cn-chengdu.aliyuncs.com/会员模块.png">
+					</image>
+					<view class="u-m-t-20" style="border-color: transparent; margin-left: 5%; margin-right: 5%;">
+						<up-cell-group color='#fff' :border="false" class="trans_back">
 							<!--        <up-cell icon="star" title="收藏(暂未开放)"></up-cell>-->
-							<up-cell :border='false' icon="photo" title="绘图历史" @click="handleGotoHistory"></up-cell>
-							<up-cell :border='false' icon="setting" title="退出登录" @click="handleLoginOut">
-								<template #icon>
-									<tn-icon name="logout" />
-								</template>
-							</up-cell>
-							<button style="background-color: transparent; margin: 0; padding: 0; text-align: left;"
-								open-type="contact">
-								<up-cell icon="chat-fill" title="微信客服"></up-cell>
-							</button>
+						
+						
+						
+							<view
+								style=" margin-top:5% ; color: #000000; height: 100%; background: radial-gradient(circle, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.1)); border-radius: 10px 10px 10px 10px; height: 120rpx; ">
+								<up-cell :border='false' @click="handleGotoHistory">
+									<template #icon>
+										<up-icon size="30"
+											name="https://chinahu-ai-server.oss-cn-chengdu.aliyuncs.com/Iconly_Glass_Gallery.png"></up-icon>
+									</template>
+									<template #title>
+										<text class="u-cell-text" style='color: #000000;'>绘图历史</text>
+									</template>
+								</up-cell>
+							</view>
+						
+							<view
+								style=" margin-top:5% ;color: #000000; height: 100%;  background: radial-gradient(circle, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.1));  border-radius: 10px 10px 10px 10px;">
+								<button
+									style="background-color: transparent; margin: 0; padding: 0; text-align: left; border-color: transparent;"
+									open-type="contact">
+									<up-cell :border="false">
+										<template #icon>
+											<up-icon size="30"
+												name="https://chinahu-ai-server.oss-cn-chengdu.aliyuncs.com/Iconly_Glass_Chat.png"></up-icon>
+										</template>
+										<template #title>
+											<text class="u-cell-text" style='color: #000000;'>联系客服</text>
+										</template>
+									</up-cell>
+								</button>
+							</view>
+							<view
+								style=" margin-top:5% ; color: #000000; height: 100%;  background: radial-gradient(circle, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.1)); border-radius: 10px 10px 10px 10px; height: 120rpx; ">
+								<up-cell :border='false' @click="handleLoginOut">
+									<template #icon>
+										<up-icon size="30"
+											name="https://chinahu-ai-server.oss-cn-chengdu.aliyuncs.com/Iconly_Glass_Home.png"></up-icon>
+									</template>
+									<template #title>
+										<text class="u-cell-text" style='color: #000000;'>退出登录</text>
+									</template>
+								</up-cell>
+							</view>
 							<!--        <up-cell icon="coupon" title="卡券(暂未开放)"></up-cell>-->
 							<!--        <up-cell icon="heart" title="关注(暂未开放)"></up-cell>-->
 						</up-cell-group>
@@ -241,7 +278,7 @@
 	import { onLoad, onReady } from "@dcloudio/uni-app";
 	import useWorkFlow from "@/composables/useWorkFlow.ts";
 	import UserMemberInfo from "@/components/home/UserMemberInfo.vue";
-	import { ref, onMounted, onUnmounted, computed,watch,nextTick  } from 'vue'
+	import { ref, onMounted, onUnmounted, computed, watch, nextTick } from 'vue'
 	import TnWaterFall from '@tuniao/tnui-vue3-uniapp/components/water-fall/src/water-fall.vue'
 	import { request } from "@/utils/request.ts";
 	import type { IDrawHistoryItem } from "@/types";
@@ -263,18 +300,18 @@
 	import { on } from "@/utils/emitter.ts";
 	import PaymentPopup from "@/components/home/PaymentPopup.vue";
 	import fuiBackgroundImage from "@/components/firstui/fui-background-image/fui-background-image.vue";
-	import { getModelList, getUserKey, getUserToken, getUserInfo,ChatAPiUrl } from "@/composables/aiChat.ts";
+	import { getModelList, getUserKey, getUserToken, getUserInfo, ChatAPiUrl } from "@/composables/aiChat.ts";
 	import { TextEncoder, TextDecoder } from 'text-decoding'
 	global.TextEncoder = TextEncoder
 	global.TextDecoder = TextDecoder
-	
+
 
 	// ---------------------------AIChat  Page------------------------------
 
 	let items = ref('')
 
-	
-	
+
+
 	function copyText(text) {
 
 		uni.setClipboardData({
@@ -299,50 +336,50 @@
 	}
 
 	async function chatAiGetToken() {
-			const requestTask = ref()
-			const userInfo = ref()
-			// 获取 用户信息
-			
-			await getUserToken().then(res => {
-				// console.log('获取到的getUserToken信息:', res.data);
-				requestTask.value = res.data
-			}).catch(err => {
-				console.error('获取getUserToken失败:', err);
-			});
-			console.log('getUserToken执行完毕');
-			// console.log('获取到的requestTask信息:', requestTask.value);
-			await getUserInfo(requestTask.value).then(res => {
-				// console.log('获取到的getUserInfo信息:', res.data);
-				userInfo.value = res.data
-			}).catch(err => {
-				console.error('获取getUserInfo失败:', err);
-			});
-			console.log('getUserInfo执行完毕');
-			await getModelList(requestTask.value.token).then(res => {
-				// console.log('获取到的getUserInfo信息:', res.data);
-				modelList.value = res.data
-				chooseModel.value = res.data[0]
-			}).catch(err => {
-				console.error('获取getModelList失败:', err);
-			});
-			console.log('getModelList执行完毕');
-			await getUserKey(userInfo.value, requestTask.value.refresh_token).then(res => {
-				console.log('获取到的getUserKey信息:', res.data);
-				userkey.value = res.data.key
-			}).catch(err => {
-				console.error('获取getUserKey失败:', err);
-			});
-			console.log('getUserKey执行完毕');
-		}
+		const requestTask = ref()
+		const userInfo = ref()
+		// 获取 用户信息
+
+		await getUserToken().then(res => {
+			// console.log('获取到的getUserToken信息:', res.data);
+			requestTask.value = res.data
+		}).catch(err => {
+			console.error('获取getUserToken失败:', err);
+		});
+		console.log('getUserToken执行完毕');
+		// console.log('获取到的requestTask信息:', requestTask.value);
+		await getUserInfo(requestTask.value).then(res => {
+			// console.log('获取到的getUserInfo信息:', res.data);
+			userInfo.value = res.data
+		}).catch(err => {
+			console.error('获取getUserInfo失败:', err);
+		});
+		console.log('getUserInfo执行完毕');
+		await getModelList(requestTask.value.token).then(res => {
+			// console.log('获取到的getUserInfo信息:', res.data);
+			modelList.value = res.data
+			chooseModel.value = res.data[0]
+		}).catch(err => {
+			console.error('获取getModelList失败:', err);
+		});
+		console.log('getModelList执行完毕');
+		await getUserKey(userInfo.value, requestTask.value.refresh_token).then(res => {
+			console.log('获取到的getUserKey信息:', res.data);
+			userkey.value = res.data.key
+		}).catch(err => {
+			console.error('获取getUserKey失败:', err);
+		});
+		console.log('getUserKey执行完毕');
+	}
 
 
 	function chooseImage() {
-			uni.showToast({
-				icon: "error",
-				title: '您没有输入',
-				duration: 2000
-			});
-		}
+		uni.showToast({
+			icon: "error",
+			title: '您没有输入',
+			duration: 2000
+		});
+	}
 
 	// 初始化 modelList 为一个空数组
 	const popup = ref(false)
@@ -395,7 +432,7 @@
 
 	const userkey = ref('')
 	const StreamRequest = (content) => {
-		
+
 		return new Promise((resolve, reject) => {
 			const requestTask = uni.request({
 
@@ -404,7 +441,7 @@
 
 				data: {
 					"messages": content,
-					"model": chooseModel.value ,
+					"model": chooseModel.value,
 					"stream": true,
 					"features": {
 						"thinking_enabled": false
@@ -477,7 +514,7 @@
 		msgList.value[index].content = msg.value
 		items.value = "items-" + (msgList.value.length - 1)
 		msgStatu.value = false
-		
+
 	}
 	const msgStatu = ref(true)
 	function msgSend() {
@@ -489,7 +526,7 @@
 			});
 			return 0
 		}
-		
+
 		// console.log(chooseModel.value)
 		if (chooseModel.value == undefined) {
 			uni.showToast({
@@ -521,7 +558,7 @@
 			"role": "system"
 		})
 		msg.value = ''
-
+		console.log(msgList.value)
 	}
 
 

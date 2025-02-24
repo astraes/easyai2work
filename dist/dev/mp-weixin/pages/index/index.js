@@ -41,11 +41,10 @@ const _easycom_up_icon = () => "../../node-modules/uview-plus/components/u-icon/
 const _easycom_up_cell = () => "../../node-modules/uview-plus/components/u-cell/u-cell.js";
 const _easycom_up_cell_group = () => "../../node-modules/uview-plus/components/u-cell-group/u-cell-group.js";
 if (!Math) {
-  (_easycom_fui_tabs + _easycom_fui_nav_bar + fuiBackgroundImage + AppSwiper + _easycom_up_gap + AppTags + AppWaterFall + _easycom_up_status_bar + MyGraphicCard + BaseLayout + _easycom_fui_footer + _easycom_fui_avatar + _easycom_fui_load_ani + _easycom_fui_icon + _easycom_fui_picker + _easycom_fui_safe_area + _easycom_up_avatar + UserMemberInfo + GetUserInfoPopup + _easycom_up_icon + _easycom_up_cell + _easycom_up_cell_group + TnIcon)();
+  (_easycom_fui_tabs + _easycom_fui_nav_bar + fuiBackgroundImage + AppSwiper + _easycom_up_gap + AppTags + AppWaterFall + _easycom_up_status_bar + MyGraphicCard + BaseLayout + _easycom_fui_footer + _easycom_fui_avatar + _easycom_fui_load_ani + _easycom_fui_icon + _easycom_fui_picker + _easycom_fui_safe_area + _easycom_up_avatar + UserMemberInfo + GetUserInfoPopup + _easycom_up_icon + _easycom_up_cell + _easycom_up_cell_group)();
 }
 const BaseLayout = () => "../../layouts/BaseLayout.js";
 const GetUserInfoPopup = () => "../../components/GetUserInfoPopup.js";
-const TnIcon = () => "../../node-modules/@tuniao/tnui-vue3-uniapp/components/icon/src/icon.js";
 const UserMemberInfo = () => "../../components/home/UserMemberInfo.js";
 const MyGraphicCard = () => "../../components/custom/MyGraphicCard/MyGraphicCard.js";
 const AppSwiper = () => "../../components/home/AppSwiper.js";
@@ -132,7 +131,7 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
     const content = common_vendor.ref("");
     const msgList = common_vendor.ref([
       {
-        "content": "你好我是Ai聊天助手，有什么问题问我吧！(温馨提示：长按消息可以复制文本哦)",
+        "content": "你好我是Ai聊天助手，有什么问题问我吧！(温馨提示：点击消息可以复制哦)",
         "role": "system"
       }
     ]);
@@ -249,6 +248,7 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
         "role": "system"
       });
       msg.value = "";
+      console.log(msgList.value);
     }
     common_vendor.onReady(() => {
       socketInit();
@@ -439,11 +439,11 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
           current: pageindex.value,
           size: "28",
           fontWeight: "900",
-          background: true
+          background: "transparent"
         }),
         c: common_vendor.p({
           custom: true,
-          background: true
+          background: "transparent"
         }),
         d: common_vendor.p({
           src: backGroundImage
@@ -451,16 +451,14 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
         e: common_vendor.p({
           height: "10"
         }),
-        f: common_vendor.o(img2pay),
-        g: common_vendor.o(handleGotoHistory),
-        h: common_vendor.p({
+        f: common_vendor.p({
           height: "10"
         }),
-        i: pageindex.value == 0,
-        j: common_vendor.p({
+        g: pageindex.value == 0,
+        h: common_vendor.p({
           src: backGroundImage
         }),
-        k: common_vendor.f(graphicDatas.value, (graphicData, k0, i0) => {
+        i: common_vendor.f(graphicDatas.value, (graphicData, k0, i0) => {
           return {
             a: "83a5a03c-11-" + i0 + ",83a5a03c-9",
             b: common_vendor.p({
@@ -478,18 +476,18 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
             })
           };
         }),
-        l: common_vendor.p({
+        j: common_vendor.p({
           text: "Copyright © 2021 Fuzi-AI"
         }),
-        m: pageindex.value == 1,
-        n: common_vendor.p({
+        k: pageindex.value == 1,
+        l: common_vendor.p({
           src: backGroundImage
         }),
-        o: common_vendor.f(msgList.value, (item, index, i0) => {
+        m: common_vendor.f(msgList.value, (item, index, i0) => {
           return common_vendor.e({
             a: "83a5a03c-14-" + i0,
             b: common_vendor.p({
-              background: "#fff",
+              background: "#f9f9f9",
               src: item.role == "system" ? "https://wangbo0808.oss-cn-shanghai.aliyuncs.com/assets/gpt4.png" : common_vendor.unref(user).avatar_url
             }),
             c: item.content.length > 1
@@ -512,95 +510,95 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
             m: index
           });
         }),
-        p: common_vendor.unref(items),
-        q: common_vendor.t(chooseModel.value || modelList.value[0]),
-        r: common_vendor.o(popupMth),
-        s: common_vendor.p({
+        n: common_vendor.unref(items),
+        o: common_vendor.t(chooseModel.value || modelList.value[0]),
+        p: common_vendor.o(popupMth),
+        q: common_vendor.p({
           name: "message",
           color: "#3b3ee9"
         }),
-        t: -1,
-        v: common_vendor.o(msgSend),
-        w: content.value,
-        x: common_vendor.o(($event) => content.value = $event.detail.value),
-        y: content.value.length == 0
+        r: -1,
+        s: common_vendor.o(msgSend),
+        t: content.value,
+        v: common_vendor.o(($event) => content.value = $event.detail.value),
+        w: content.value.length == 0
       }, content.value.length == 0 ? {
-        z: common_vendor.p({
+        x: common_vendor.p({
           name: "clear",
           color: "#3b3ee9"
         })
       } : {
-        A: common_vendor.o(msgSend)
+        y: common_vendor.o(msgSend)
       }, {
-        B: common_vendor.o(change),
-        C: common_vendor.o(cancel),
-        D: common_vendor.p({
+        z: common_vendor.o(change),
+        A: common_vendor.o(cancel),
+        B: common_vendor.p({
           options: modelList.value,
           show: popup.value
         }),
-        E: !_ctx.focus
-      }, !_ctx.focus ? {
-        F: common_vendor.p({
+        C: common_vendor.p({
           background: "#f8f8f8"
-        })
-      } : {}, {
-        G: pageindex.value == 2,
-        H: common_vendor.p({
+        }),
+        D: pageindex.value == 2,
+        E: common_vendor.p({
           src: backGroundImage
         }),
-        I: common_vendor.p({
+        F: common_vendor.p({
           src: common_vendor.unref(user).avatar_url,
           size: "80"
         }),
-        J: !common_vendor.unref(composables_useCommon.isLogin)
+        G: !common_vendor.unref(composables_useCommon.isLogin)
       }, !common_vendor.unref(composables_useCommon.isLogin) ? {} : {}, {
-        K: common_vendor.unref(composables_useCommon.isLogin)
+        H: common_vendor.unref(composables_useCommon.isLogin)
       }, common_vendor.unref(composables_useCommon.isLogin) ? {
-        L: common_vendor.t(common_vendor.unref(user).nickname)
+        I: common_vendor.t(common_vendor.unref(user).nickname)
       } : {}, {
-        M: common_vendor.unref(composables_useCommon.isLogin)
+        J: common_vendor.unref(composables_useCommon.isLogin)
       }, common_vendor.unref(composables_useCommon.isLogin) ? {
-        N: common_vendor.t(common_vendor.unref(user).balance)
+        K: common_vendor.t(common_vendor.unref(user).balance)
       } : {}, {
-        O: common_vendor.p({
+        L: common_vendor.p({
           name: "scan",
           color: "#969799",
           size: "28"
         }),
-        P: common_vendor.o(toEmpty),
-        Q: common_vendor.p({
+        M: common_vendor.o(toEmpty),
+        N: common_vendor.p({
           name: "arrow-right",
           color: "#969799",
           size: "28"
         }),
-        R: common_vendor.o(toEmpty),
-        S: common_vendor.o(handleLogin),
-        T: common_vendor.o(($event) => showPay.value = true),
-        U: common_vendor.p({
-          icon: "rmb-circle",
-          title: "算力充值",
+        O: common_vendor.o(toEmpty),
+        P: common_vendor.o(handleLogin),
+        Q: common_vendor.o(img2pay),
+        R: common_vendor.p({
+          size: "30",
+          name: "https://chinahu-ai-server.oss-cn-chengdu.aliyuncs.com/Iconly_Glass_Gallery.png"
+        }),
+        S: common_vendor.o(handleGotoHistory),
+        T: common_vendor.p({
           border: false
         }),
-        V: common_vendor.o(handleGotoHistory),
+        U: common_vendor.p({
+          size: "30",
+          name: "https://chinahu-ai-server.oss-cn-chengdu.aliyuncs.com/Iconly_Glass_Chat.png"
+        }),
+        V: common_vendor.p({
+          border: false
+        }),
         W: common_vendor.p({
-          border: false,
-          icon: "photo",
-          title: "绘图历史"
+          size: "30",
+          name: "https://chinahu-ai-server.oss-cn-chengdu.aliyuncs.com/Iconly_Glass_Home.png"
         }),
-        X: common_vendor.p({
-          name: "logout"
+        X: common_vendor.o(handleLoginOut),
+        Y: common_vendor.p({
+          border: false
         }),
-        Y: common_vendor.o(handleLoginOut),
         Z: common_vendor.p({
-          border: false,
-          icon: "setting",
-          title: "退出登录"
+          color: "#fff",
+          border: false
         }),
-        aa: common_vendor.p({
-          icon: "chat-fill",
-          title: "微信客服"
-        }),
-        ab: pageindex.value == 3
+        aa: pageindex.value == 3
       });
     };
   }

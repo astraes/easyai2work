@@ -16,10 +16,10 @@
 	import {
 
 		isLogin
-		
+
 	} from "@/composables/useCommon.ts";
-	
-	
+
+
 
 
 	interface TimeLineData {
@@ -34,7 +34,7 @@
 	}
 
 	onLoad(() => {
-		if(!isLogin.value){
+		if (!isLogin.value) {
 			uni.showToast({
 				icon: 'error',
 				title: '您还没有登录',
@@ -44,7 +44,7 @@
 						uni.navigateBack()
 					}, 2000)
 				}
-			
+
 			})
 		}
 		getHistoryData()
@@ -139,12 +139,24 @@
 
 	}
 	const show = ref(false);
-	function showGallery() {
+	const picArry = ref()
+	const GalleryPic = ref()
+	
+	function showGallery(data) {
 		show.value = true;
+		GalleryPic.value = data;
+		console.log(GalleryPic.value)
 	}
+
+
 	function hideGallery() {
 		show.value = false;
+
 	}
+
+
+
+
 	function linkType(url) {
 		// 如果输入不是字符串，返回 2（未知类型）
 		if (typeof url !== 'string') return 2;
@@ -176,49 +188,48 @@
 
 	}
 	// 定义 dowonVideo 函数，并指定 url 参数的类型为 string
-async function dowonVideo(url: string) {
-    // 替换为你的视频地址
-    const videoUrl = url;
+	async function dowonVideo(url : string) {
+		// 替换为你的视频地址
+		const videoUrl = url;
 
-    try {
-        // 下载视频到临时路径，使用 await 等待 Promise 解析
-        const downloadResult = await uni.downloadFile({
-            url: videoUrl,
-        });
+		try {
+			// 下载视频到临时路径，使用 await 等待 Promise 解析
+			const downloadResult = await uni.downloadFile({
+				url: videoUrl,
+			});
 
-        // 检查下载是否成功
-        if (downloadResult.statusCode === 200) {
-            const { tempFilePath } = downloadResult;
+			// 检查下载是否成功
+			if (downloadResult.statusCode === 200) {
+				const { tempFilePath } = downloadResult;
 
-            // 保存到相册
-            await uni.saveVideoToPhotosAlbum({
-                filePath: tempFilePath,
-            });
+				// 保存到相册
+				await uni.saveVideoToPhotosAlbum({
+					filePath: tempFilePath,
+				});
 
-            uni.showToast({
-                title: '下载成功',
-                icon: 'success',
-            });
-        } else {
-            console.error('下载失败，状态码:', downloadResult.statusCode);
-            uni.showToast({
-                title: '下载失败',
-                icon: 'none',
-            });
-        }
-    } catch (error) {
-        console.error('下载失败:', error);
-        uni.showToast({
-            title: '下载失败',
-            icon: 'none',
-        });
-    }
-}
+				uni.showToast({
+					title: '下载成功',
+					icon: 'success',
+				});
+			} else {
+				console.error('下载失败，状态码:', downloadResult.statusCode);
+				uni.showToast({
+					title: '下载失败',
+					icon: 'none',
+				});
+			}
+		} catch (error) {
+			console.error('下载失败:', error);
+			uni.showToast({
+				title: '下载失败',
+				icon: 'none',
+			});
+		}
+	}
 </script>
 
 <template>
-	<fui-background-image
-		src="@/src/static/Home2 (1).jpgHome2(1).jpg">
+	<fui-background-image src="@/src/static/Home2 (1).jpgHome2(1).jpg">
 	</fui-background-image>
 	<fui-sticky>
 		<fui-tabs style="margin-top: 15%; background-color: transparent;" :tabs="tabs" @change="QieHuan"></fui-tabs>
@@ -232,12 +243,11 @@ async function dowonVideo(url: string) {
 		</fui-section>
 
 	</view>
-
 	<view v-if="currentTabIndex == 0">
-
+		<fui-gallery :urls="GalleryPic" :show="show" @hide="hideGallery"></fui-gallery>
 		<fui-timeaxis :padding="['32rpx','16rpx']">
 			<fui-timeaxis-node v-for="(item,index ) in historyData" :key="index">
-				
+
 				<view class="fui-node__box" style="background: #FF2B2B;" v-if="item.status == 2">
 					<fui-icon name="clear-fill" :size="28" color="#fff"></fui-icon>
 				</view>
@@ -248,26 +258,22 @@ async function dowonVideo(url: string) {
 					<fui-load-ani type="3"></fui-load-ani>
 				</view>
 				<template v-slot:right>
-
 					<!-- 判断是否为图片 -->
 					<view class="fui-custom__wrap" v-if="linkType(item.output[0]) == 0">
-
 						<fui-section title="提示词" :descr="item.params?.positive" descrSize='32'
 							descrColor='#000000'></fui-section>
-						<view class="section__ctn" style="margin-top: 6%;">
-							<image @click="showGallery"
-								style="width: 300px; height: 390px; background-color:transparent;" :mode="scaleToFill"
-								:src="item.output[0]" :show-menu-by-longpress='true'>
-							</image>
-							<!-- <fui-gallery :urls="item.output" :show="show" @hide="hideGallery"></fui-gallery> -->
-
+						<view class="section__ctn" style="margin-top: 6%;" >
+							<view v-for="(pic,picIndex) in item.output">
+								<image @click="showGallery(historyData[index].output)"
+									style="width: 300px;  background-color:transparent;" mode="widthFix" :src="pic"
+									:show-menu-by-longpress='true'>
+								</image>
+							</view>
 						</view>
 
 						<fui-icon
 							style="margin-top:-11%; background-color:rgba(255, 255, 255, 0.5);; border-radius: 100px;  position: absolute ; margin-left: 480rpx;"
-							color="#ff0000" name="delete" @click="removeHistoryRecord(item._id)"></fui-icon>
-
-
+							color="#ff0000" name="delete" @click="removeHistoryRecord(item.id)"></fui-icon>
 
 					</view>
 					<!-- 如果是视频的话 -->
@@ -297,12 +303,15 @@ async function dowonVideo(url: string) {
 
 							<!-- <fui-lottie :options="option" action="play"></fui-lottie> -->
 							<view class="fui-item__box">
-								<image :src="item.params?.image_path_mask  || item.params?.image_path_origin || testData " class="fui-logo" :show-menu-by-longpress='true'></image>
+
+								<image mode="widthFix"
+									:src="item.params?.image_path_mask  || item.params?.image_path_origin || testData "
+									class="fui-logo" :show-menu-by-longpress='true'></image>
 
 							</view>
 							<fui-icon
 								style="margin-top:-12%; background-color:rgba(255, 255, 255, 0.5);; border-radius: 100px;  position: absolute ; margin-left: 280rpx;"
-								color="#ff0000" name="delete" @click="removeHistoryRecord(item._id)"></fui-icon>
+								color="#ff0000" name="delete" @click="removeHistoryRecord(item.id)"></fui-icon>
 							<view style="margin-top: -5%;">
 								<fui-collapse-item background="transparent ">
 
@@ -323,12 +332,8 @@ async function dowonVideo(url: string) {
 						</fui-parse-group> -->
 						</scroll-view>
 					</view>
-
-
 				</template>
-
 			</fui-timeaxis-node>
-
 		</fui-timeaxis>
 	</view>
 	<view v-if="currentTabIndex == 1" class="tn-p">
@@ -340,8 +345,8 @@ async function dowonVideo(url: string) {
 
 						<view v-if="linkType(item.output[0]) == 0">
 							<view>
-								<image style=" width: 360rpx; height: 400rpx;background-color:transparent;"
-									:mode="scaleToFill" :src="item.output[0]" :show-menu-by-longpress='true'></image>
+								<image style="width: 200px;  background-color:transparent;" mode="widthFix"
+									:src="item.output[0]" :show-menu-by-longpress='true'></image>
 
 							</view>
 						</view>
@@ -356,7 +361,9 @@ async function dowonVideo(url: string) {
 						<view v-else>
 
 							<view class="fui-item__box">
-								<image :src="item.params?.image_path_mask  || item.params?.image_path_origin || testData " class="fui-logo"></image>
+								<image
+									:src="item.params?.image_path_mask  || item.params?.image_path_origin || testData "
+									class="fui-logo"></image>
 
 							</view>
 							<!-- <fui-collapse-item background="transparent ">
@@ -403,7 +410,7 @@ async function dowonVideo(url: string) {
 
 	.fui-logo {
 		width: 300rpx;
-		height: 400rpx;
+		// height: 400rpx;
 		margin-right: 24rpx;
 		display: flex;
 		text-align: center;

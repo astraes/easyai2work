@@ -18,7 +18,6 @@
     "up-cell-group": "../../node-modules/uview-plus/components/u-cell-group/u-cell-group",
     "base-layout": "../../layouts/BaseLayout",
     "get-user-info-popup": "../../components/GetUserInfoPopup",
-    "tn-icon": "../../node-modules/@tuniao/tnui-vue3-uniapp/components/icon/src/icon",
     "user-member-info": "../../components/home/UserMemberInfo",
     "my-graphic-card": "../../components/custom/MyGraphicCard/MyGraphicCard",
     "app-swiper": "../../components/home/AppSwiper",
