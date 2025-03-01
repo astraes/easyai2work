@@ -21,7 +21,7 @@ export const getUserToken = () => {
 			success: (res) => {
 
 				resolve(res);
-				// console.log('refreshToken请求成功', res.data);
+				console.log('getUserToken请求成功', res.data);
 
 				// uni.parseStreamData(res.data)
 			}, // 请求成功回调

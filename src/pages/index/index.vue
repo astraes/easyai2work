@@ -24,7 +24,7 @@
 		<!-- // 下面链接改成你的背景图片，求求大家用自己的，作者oss按量付费，开源不易！
 		
 		// 背景图片和用到的素材我都给大家放在/src/static里了 -->
-	<!-- 	<image @click="img2pay"
+		<!-- 	<image @click="img2pay"
 			style="width: 320rpx; height: 106rpx; background-color: transparent; display:inline-block; box-sizing:border-box; position:relative; left:40rpx;"
 			mode="scaleToFill" src="https://chinahu-ai-server.oss-cn-chengdu.aliyuncs.com/画板 2 (1).png"></image>
 		<image @click="handleGotoHistory"
@@ -200,9 +200,9 @@
 					<view class="u-m-t-20" style="border-color: transparent; margin-left: 5%; margin-right: 5%;">
 						<up-cell-group color='#fff' :border="false" class="trans_back">
 							<!--        <up-cell icon="star" title="收藏(暂未开放)"></up-cell>-->
-						
-						
-						
+
+
+
 							<view
 								style=" margin-top:5% ; color: #000000; height: 100%; background: radial-gradient(circle, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.1)); border-radius: 10px 10px 10px 10px; height: 120rpx; ">
 								<up-cell :border='false' @click="handleGotoHistory">
@@ -215,7 +215,7 @@
 									</template>
 								</up-cell>
 							</view>
-						
+
 							<view
 								style=" margin-top:5% ;color: #000000; height: 100%;  background: radial-gradient(circle, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.1));  border-radius: 10px 10px 10px 10px;">
 								<button
@@ -243,6 +243,20 @@
 										<text class="u-cell-text" style='color: #000000;'>退出登录</text>
 									</template>
 								</up-cell>
+
+							</view>
+							<view v-if='role'
+								style=" margin-top:5% ; color: #000000; height: 100%;  background: radial-gradient(circle, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.1)); border-radius: 10px 10px 10px 10px; height: 120rpx; ">
+								<up-cell :border='false' @click="ToConsole">
+									<template #icon>
+										<up-icon size="30"
+											name="https://chinahu-ai-server.oss-cn-chengdu.aliyuncs.com/Iconly_Glass_Setting.png"></up-icon>
+									</template>
+									<template #title>
+										<text class="u-cell-text" style='color: #000000;'>管理台</text>
+									</template>
+								</up-cell>
+
 							</view>
 							<!--        <up-cell icon="coupon" title="卡券(暂未开放)"></up-cell>-->
 							<!--        <up-cell icon="heart" title="关注(暂未开放)"></up-cell>-->
@@ -275,7 +289,7 @@
 		saveLoginInfo
 	} from "@/composables/useCommon.ts";
 	import TnIcon from '@tuniao/tnui-vue3-uniapp/components/icon/src/icon.vue'
-	import { onLoad, onReady } from "@dcloudio/uni-app";
+	import { onLoad, onReady ,includes} from "@dcloudio/uni-app";
 	import useWorkFlow from "@/composables/useWorkFlow.ts";
 	import UserMemberInfo from "@/components/home/UserMemberInfo.vue";
 	import { ref, onMounted, onUnmounted, computed, watch, nextTick } from 'vue'
@@ -304,8 +318,26 @@
 	import { TextEncoder, TextDecoder } from 'text-decoding'
 	global.TextEncoder = TextEncoder
 	global.TextDecoder = TextDecoder
-
-
+	function ToConsole(){
+		uni.navigateTo({
+			url: '/pages/console/console'
+		})
+	}
+	const role = ref(false)
+	function Kongzhitai() {
+		if (!isLogin.value) {
+			
+			role.value = false
+			return 0
+		}
+		const UserInfor = uni.getStorageSync('userInfo')
+		console.log("-----------userInfo---------------",UserInfor)
+		const roltList = ['operator', 'manager', 'admin']
+		
+		if (roltList.includes(UserInfor.role[0])) {
+			role.value = true
+		}
+	}
 	// ---------------------------AIChat  Page------------------------------
 
 	let items = ref('')
@@ -570,6 +602,7 @@
 		on(EventType.PAY_SUCCESS, ({ order_id }) => handlePayMessage(order_id))
 		wode_loging()
 		chatAiGetToken()
+		Kongzhitai()
 
 
 
@@ -734,6 +767,7 @@
 		if (uniPlatform !== 'web') {
 			// 非开发者工具环境，执行登录操作
 			handleLoginByWechat()
+			Kongzhitai()
 		} else {
 			// console.log('dev')
 			// 开发者工具环境，模拟登录 todo
@@ -789,8 +823,10 @@
 			title: '正在退出登录...',
 			mask: true
 		})
+		role.value = false
+		
 		loginOut()
-
+		
 		uni.hideLoading()
 		uni.showToast({
 			title: '退出成功',

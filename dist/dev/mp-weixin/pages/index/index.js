@@ -57,6 +57,24 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
   setup(__props) {
     global.TextEncoder = common_vendor.TextEncoder;
     global.TextDecoder = common_vendor.TextDecoder;
+    function ToConsole() {
+      common_vendor.index.navigateTo({
+        url: "/pages/console/console"
+      });
+    }
+    const role = common_vendor.ref(false);
+    function Kongzhitai() {
+      if (!composables_useCommon.isLogin.value) {
+        role.value = false;
+        return 0;
+      }
+      const UserInfor = common_vendor.index.getStorageSync("userInfo");
+      console.log("-----------userInfo---------------", UserInfor);
+      const roltList = ["operator", "manager", "admin"];
+      if (roltList.includes(UserInfor.role[0])) {
+        role.value = true;
+      }
+    }
     let items = common_vendor.ref("");
     function copyText(text) {
       common_vendor.index.setClipboardData({
@@ -255,6 +273,7 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
       utils_emitter.on(types_event_types.EventType.PAY_SUCCESS, ({ order_id }) => handlePayMessage(order_id));
       wode_loging();
       chatAiGetToken();
+      Kongzhitai();
     });
     common_vendor.onMounted(() => {
       getTestImageData();
@@ -367,6 +386,7 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
       const { uniPlatform } = common_vendor.index.getSystemInfoSync();
       if (uniPlatform !== "web") {
         handleLoginByWechat();
+        Kongzhitai();
       } else {
         const user2 = await composables_useCommon.loginByUsername({
           username: "test456",
@@ -413,6 +433,7 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
         title: "正在退出登录...",
         mask: true
       });
+      role.value = false;
       composables_useCommon.loginOut();
       common_vendor.index.hideLoading();
       common_vendor.index.showToast({
@@ -594,11 +615,22 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
         Y: common_vendor.p({
           border: false
         }),
-        Z: common_vendor.p({
+        Z: role.value
+      }, role.value ? {
+        aa: common_vendor.p({
+          size: "30",
+          name: "https://chinahu-ai-server.oss-cn-chengdu.aliyuncs.com/Iconly_Glass_Setting.png"
+        }),
+        ab: common_vendor.o(ToConsole),
+        ac: common_vendor.p({
+          border: false
+        })
+      } : {}, {
+        ad: common_vendor.p({
           color: "#fff",
           border: false
         }),
-        aa: pageindex.value == 3
+        ae: pageindex.value == 3
       });
     };
   }

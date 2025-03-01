@@ -18,6 +18,7 @@ const getUserToken = () => {
       // 开启流传输
       success: (res) => {
         resolve(res);
+        console.log("getUserToken请求成功", res.data);
       },
       // 请求成功回调
       fail: (err) => {

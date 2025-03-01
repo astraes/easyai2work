@@ -8,7 +8,8 @@
     "pages/draw/apps/apps",
     "pages/Empty/Empty",
     "pages/history/history_fui/history_fui",
-    "pages/draw/draw_info/draw_info"
+    "pages/draw/draw_info/draw_info",
+    "pages/console/console"
   ],
   "window": {
     "navigationBarTextStyle": "black",

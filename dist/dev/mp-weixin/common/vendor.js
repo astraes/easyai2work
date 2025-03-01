@@ -16545,2226 +16545,6 @@ const props$d = defineMixin({
     }
   }
 });
-const props$c = defineMixin({
-  props: {
-    // 主题颜色
-    type: {
-      type: String,
-      default: () => defProps.text.type
-    },
-    // 是否显示
-    show: {
-      type: Boolean,
-      default: () => defProps.text.show
-    },
-    // 显示的值
-    text: {
-      type: [String, Number],
-      default: () => defProps.text.text
-    },
-    // 前置图标
-    prefixIcon: {
-      type: String,
-      default: () => defProps.text.prefixIcon
-    },
-    // 后置图标
-    suffixIcon: {
-      type: String,
-      default: () => defProps.text.suffixIcon
-    },
-    // 文本处理的匹配模式
-    // text-普通文本，price-价格，phone-手机号，name-姓名，date-日期，link-超链接
-    mode: {
-      type: String,
-      default: () => defProps.text.mode
-    },
-    // mode=link下，配置的链接
-    href: {
-      type: String,
-      default: () => defProps.text.href
-    },
-    // 格式化规则
-    format: {
-      type: [String, Function],
-      default: () => defProps.text.format
-    },
-    // mode=phone时，点击文本是否拨打电话
-    call: {
-      type: Boolean,
-      default: () => defProps.text.call
-    },
-    // 小程序的打开方式
-    openType: {
-      type: String,
-      default: () => defProps.text.openType
-    },
-    // 是否粗体，默认normal
-    bold: {
-      type: Boolean,
-      default: () => defProps.text.bold
-    },
-    // 是否块状
-    block: {
-      type: Boolean,
-      default: () => defProps.text.block
-    },
-    // 文本显示的行数，如果设置，超出此行数，将会显示省略号
-    lines: {
-      type: [String, Number],
-      default: () => defProps.text.lines
-    },
-    // 文本颜色
-    color: {
-      type: String,
-      default: () => defProps.text.color
-    },
-    // 字体大小
-    size: {
-      type: [String, Number],
-      default: () => defProps.text.size
-    },
-    // 图标的样式
-    iconStyle: {
-      type: [Object, String],
-      default: () => defProps.text.iconStyle
-    },
-    // 文字装饰，下划线，中划线等，可选值 none|underline|line-through
-    decoration: {
-      tepe: String,
-      default: () => defProps.text.decoration
-    },
-    // 外边距，对象、字符串，数值形式均可
-    margin: {
-      type: [Object, String, Number],
-      default: () => defProps.text.margin
-    },
-    // 文本行高
-    lineHeight: {
-      type: [String, Number],
-      default: () => defProps.text.lineHeight
-    },
-    // 文本对齐方式，可选值left|center|right
-    align: {
-      type: String,
-      default: () => defProps.text.align
-    },
-    // 文字换行，可选值break-word|normal|anywhere
-    wordWrap: {
-      type: String,
-      default: () => defProps.text.wordWrap
-    },
-    // 占满剩余空间
-    flex1: {
-      type: Boolean,
-      default: () => defProps.text.flex1
-    }
-  }
-});
-const value = {
-  computed: {
-    // 经处理后需要显示的值
-    value() {
-      const {
-        text,
-        mode,
-        format: format2,
-        href
-      } = this;
-      if (mode === "price") {
-        if (!/^\d+(\.\d+)?$/.test(text)) {
-          error("金额模式下，text参数需要为金额格式");
-        }
-        if (test.func(format2)) {
-          return format2(text);
-        }
-        return priceFormat(text, 2);
-      }
-      if (mode === "date") {
-        !test.date(text) && error("日期模式下，text参数需要为日期或时间戳格式");
-        if (test.func(format2)) {
-          return format2(text);
-        }
-        if (format2) {
-          return timeFormat(text, format2);
-        }
-        return timeFormat(text, "yyyy-mm-dd");
-      }
-      if (mode === "phone") {
-        if (test.func(format2)) {
-          return format2(text);
-        }
-        if (format2 === "encrypt") {
-          return `${text.substr(0, 3)}****${text.substr(7)}`;
-        }
-        return text;
-      }
-      if (mode === "name") {
-        !(typeof text === "string") && error("姓名模式下，text参数需要为字符串格式");
-        if (test.func(format2)) {
-          return format2(text);
-        }
-        if (format2 === "encrypt") {
-          return this.formatName(text);
-        }
-        return text;
-      }
-      if (mode === "link") {
-        !test.url(href) && error("超链接模式下，href参数需要为URL格式");
-        return text;
-      }
-      return text;
-    }
-  },
-  methods: {
-    // 默认的姓名脱敏规则
-    formatName(name) {
-      let value2 = "";
-      if (name.length === 2) {
-        value2 = name.substr(0, 1) + "*";
-      } else if (name.length > 2) {
-        let char = "";
-        for (let i = 0, len = name.length - 2; i < len; i++) {
-          char += "*";
-        }
-        value2 = name.substr(0, 1) + char + name.substr(-1, 1);
-      } else {
-        value2 = name;
-      }
-      return value2;
-    }
-  }
-};
-const props$b = defineMixin({
-  props: {
-    color: {
-      type: String,
-      default: () => defProps.line.color
-    },
-    // 长度，竖向时表现为高度，横向时表现为长度，可以为百分比，带px单位的值等
-    length: {
-      type: [String, Number],
-      default: () => defProps.line.length
-    },
-    // 线条方向，col-竖向，row-横向
-    direction: {
-      type: String,
-      default: () => defProps.line.direction
-    },
-    // 是否显示细边框
-    hairline: {
-      type: Boolean,
-      default: () => defProps.line.hairline
-    },
-    // 线条与上下左右元素的间距，字符串形式，如"30px"、"20px 30px"
-    margin: {
-      type: [String, Number],
-      default: () => defProps.line.margin
-    },
-    // 是否虚线，true-虚线，false-实线
-    dashed: {
-      type: Boolean,
-      default: () => defProps.line.dashed
-    }
-  }
-});
-const props$a = defineMixin({
-  props: {
-    // 是否开启顶部安全区适配
-    safeAreaInsetTop: {
-      type: Boolean,
-      default: () => true
-    },
-    // 是否固定在顶部
-    fixed: {
-      type: Boolean,
-      default: () => true
-    },
-    // 左边的图标
-    leftIcon: {
-      type: String,
-      default: "arrow-leftward"
-    },
-    // 背景颜色
-    bgColor: {
-      type: String,
-      default: () => "rgba(0,0,0,.15)"
-    },
-    // 导航栏高度
-    height: {
-      type: [String, Number],
-      default: () => "32px"
-    },
-    // 图标的大小
-    iconSize: {
-      type: [String, Number],
-      default: "20px"
-    },
-    // 图标的颜色
-    iconColor: {
-      type: String,
-      default: "#fff"
-    },
-    // 点击左侧区域(返回图标)，是否自动返回上一页
-    autoBack: {
-      type: Boolean,
-      default: () => true
-    },
-    // 首页路径
-    homeUrl: {
-      type: [String],
-      default: ""
-    }
-  }
-});
-const updateUserInfoPopupProps = buildProps({
-  /**
-   * @description 控制弹框显示、隐藏
-   */
-  show: {
-    type: Boolean,
-    default: false
-  },
-  /**
-   * @description 用户头像地址
-   */
-  avatar: {
-    type: String,
-    default: ""
-  },
-  /**
-   * @description 用户昵称
-   */
-  nickname: {
-    type: String,
-    default: ""
-  },
-  /**
-   * @description 弹框标题
-   */
-  title: {
-    type: String,
-    default: "获取您的昵称、头像"
-  },
-  /**
-   * @description 弹框提示
-   */
-  tips: {
-    type: String,
-    default: "获取用户头像、昵称，主要用于向用户提供具有辨识度的用户体验"
-  },
-  /**
-   * @description 弹框确认按钮文案
-   */
-  confirmText: {
-    type: String,
-    default: "保 存"
-  },
-  /**
-   * @description 弹框按钮背景颜色，以tn开头使用图鸟内置的颜色
-   */
-  confirmBgColor: {
-    type: String,
-    default: "tn-type-primary"
-  },
-  /**
-   * @description 弹框按钮文字颜色，以tn开头使用图鸟内置的颜色
-   */
-  confirmTextColor: {
-    type: String,
-    default: "tn-white"
-  }
-});
-const updateUserInfoPopupEmits = {
-  "update:show": (val) => isBoolean(val),
-  "update:avatar": (val) => isString(val),
-  "update:nickname": (val) => isString(val),
-  /**
-   * @description 点击弹框确认按钮时触发
-   */
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  confirm: (avatar, nickname) => true,
-  /**
-   * @description 选择头像后触发
-   */
-  "choose-avatar": (val) => isString(val)
-};
-const useUpdateUserInfoPopupCustomStyle = (props2) => {
-  const ns = useNamespace("update-user-info-popup");
-  const [confirmBtnBgColorClass, confirmBtnBgColorStyle] = useComponentColor(
-    toRef(props2, "confirmBgColor"),
-    "bg"
-  );
-  const [confirmBtnTextColorClass, confirmBtnTextColorStyle] = useComponentColor(toRef(props2, "confirmTextColor"), "text");
-  const submitBtnClass = computed(() => {
-    const cls = [ns.e("submit-btn")];
-    if (confirmBtnBgColorClass.value) {
-      cls.push(confirmBtnBgColorClass.value);
-    }
-    if (confirmBtnTextColorClass.value) {
-      cls.push(confirmBtnTextColorClass.value);
-    }
-    return cls.join(" ");
-  });
-  const submitBtnStyle = computed(() => {
-    const style = {};
-    if (!confirmBtnBgColorClass.value) {
-      style.backgroundColor = confirmBtnBgColorStyle.value || "var(--tn-color-primary)";
-    }
-    if (confirmBtnTextColorStyle.value) {
-      style.color = confirmBtnTextColorStyle.value;
-    } else if (!confirmBtnBgColorClass.value) {
-      style.color = "var(--tn-color-white)";
-    }
-    if (!props2.avatar || !props2.nickname) {
-      style.backgroundColor = "var(--tn-color-gray-disabled)";
-      style.color = "var(--tn-color-gray-dark)";
-    }
-    return style;
-  });
-  return {
-    ns,
-    submitBtnClass,
-    submitBtnStyle
-  };
-};
-const useUpdateUserInfoPopup = (props2, emits) => {
-  const showUpdatePopup = ref(false);
-  const inputNickname = ref(props2.nickname);
-  watch(
-    () => props2.show,
-    (val) => {
-      showUpdatePopup.value = val;
-    },
-    {
-      immediate: true
-    }
-  );
-  const nickNameInputHandle = (e2) => {
-    const value2 = e2.detail.value;
-    inputNickname.value = value2;
-    emits("update:nickname", value2);
-  };
-  const avatarChooseHandle = (e2) => {
-    emits("choose-avatar", e2.detail.avatarUrl);
-  };
-  const submitBtnClickHandle = () => {
-    if (!inputNickname.value || !props2.avatar) {
-      return;
-    }
-    emits("confirm", props2.avatar, inputNickname.value);
-    emits("update:show", false);
-  };
-  const popupCloseHandle = () => {
-    emits("update:show", false);
-  };
-  return {
-    showUpdatePopup,
-    inputNickname,
-    nickNameInputHandle,
-    popupCloseHandle,
-    submitBtnClickHandle,
-    avatarChooseHandle
-  };
-};
-const buttonFormTypes = ["submit", "reset"];
-const buttonOpenTypes = [
-  "feedback",
-  "share",
-  "contact",
-  "getPhoneNumber",
-  "getRealtimePhoneNumber",
-  "launchApp",
-  "openSetting",
-  "getUserInfo",
-  "chooseAvatar",
-  "agreePrivacyAuthorization"
-];
-const buttonProps = buildProps({
-  /**
-   * @description 按钮宽度
-   */
-  width: {
-    type: [String, Number]
-  },
-  /**
-   * @description 按钮高度
-   */
-  height: {
-    type: [String, Number]
-  },
-  /**
-   * @description 按钮尺寸
-   */
-  size: useComponentSizeProp,
-  /**
-   * @description 按钮形状
-   */
-  shape: {
-    type: String,
-    values: componentShapes,
-    default: ""
-  },
-  /**
-   * @description 按钮颜色类型
-   */
-  type: {
-    type: String,
-    values: componentTypes,
-    default: "primary"
-  },
-  /**
-   * @description 按钮图标
-   */
-  icon: {
-    type: iconPropType
-  },
-  /**
-   * @description 是否加粗字体
-   */
-  bold: Boolean,
-  /**
-   * @description 字体大小
-   */
-  fontSize: {
-    type: [String, Number]
-  },
-  /**
-   * @description 背景颜色，以tn开头则使用图鸟内置的颜色
-   */
-  bgColor: String,
-  /**
-   * @description 文字颜色，以tn开头则使用图鸟内置的颜色
-   */
-  textColor: String,
-  /**
-   * @description 是否显示为文本按钮
-   */
-  text: Boolean,
-  /**
-   * @description 是否为朴素按钮
-   */
-  plain: Boolean,
-  /**
-   * @description 边框颜色，以tn开头则使用图鸟内置的颜色
-   */
-  borderColor: String,
-  /**
-   * @description 是否加粗边框
-   */
-  borderBold: Boolean,
-  /**
-   * @description 是否显示阴影
-   */
-  shadow: Boolean,
-  /**
-   * @description 阴影颜色，以tn开头则使用图鸟内置的颜色
-   */
-  shadowColor: String,
-  /**
-   * @description 点击时触发的类
-   */
-  hoverClass: {
-    type: String,
-    default: "tn-u-btn-hover"
-  },
-  /**
-   * @description 自定义样式
-   */
-  customStyle: useComponentCustomStyleProp,
-  /**
-   * @description 自定义类
-   */
-  customClass: String,
-  /**
-   * @description 是否禁用按钮
-   */
-  disabled: Boolean,
-  /**
-   * @description 是否只为一个按钮，不作用任何样式
-   */
-  onlyButton: Boolean,
-  /**
-   * @description 是否显示加载中
-   */
-  loading: Boolean,
-  /**
-   * @description 是否防抖
-   */
-  debounce: {
-    type: Boolean,
-    default: false
-  },
-  /**
-   * @description 触发form表单的事件类型
-   */
-  formType: {
-    type: String,
-    values: buttonFormTypes
-  },
-  /**
-   * @description 按钮开放能力，具体能力参考官网https://uniapp.dcloud.io/component/button.html
-   */
-  openType: {
-    type: String,
-    values: buttonOpenTypes
-  },
-  /**
-   * @description 打开app时向app传递的参数, 在微信、QQ小程序和openType为launchApp时生效
-   */
-  appParameter: {
-    type: String,
-    default: ""
-  },
-  /**
-   * @description 会话来源, 在微信小程序和openType为contact时生效
-   */
-  sessionFrom: {
-    type: String,
-    default: ""
-  },
-  /**
-   * @description 会话内消息卡片标题, 默认为当前标题, 在微信小程序和openType为contact时生效
-   */
-  sendMessageTitle: {
-    type: String,
-    default: ""
-  },
-  /**
-   * @description 会话内消息卡片点击跳转小程序路径, 默认为当前路径, 在微信小程序和openType为contact时生效
-   */
-  sendMessagePath: {
-    type: String,
-    default: ""
-  },
-  /**
-   * @description 会话内消息卡片图片, 默认为截图, 在微信小程序和openType为contact时生效
-   */
-  sendMessageImg: {
-    type: String,
-    default: ""
-  },
-  /**
-   * @description 是否显示会话内消息卡片, 设置此参数为true, 用户进入客服会话会在右下角显示"可能要发送的小程序"提示, 用户点击后可以快速发送小程序消息, 在微信小程序和openType为contact时生效
-   */
-  showMessageCard: {
-    type: Boolean,
-    default: false
-  },
-  /**
-   * @description 当手机号快速验证或手机号实时验证额度用尽时，是否对用户展示“申请获取你的手机号，但该功能使用次数已达当前小程序上限，暂时无法使用”的提示
-   */
-  phoneNumberNoQuotaToast: {
-    type: Boolean,
-    default: true
-  },
-  clickModifiers: {
-    type: String
-  }
-});
-const buttonEmits = {
-  /**
-   * @description 按钮点击事件
-   */
-  click: () => true,
-  /**
-   * @description 获取用户手机号码回调
-   */
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  getphonenumber: (e2) => true,
-  /**
-   * @description 获取用户手机号实时验证回调
-   */
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  getrealtimephonenumber: (e2) => true,
-  /**
-   * @description 打开权限设置面板并关闭时回调
-   */
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  opensetting: (e2) => true,
-  /**
-   * @description 打开APP成功时回调
-   */
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  launchapp: (e2) => true,
-  /**
-   * @description 获取用户信息回调
-   */
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  getuserinfo: (e2) => true,
-  /**
-   * @description 获取用户头像回调
-   */
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  chooseavatar: (e2) => true,
-  /**
-   * @description 同意隐私授权回调
-   */
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  agreeprivacyauthorization: (e2) => true,
-  /**
-   * @description 客服消息回调
-   */
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  contact: (e2) => true,
-  /**
-   * @description 开放能力调用发生错误时回调
-   */
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  error: (e2) => true
-};
-const useButtonCustomStyle = (props2) => {
-  const ns = useNamespace("button");
-  const [bgColorClass, bgColorStyle] = useComponentColor(
-    toRef(props2, "bgColor"),
-    "bg"
-  );
-  const [textColorClass, textColorStyle] = useComponentColor(
-    toRef(props2, "textColor"),
-    "text"
-  );
-  const [borderColorClass, borderColorStyle] = useComponentColor(
-    toRef(props2, "borderColor"),
-    "border"
-  );
-  const [shadowColorClass, shadowColorStyle] = useComponentColor(
-    toRef(props2, "shadowColor"),
-    "shadow"
-  );
-  const buttonClass = computed(() => {
-    const cls = [ns.b()];
-    if (props2.onlyButton) {
-      cls.push(ns.m("only-button"));
-      return cls.join(" ");
-    }
-    if (props2.text)
-      cls.push(ns.m("text"));
-    if (props2.plain) {
-      cls.push(ns.m("plain"));
-      if (props2.borderBold)
-        cls.push(ns.m("plain-bold"));
-    }
-    if (props2.type) {
-      if (props2.text) {
-        if (!props2.textColor)
-          cls.push(`tn-type-${props2.type}_text`);
-      } else if (props2.plain) {
-        if (!props2.borderColor)
-          cls.push(`tn-type-${props2.type}_border`);
-      } else {
-        if (!props2.bgColor)
-          cls.push(`tn-type-${props2.type}_bg`);
-      }
-    }
-    if (props2.size)
-      cls.push(ns.m(props2.size));
-    if (!props2.text && props2.shape)
-      cls.push(ns.m(props2.shape));
-    if (props2.bold)
-      cls.push("tn-text-bold");
-    if (!props2.text && !props2.plain) {
-      if (bgColorClass.value)
-        cls.push(bgColorClass.value);
-    }
-    if (textColorClass.value)
-      cls.push(textColorClass.value);
-    if (props2.plain) {
-      if (borderColorClass.value)
-        cls.push(borderColorClass.value);
-    }
-    if (props2.shadow) {
-      cls.push("tn-shadow");
-      if (shadowColorClass.value)
-        cls.push(shadowColorClass.value);
-    }
-    if (props2.customClass)
-      cls.push(props2.customClass);
-    return cls.join(" ");
-  });
-  const buttonStyle = computed(() => {
-    const style = {};
-    if (props2.onlyButton)
-      return style;
-    if (props2.width) {
-      style.width = formatDomSizeValue(props2.width);
-      if (props2.shape === "circle")
-        style.height = style.width;
-    }
-    if (props2.height && props2.shape !== "circle")
-      style.height = formatDomSizeValue(props2.height);
-    if (props2.fontSize)
-      style.fontSize = formatDomSizeValue(props2.fontSize);
-    if (!props2.text && !props2.plain) {
-      if (bgColorStyle.value)
-        style.backgroundColor = bgColorStyle.value;
-    }
-    if (textColorStyle.value) {
-      style.color = textColorStyle.value;
-    }
-    if (props2.plain && borderColorStyle.value) {
-      style.borderColor = borderColorStyle.value;
-    }
-    if (props2.shadow && shadowColorStyle.value)
-      style.boxShadow = shadowColorStyle.value;
-    if (!isEmpty(props2.customStyle)) {
-      Object.assign(style, props2.customStyle);
-    }
-    return style;
-  });
-  return {
-    ns,
-    buttonClass,
-    buttonStyle
-  };
-};
-const useButton = (props2, emits) => {
-  const buttonClickHandle = () => {
-    if (props2.disabled || props2.loading)
-      return;
-    emits("click");
-  };
-  const buttonClick = props2.debounce ? debounce(buttonClickHandle, 250) : buttonClickHandle;
-  const getPhoneNumber = (e2) => {
-    emits("getphonenumber", e2);
-  };
-  const getRealTimePhoneNumber = (e2) => {
-    emits("getrealtimephonenumber", e2);
-  };
-  const openSetting = (e2) => {
-    emits("opensetting", e2);
-  };
-  const launchApp = (e2) => {
-    emits("launchapp", e2);
-  };
-  const getUserInfo = (e2) => {
-    emits("getuserinfo", e2);
-  };
-  const chooseAvatar = (e2) => {
-    emits("chooseavatar", e2);
-  };
-  const agreePrivacyAuthorization = (e2) => {
-    emits("agreeprivacyauthorization", e2);
-  };
-  const contact = (e2) => {
-    emits("contact", e2);
-  };
-  const openTypeError = (e2) => {
-    emits("error", e2);
-  };
-  return {
-    buttonClick,
-    getPhoneNumber,
-    getRealTimePhoneNumber,
-    openSetting,
-    launchApp,
-    getUserInfo,
-    chooseAvatar,
-    agreePrivacyAuthorization,
-    contact,
-    openTypeError
-  };
-};
-const avatarShape = ["circle", "square"];
-const avatarProps = buildProps({
-  /**
-   * @description 头像地址(url地址和绝对地址)
-   */
-  url: String,
-  /**
-   * @descripttion 头像图标
-   */
-  icon: String,
-  /**
-   * @description 头像图标配置
-   */
-  iconConfig: {
-    type: definePropType(Object),
-    default: () => ({})
-  },
-  /**
-   * @description 头像颜色类型
-   */
-  type: {
-    type: String,
-    values: componentTypes,
-    default: ""
-  },
-  /**
-   * @description 头像大小
-   */
-  size: {
-    type: [String, Number]
-  },
-  /**
-   * @description 头像形状
-   */
-  shape: {
-    type: String,
-    values: avatarShape,
-    default: "circle"
-  },
-  /**
-   * @description 头像图片模式
-   */
-  imgMode: {
-    type: String,
-    values: componentImgModes,
-    default: "aspectFill"
-  },
-  /**
-   * @description 背景颜色
-   */
-  bgColor: String,
-  /**
-   * @description 显示边框
-   */
-  border: useComponentBoolean,
-  /**
-   * @description 边框颜色
-   */
-  borderColor: String,
-  /**
-   * @description 是否加粗边框
-   */
-  borderBold: useComponentBoolean,
-  /**
-   * @description 显示阴影
-   */
-  shadow: useComponentBoolean,
-  /**
-   * @description 阴影颜色
-   */
-  shadowColor: String,
-  /**
-   * @description 角标内容
-   */
-  badge: {
-    type: [String, Number]
-  },
-  /**
-   * @description 角标配置
-   */
-  badgeConfig: {
-    type: definePropType(Object),
-    default: () => ({})
-  }
-});
-const avatarEmits = {
-  /**
-   * @description 点击事件
-   */
-  click: () => true
-};
-const avatarGroupContextKey = Symbol(
-  "avatarGroupContextKey"
-);
-const formContextKey = Symbol("formContextKey");
-const formItemContextKey = Symbol("formItemContextKey");
-const useAvatarIconConfig = (config2) => {
-  const avatarGroup = inject(avatarGroupContextKey, void 0);
-  const iconColor = computed(() => {
-    var _a;
-    return (config2 == null ? void 0 : config2.color) || ((_a = avatarGroup == null ? void 0 : avatarGroup.iconConfig) == null ? void 0 : _a.color) || "";
-  });
-  const iconSize = computed(() => {
-    var _a;
-    return (config2 == null ? void 0 : config2.size) || ((_a = avatarGroup == null ? void 0 : avatarGroup.iconConfig) == null ? void 0 : _a.size) || "";
-  });
-  const iconBold = computed(() => {
-    var _a;
-    return (config2 == null ? void 0 : config2.bold) || ((_a = avatarGroup == null ? void 0 : avatarGroup.iconConfig) == null ? void 0 : _a.bold) || false;
-  });
-  return {
-    iconColor,
-    iconSize,
-    iconBold
-  };
-};
-const useAvatarProps = (props2) => {
-  const avatarGroup = inject(avatarGroupContextKey, void 0);
-  const type2 = computed(() => {
-    return isEmptyDoubleVariableInDefault(props2 == null ? void 0 : props2.type, avatarGroup == null ? void 0 : avatarGroup.type, "");
-  });
-  const size2 = computed(() => {
-    return isEmptyDoubleVariableInDefault(props2 == null ? void 0 : props2.size, avatarGroup == null ? void 0 : avatarGroup.size, "");
-  });
-  const shape = computed(() => {
-    return isEmptyDoubleVariableInDefault(
-      props2 == null ? void 0 : props2.shape,
-      avatarGroup == null ? void 0 : avatarGroup.shape,
-      "circle"
-    );
-  });
-  const imgMode = computed(() => {
-    return isEmptyDoubleVariableInDefault(
-      props2 == null ? void 0 : props2.imgMode,
-      avatarGroup == null ? void 0 : avatarGroup.imgMode,
-      "aspectFill"
-    );
-  });
-  const bgColor = computed(() => {
-    return isEmptyDoubleVariableInDefault(
-      props2 == null ? void 0 : props2.bgColor,
-      avatarGroup == null ? void 0 : avatarGroup.bgColor,
-      "tn-gray-light"
-    );
-  });
-  const border = computed(() => {
-    return isEmptyDoubleVariableInDefault(
-      props2 == null ? void 0 : props2.border,
-      avatarGroup == null ? void 0 : avatarGroup.border,
-      false
-    );
-  });
-  const borderColor = computed(() => {
-    return isEmptyDoubleVariableInDefault(
-      props2 == null ? void 0 : props2.borderColor,
-      avatarGroup == null ? void 0 : avatarGroup.borderColor,
-      ""
-    );
-  });
-  const borderBold = computed(() => {
-    return isEmptyDoubleVariableInDefault(
-      props2 == null ? void 0 : props2.borderBold,
-      avatarGroup == null ? void 0 : avatarGroup.borderBold,
-      false
-    );
-  });
-  const shadow = computed(() => {
-    return isEmptyDoubleVariableInDefault(
-      props2 == null ? void 0 : props2.shadow,
-      avatarGroup == null ? void 0 : avatarGroup.shadow,
-      false
-    );
-  });
-  const shadowColor = computed(() => {
-    return isEmptyDoubleVariableInDefault(
-      props2 == null ? void 0 : props2.shadowColor,
-      avatarGroup == null ? void 0 : avatarGroup.shadowColor,
-      ""
-    );
-  });
-  const avatarGap = computed(() => {
-    let gap = Number(isEmptyVariableInDefault(avatarGroup == null ? void 0 : avatarGroup.gap, 0));
-    if (gap < 0)
-      gap = 0;
-    if (gap > 1)
-      gap = 1;
-    return gap;
-  });
-  return {
-    type: type2,
-    size: size2,
-    shape,
-    imgMode,
-    bgColor,
-    border,
-    borderColor,
-    borderBold,
-    shadow,
-    shadowColor,
-    avatarGap
-  };
-};
-const useAvatarCustomStyle = (props2, groupIndex, avatarWidth) => {
-  const ns = useNamespace("avatar");
-  const {
-    type: type2,
-    size: size2,
-    shape,
-    bgColor,
-    border,
-    borderColor,
-    shadow,
-    shadowColor,
-    avatarGap
-  } = useAvatarProps(props2);
-  const [bgColorClass, bgColorStyle] = useComponentColor(bgColor, "bg");
-  const [borderColorClass, borderColorStyle] = useComponentColor(
-    borderColor,
-    "border"
-  );
-  const [shadowColorClass] = useComponentColor(shadowColor, "shadow");
-  const { sizeType } = useComponentSize(size2.value);
-  const avatarClass = computed(() => {
-    const cls = [];
-    cls.push(ns.b());
-    if (type2.value)
-      cls.push(`tn-type-${type2.value}_bg`);
-    if (!type2.value && bgColorClass.value)
-      cls.push(bgColorClass.value);
-    if (sizeType.value === "inner")
-      cls.push(ns.m(size2.value));
-    if (shape.value)
-      cls.push(ns.m(shape.value));
-    if (border.value) {
-      cls.push("tn-border");
-      if (borderColorClass.value)
-        cls.push(borderColorClass.value);
-    }
-    if (shadow.value) {
-      cls.push("tn-shadow");
-      if (shadowColorClass.value)
-        cls.push(shadowColorClass.value);
-    }
-    return cls.join(" ");
-  });
-  const avatarStyle = computed(() => {
-    const style = {};
-    if (sizeType.value === "custom") {
-      style.width = formatDomSizeValue(size2.value);
-      style.height = style.width;
-    }
-    if (bgColorStyle.value)
-      style.backgroundColor = bgColorStyle.value;
-    if (border.value && borderColorStyle.value)
-      style.borderColor = borderColorStyle.value;
-    if (groupIndex.value != -1) {
-      style.zIndex = groupIndex.value + 1;
-      if (groupIndex.value > 0) {
-        style.marginLeft = `calc(-${avatarWidth.value * avatarGap.value}px)`;
-      } else {
-        style.marginLeft = "0px";
-      }
-    }
-    return style;
-  });
-  return {
-    ns,
-    avatarClass,
-    avatarStyle
-  };
-};
-const useAvatar = (props2, emits) => {
-  const instance = getCurrentInstance();
-  if (!instance) {
-    debugWarn("TnAvatarGroup", "请在 setup 中使用 useAvatarGroup");
-  }
-  const { uid: uid2 } = instance;
-  const avatarGroup = inject(avatarGroupContextKey, void 0);
-  avatarGroup == null ? void 0 : avatarGroup.addItem({ uid: uid2 });
-  const componentId = `ta-${generateId()}`;
-  const { getSelectorNodeInfo } = useSelectorQuery(instance);
-  const groupAvatarCount = computed(() => {
-    return isEmptyVariableInDefault(avatarGroup == null ? void 0 : avatarGroup.avatarItems.length, 0);
-  });
-  const avatarGroupIndex = ref(-1);
-  nextTick$1(() => {
-    const avatarIndex = avatarGroup == null ? void 0 : avatarGroup.avatarItems.findIndex(
-      (item) => item.uid === uid2
-    );
-    avatarGroupIndex.value = isEmptyVariableInDefault(avatarIndex, -1);
-    if (!avatarWidth.value && avatarGroupIndex.value !== -1) {
-      getAvatarWidthNodeInfo();
-    }
-  });
-  const avatarWidth = ref(0);
-  let initCount = 0;
-  const getAvatarWidthNodeInfo = async () => {
-    try {
-      const rectInfo = await getSelectorNodeInfo(`#${componentId}`);
-      if (!rectInfo.width) {
-        throw new Error("获取头像宽度信息失败");
-      }
-      avatarWidth.value = rectInfo.width || 0;
-    } catch (err) {
-      if (initCount > 10) {
-        initCount = 0;
-        debugWarn("TnAvatar", `获取头像宽度信息失败：${err}`);
-        return;
-      }
-      initCount++;
-      setTimeout(() => {
-        getAvatarWidthNodeInfo();
-      }, 150);
-    }
-  };
-  const avatarClick = () => {
-    avatarGroup == null ? void 0 : avatarGroup.handleItemClick(uid2);
-    emits("click");
-  };
-  onUnmounted(() => {
-    avatarGroup == null ? void 0 : avatarGroup.removeItem(uid2);
-  });
-  return {
-    componentId,
-    groupAvatarCount,
-    avatarGroupIndex,
-    avatarWidth,
-    avatarClick
-  };
-};
-const useAvatarGroup = (props2, emits) => {
-  const {
-    children: avatarItems,
-    addChild: addItem,
-    removeChild: removeItem
-  } = useOrderedChildren();
-  const handleItemClick = (uid2) => {
-    const index2 = avatarItems.value.findIndex((item) => item.uid === uid2);
-    emits("click", index2);
-  };
-  provide(
-    avatarGroupContextKey,
-    reactive({
-      ...toRefs(props2),
-      avatarItems,
-      addItem,
-      removeItem,
-      handleItemClick
-    })
-  );
-};
-const useAvatarBadgeProps = (props2) => {
-  const avatarGroup = inject(avatarGroupContextKey, void 0);
-  const max = computed(() => {
-    var _a, _b;
-    return isEmptyDoubleVariableInDefault(
-      (_a = props2 == null ? void 0 : props2.badgeConfig) == null ? void 0 : _a.max,
-      (_b = avatarGroup == null ? void 0 : avatarGroup.badgeConfig) == null ? void 0 : _b.max
-    );
-  });
-  const type2 = computed(() => {
-    var _a, _b;
-    return isEmptyDoubleVariableInDefault(
-      (_a = props2 == null ? void 0 : props2.badgeConfig) == null ? void 0 : _a.type,
-      (_b = avatarGroup == null ? void 0 : avatarGroup.badgeConfig) == null ? void 0 : _b.type,
-      "primary"
-    );
-  });
-  const bgColor = computed(() => {
-    var _a, _b;
-    return isEmptyDoubleVariableInDefault(
-      (_a = props2 == null ? void 0 : props2.badgeConfig) == null ? void 0 : _a.bgColor,
-      (_b = avatarGroup == null ? void 0 : avatarGroup.badgeConfig) == null ? void 0 : _b.bgColor
-    );
-  });
-  const textColor = computed(() => {
-    var _a, _b;
-    return isEmptyDoubleVariableInDefault(
-      (_a = props2 == null ? void 0 : props2.badgeConfig) == null ? void 0 : _a.textColor,
-      (_b = avatarGroup == null ? void 0 : avatarGroup.badgeConfig) == null ? void 0 : _b.textColor
-    );
-  });
-  const fontSize = computed(() => {
-    var _a, _b;
-    return isEmptyDoubleVariableInDefault(
-      (_a = props2 == null ? void 0 : props2.badgeConfig) == null ? void 0 : _a.fontSize,
-      (_b = avatarGroup == null ? void 0 : avatarGroup.badgeConfig) == null ? void 0 : _b.fontSize
-    );
-  });
-  const size2 = computed(() => {
-    var _a, _b;
-    return isEmptyDoubleVariableInDefault(
-      (_a = props2 == null ? void 0 : props2.badgeConfig) == null ? void 0 : _a.size,
-      (_b = avatarGroup == null ? void 0 : avatarGroup.badgeConfig) == null ? void 0 : _b.size
-    );
-  });
-  const bold = computed(() => {
-    var _a, _b;
-    return isEmptyDoubleVariableInDefault(
-      (_a = props2 == null ? void 0 : props2.badgeConfig) == null ? void 0 : _a.bold,
-      (_b = avatarGroup == null ? void 0 : avatarGroup.badgeConfig) == null ? void 0 : _b.bold,
-      false
-    );
-  });
-  const dot = computed(() => {
-    var _a, _b;
-    return isEmptyDoubleVariableInDefault(
-      (_a = props2 == null ? void 0 : props2.badgeConfig) == null ? void 0 : _a.dot,
-      (_b = avatarGroup == null ? void 0 : avatarGroup.badgeConfig) == null ? void 0 : _b.dot,
-      false
-    );
-  });
-  const absolutePosition = computed(() => {
-    var _a, _b;
-    return isEmptyDoubleVariableInDefault(
-      (_a = props2 == null ? void 0 : props2.badgeConfig) == null ? void 0 : _a.absolutePosition,
-      (_b = avatarGroup == null ? void 0 : avatarGroup.badgeConfig) == null ? void 0 : _b.absolutePosition,
-      {}
-    );
-  });
-  const absoluteCenter = computed(() => {
-    var _a, _b;
-    return isEmptyDoubleVariableInDefault(
-      (_a = props2 == null ? void 0 : props2.badgeConfig) == null ? void 0 : _a.absoluteCenter,
-      (_b = avatarGroup == null ? void 0 : avatarGroup.badgeConfig) == null ? void 0 : _b.absoluteCenter,
-      true
-    );
-  });
-  const badgeConfig = computed(() => {
-    return {
-      value: props2.badge,
-      max: max.value,
-      type: type2.value,
-      bgColor: bgColor.value,
-      textColor: textColor.value,
-      fontSize: fontSize.value,
-      size: size2.value,
-      bold: bold.value,
-      customClass: "",
-      customStyle: {},
-      dot: dot.value,
-      absolute: true,
-      absolutePosition: absolutePosition.value,
-      absoluteCenter: absoluteCenter.value,
-      index: ""
-    };
-  });
-  return {
-    badgeConfig
-  };
-};
-const avatarGroupProps = buildProps({
-  /**
-   * @description 头像图标配置
-   */
-  iconConfig: avatarProps.iconConfig,
-  /**
-   * @description 头像颜色类型
-   */
-  type: avatarProps.type,
-  /**
-   * @description 头像大小
-   */
-  size: avatarProps.size,
-  /**
-   * @description 头像形状
-   */
-  shape: avatarProps.shape,
-  /**
-   * @description 头像图片模式
-   */
-  imgMode: avatarProps.imgMode,
-  /**
-   * @description 背景颜色
-   */
-  bgColor: avatarProps.bgColor,
-  /**
-   * @description 显示边框
-   */
-  border: {
-    type: Boolean,
-    default: true
-  },
-  /**
-   * @description 边框颜色
-   */
-  borderColor: {
-    type: String,
-    default: "tn-white"
-  },
-  /**
-   * @description 是否加粗边框
-   */
-  borderBold: avatarProps.borderBold,
-  /**
-   * @description 显示阴影
-   */
-  shadow: avatarProps.shadow,
-  /**
-   * @description 阴影颜色
-   */
-  shadowColor: avatarProps.shadowColor,
-  /**
-   * @description 头像角标配置
-   */
-  badgeConfig: avatarProps.badgeConfig,
-  /**
-   * @description 头像之间遮挡比例
-   */
-  gap: {
-    type: [String, Number],
-    default: 0.4
-  }
-});
-const avatarGroupEmits = {
-  /**
-   * @description 点击头像
-   */
-  click: (index2) => typeof index2 === "number"
-};
-const props$9 = defineMixin({
-  props: {
-    // 搜索框形状，round-圆形，square-方形
-    shape: {
-      type: String,
-      default: () => defProps.search.shape
-    },
-    // 搜索框背景色，默认值#f2f2f2
-    bgColor: {
-      type: String,
-      default: () => defProps.search.bgColor
-    },
-    // 占位提示文字
-    placeholder: {
-      type: String,
-      default: () => defProps.search.placeholder
-    },
-    // 是否启用清除控件
-    clearabled: {
-      type: Boolean,
-      default: () => defProps.search.clearabled
-    },
-    // 是否自动聚焦
-    focus: {
-      type: Boolean,
-      default: () => defProps.search.focus
-    },
-    // 是否在搜索框右侧显示取消按钮
-    showAction: {
-      type: Boolean,
-      default: () => defProps.search.showAction
-    },
-    // 右边控件的样式
-    actionStyle: {
-      type: Object,
-      default: () => defProps.search.actionStyle
-    },
-    // 取消按钮文字
-    actionText: {
-      type: String,
-      default: () => defProps.search.actionText
-    },
-    // 输入框内容对齐方式，可选值为 left|center|right
-    inputAlign: {
-      type: String,
-      default: () => defProps.search.inputAlign
-    },
-    // input输入框的样式，可以定义文字颜色，大小等，对象形式
-    inputStyle: {
-      type: Object,
-      default: () => defProps.search.inputStyle
-    },
-    // 是否启用输入框
-    disabled: {
-      type: Boolean,
-      default: () => defProps.search.disabled
-    },
-    // 边框颜色
-    borderColor: {
-      type: String,
-      default: () => defProps.search.borderColor
-    },
-    // 搜索图标的颜色，默认同输入框字体颜色
-    searchIconColor: {
-      type: String,
-      default: () => defProps.search.searchIconColor
-    },
-    // 输入框字体颜色
-    color: {
-      type: String,
-      default: () => defProps.search.color
-    },
-    // placeholder的颜色
-    placeholderColor: {
-      type: String,
-      default: () => defProps.search.placeholderColor
-    },
-    // 左边输入框的图标，可以为uView图标名称或图片路径
-    searchIcon: {
-      type: String,
-      default: () => defProps.search.searchIcon
-    },
-    searchIconSize: {
-      type: [Number, String],
-      default: () => defProps.search.searchIconSize
-    },
-    // 组件与其他上下左右元素之间的距离，带单位的字符串形式，如"30px"、"30px 20px"等写法
-    margin: {
-      type: String,
-      default: () => defProps.search.margin
-    },
-    // 开启showAction时，是否在input获取焦点时才显示
-    animation: {
-      type: Boolean,
-      default: () => defProps.search.animation
-    },
-    // 输入框的初始化内容
-    modelValue: {
-      type: String,
-      default: () => defProps.search.value
-    },
-    value: {
-      type: String,
-      default: () => defProps.search.value
-    },
-    // 输入框最大能输入的长度，-1为不限制长度(来自uniapp文档)
-    maxlength: {
-      type: [String, Number],
-      default: () => defProps.search.maxlength
-    },
-    // 搜索框高度，单位px
-    height: {
-      type: [String, Number],
-      default: () => defProps.search.height
-    },
-    // 搜索框左侧文本
-    label: {
-      type: [String, Number, null],
-      default: () => defProps.search.label
-    },
-    // 键盘弹起时，是否自动上推页面	
-    adjustPosition: {
-      type: Boolean,
-      default: () => true
-    },
-    // 键盘收起时，是否自动失去焦点	
-    autoBlur: {
-      type: Boolean,
-      default: () => false
-    }
-  }
-});
-const props$8 = defineMixin({
-  props: {
-    // 滑块的移动过渡时间，单位ms
-    duration: {
-      type: Number,
-      default: () => defProps.tabs.duration
-    },
-    // tabs标签数组
-    list: {
-      type: Array,
-      default: () => defProps.tabs.list
-    },
-    // 滑块颜色
-    lineColor: {
-      type: String,
-      default: () => defProps.tabs.lineColor
-    },
-    // 菜单选择中时的样式
-    activeStyle: {
-      type: [String, Object],
-      default: () => defProps.tabs.activeStyle
-    },
-    // 菜单非选中时的样式
-    inactiveStyle: {
-      type: [String, Object],
-      default: () => defProps.tabs.inactiveStyle
-    },
-    // 滑块长度
-    lineWidth: {
-      type: [String, Number],
-      default: () => defProps.tabs.lineWidth
-    },
-    // 滑块高度
-    lineHeight: {
-      type: [String, Number],
-      default: () => defProps.tabs.lineHeight
-    },
-    // 滑块背景显示大小，当滑块背景设置为图片时使用
-    lineBgSize: {
-      type: String,
-      default: () => defProps.tabs.lineBgSize
-    },
-    // 菜单item的样式
-    itemStyle: {
-      type: [String, Object],
-      default: () => defProps.tabs.itemStyle
-    },
-    // 菜单是否可滚动
-    scrollable: {
-      type: Boolean,
-      default: () => defProps.tabs.scrollable
-    },
-    // 当前选中标签的索引
-    current: {
-      type: [Number, String],
-      default: () => defProps.tabs.current
-    },
-    // 默认读取的键名
-    keyName: {
-      type: String,
-      default: () => defProps.tabs.keyName
-    }
-  }
-});
-const overlayProps = buildProps({
-  /**
-   * @description 是否显示遮罩层
-   */
-  show: {
-    type: Boolean,
-    default: false
-  },
-  /**
-   * @description 动画时间，单位毫秒
-   */
-  duration: {
-    type: Number,
-    default: 300
-  },
-  /**
-   * @description 遮罩层透明度，有效值0-1
-   */
-  opacity: {
-    type: Number,
-    default: 0.5
-  },
-  /**
-   * @description zIndex
-   */
-  zIndex: {
-    type: Number,
-    default: ZIndex.mask
-  }
-});
-const overlayEmits = {
-  "update:show": (value2) => isBoolean(value2),
-  click: () => true
-};
-const useOverlay = (props2, emits) => {
-  const ns = useNamespace("overlay");
-  const overlayClass = computed(() => {
-    const cls = [ns.b()];
-    if (props2.show)
-      cls.push(ns.m("show"));
-    return cls.join(" ");
-  });
-  const overlayStyle = computed(() => {
-    const style = {};
-    style.transitionDuration = `${isEmptyVariableInDefault(
-      props2.duration,
-      300
-    )}ms`;
-    style.backgroundColor = `rgba(0, 0, 0, ${isEmptyVariableInDefault(
-      props2.opacity,
-      0.5
-    )})`;
-    if (props2.zIndex)
-      style.zIndex = props2.zIndex;
-    return style;
-  });
-  const overlayClick = () => {
-    emits("update:show", false);
-    emits("click");
-  };
-  return {
-    ns,
-    overlayClass,
-    overlayStyle,
-    overlayClick
-  };
-};
-const _sfc_main$2 = /* @__PURE__ */ defineComponent({
-  __name: "overlay",
-  props: overlayProps,
-  emits: overlayEmits,
-  setup(__props, { emit: __emit }) {
-    const props2 = __props;
-    const emits = __emit;
-    const { overlayClass, overlayStyle, overlayClick } = useOverlay(props2, emits);
-    return (_ctx, _cache) => {
-      return {
-        a: n(unref(overlayClass)),
-        b: s(unref(overlayStyle)),
-        c: o(
-          //@ts-ignore
-          (...args) => unref(overlayClick) && unref(overlayClick)(...args)
-        ),
-        d: o(() => {
-        })
-      };
-    };
-  }
-});
-const Component$1 = /* @__PURE__ */ _export_sfc(_sfc_main$2, [["__scopeId", "data-v-40a804f4"]]);
-withNoopInstall(Component$1);
-const popupOpenDirection = [
-  "top",
-  "bottom",
-  "left",
-  "right",
-  "center"
-];
-const popupCloseBtnPosition = [
-  "left-top",
-  "right-top",
-  "left-bottom",
-  "right-bottom"
-];
-const popupProps = buildProps({
-  /**
-   * @description 控制弹框是否显示
-   */
-  modelValue: Boolean,
-  /**
-   * @description 弹框打开的方向
-   */
-  openDirection: {
-    type: String,
-    values: popupOpenDirection,
-    default: "center"
-  },
-  /**
-   * @description 弹窗的宽度，在 openDirection 为 left 或 right 或 center 时生效
-   */
-  width: {
-    type: [String, Number]
-  },
-  /**
-   * @description 弹窗的高度，在 openDirection 为 top 或 bottom 或 center 时生效
-   */
-  height: {
-    type: [String, Number]
-  },
-  /**
-   * @description 弹框的内容的背景颜色
-   */
-  bgColor: {
-    type: String,
-    default: "#fff"
-  },
-  /**
-   * @description 弹框的内容的圆角
-   */
-  radius: {
-    type: [String, Number],
-    default: 15
-  },
-  /**
-   * @description 是否显示overlay遮罩层
-   */
-  overlay: {
-    type: Boolean,
-    default: true
-  },
-  /**
-   * @description overlay遮罩层的透明度
-   */
-  overlayOpacity: overlayProps["opacity"],
-  /**
-   * @description 点击overlay关闭弹框
-   */
-  overlayCloseable: {
-    type: Boolean,
-    default: true
-  },
-  /**
-   * @description 是否显示关闭按钮
-   */
-  closeBtn: Boolean,
-  /**
-   * @description 关闭按钮的位置
-   */
-  closeBtnPosition: {
-    type: String,
-    values: popupCloseBtnPosition,
-    default: "right-top"
-  },
-  /**
-   * @description 底部是否开启安全区域
-   */
-  safeAreaInsetBottom: useComponentSafeAreaInsetBottomProp,
-  /**
-   * @description zIndex
-   */
-  zIndex: {
-    type: Number,
-    default: ZIndex.popup
-  },
-  /**
-   * @description 距离顶部的距离，在 openDirection 为 top 或 left 或 right 时生效，默认单位为`px`
-   */
-  top: {
-    type: [String, Number]
-  }
-});
-const popupEmits = {
-  [UPDATE_MODEL_EVENT]: (value2) => isBoolean(value2),
-  open: () => true,
-  close: () => true,
-  ["overlay-click"]: () => true
-};
-const usePopupCustomStyle = (props2) => {
-  const ns = useNamespace("popup");
-  const zIndex2 = computed(() => Number(props2.zIndex));
-  const overlayZIndex = computed(() => zIndex2.value - 1);
-  const [contentBgColorClass, contentBgColorStyle] = useComponentColor(
-    toRef(props2, "bgColor"),
-    "bg"
-  );
-  const popupContentClass = computed(() => {
-    const cls = [ns.e("content")];
-    if (props2.openDirection)
-      cls.push(ns.em("content", props2.openDirection));
-    if (props2.openDirection === "bottom" && props2.safeAreaInsetBottom) {
-      cls.push("tn-u-safe-area");
-    }
-    if (contentBgColorClass.value)
-      cls.push(contentBgColorClass.value);
-    return cls.join(" ");
-  });
-  const popupContentStyle = computed(() => {
-    const style = {};
-    if (contentBgColorStyle.value)
-      style.backgroundColor = contentBgColorStyle.value;
-    if (props2.radius) {
-      style.overflow = "hidden";
-      if (props2.openDirection === "center") {
-        style.borderRadius = formatDomSizeValue(props2.radius);
-      }
-      if (props2.openDirection === "top") {
-        style.borderBottomLeftRadius = formatDomSizeValue(props2.radius);
-        style.borderBottomRightRadius = formatDomSizeValue(props2.radius);
-      }
-      if (props2.openDirection === "left") {
-        style.borderTopRightRadius = formatDomSizeValue(props2.radius);
-        style.borderBottomRightRadius = formatDomSizeValue(props2.radius);
-      }
-      if (props2.openDirection === "right") {
-        style.borderTopLeftRadius = formatDomSizeValue(props2.radius);
-        style.borderBottomLeftRadius = formatDomSizeValue(props2.radius);
-      }
-      if (props2.openDirection === "bottom") {
-        style.borderTopLeftRadius = formatDomSizeValue(props2.radius);
-        style.borderTopRightRadius = formatDomSizeValue(props2.radius);
-      }
-    }
-    if (props2.top && (props2.openDirection === "top" || props2.openDirection === "left" || props2.openDirection === "right")) {
-      style.top = formatDomSizeValue(props2.top, "px");
-    }
-    if (props2.width && (props2.openDirection === "left" || props2.openDirection === "right" || props2.openDirection === "center")) {
-      style.width = formatDomSizeValue(props2.width);
-    }
-    if (props2.height && (props2.openDirection === "top" || props2.openDirection === "bottom" || props2.openDirection === "center")) {
-      style.height = formatDomSizeValue(props2.height);
-    }
-    if (props2.openDirection === "left" || props2.openDirection === "right") {
-      if (props2.top)
-        style.height = `calc(100% - ${formatDomSizeValue(props2.top, "px")})`;
-    }
-    style.zIndex = zIndex2.value;
-    return style;
-  });
-  return {
-    ns,
-    zIndex: zIndex2,
-    overlayZIndex,
-    popupContentClass,
-    popupContentStyle
-  };
-};
-const usePopup = (props2) => {
-  const { emit: emit2 } = getCurrentInstance();
-  const iosDevice = computed(() => {
-    const systemInfo = index$2.getSystemInfoSync();
-    return systemInfo.osName === "ios" || systemInfo.osName === "macos";
-  });
-  const showOverlay = ref(false);
-  const showPopup = ref(false);
-  const visiblePopup = ref(false);
-  let initPopupModelValue = false;
-  watch(
-    () => props2.modelValue,
-    (value2) => {
-      if (value2) {
-        visiblePopup.value = true;
-        if (iosDevice.value) {
-          setTimeout(() => {
-            showPopup.value = true;
-            if (props2.overlay)
-              showOverlay.value = true;
-            initPopupModelValue && emit2("open");
-          }, 0);
-        } else {
-          showPopup.value = true;
-          if (props2.overlay)
-            showOverlay.value = true;
-          initPopupModelValue && emit2("open");
-        }
-      } else {
-        showPopup.value = false;
-        showOverlay.value = false;
-        setTimeout(() => {
-          visiblePopup.value = false;
-        }, 250);
-        initPopupModelValue && emit2("close");
-      }
-      initPopupModelValue = true;
-    },
-    {
-      immediate: true
-    }
-  );
-  const updateModelValue = (value2) => {
-    emit2(UPDATE_MODEL_EVENT, value2);
-  };
-  const onClickCloseBtn = () => {
-    updateModelValue(false);
-    emit2("close");
-  };
-  const onClickOverlay = () => {
-    if (props2.overlayCloseable) {
-      updateModelValue(false);
-      emit2("close");
-      emit2("overlay-click");
-    }
-  };
-  return {
-    iosDevice,
-    showOverlay,
-    showPopup,
-    visiblePopup,
-    updateModelValue,
-    onClickCloseBtn,
-    onClickOverlay
-  };
-};
-const propgressBaseProps = buildProps({
-  /**
-   * @description 当前进度百分比
-   */
-  percent: {
-    type: Number,
-    default: 0
-  },
-  /**
-   * @description 激活时的颜色，以tn开头则使用图鸟内置的颜色，在为圆环进度条是无法使用内置的颜色
-   */
-  activeColor: String,
-  /**
-   * @description 未激活时的颜色，以tn开头则使用图鸟内置的颜色，在为圆环进度条是无法使用内置的颜色
-   */
-  inactiveColor: String,
-  /**
-   * @description 显示当前进度
-   */
-  showPercent: Boolean,
-  /**
-   * @description 动画执行时间，单位ms
-   */
-  duration: {
-    type: Number,
-    default: 1500
-  }
-});
-const circleProgressProps = buildProps({
-  ...propgressBaseProps,
-  /**
-   * @description 圆环的半径，单位 px，只支持传递固定的值
-   */
-  radius: {
-    type: Number,
-    default: 50
-  },
-  /**
-   * @description 圆环的宽度，单位 px，只支持传递固定的值
-   */
-  ringWidth: {
-    type: Number,
-    default: 7
-  }
-});
-const useCircleProgress = (props2) => {
-  const instance = getCurrentInstance();
-  const ns = useNamespace("circle-progress");
-  const radius = computed(() => {
-    return isEmptyVariableInDefault(props2 == null ? void 0 : props2.radius, 50);
-  });
-  const ringWidth = computed(() => {
-    return isEmptyVariableInDefault(props2 == null ? void 0 : props2.ringWidth, 14);
-  });
-  const circleColor = computed(() => {
-    return isEmptyVariableInDefault(props2 == null ? void 0 : props2.inactiveColor, "#e6e6e6");
-  });
-  const activeCircleColor = computed(() => {
-    return isEmptyVariableInDefault(props2 == null ? void 0 : props2.activeColor, "#01beff");
-  });
-  const duration = computed(() => {
-    return isEmptyVariableInDefault(props2 == null ? void 0 : props2.duration, 1500);
-  });
-  let currentPercent = 0;
-  let prevPercent = 0;
-  const canvasId = String(generateId());
-  let progressCanvas = null;
-  const startAngle = -90 * (Math.PI / 180);
-  const drawProgressCircle = (percent) => {
-    if (!progressCanvas) {
-      progressCanvas = index$2.createCanvasContext(canvasId, instance);
-    }
-    progressCanvas.clearRect(0, 0, radius.value * 2, radius.value * 2);
-    progressCanvas.beginPath();
-    progressCanvas.setLineWidth(ringWidth.value);
-    progressCanvas.setStrokeStyle(circleColor.value);
-    progressCanvas.arc(
-      radius.value,
-      radius.value,
-      radius.value - ringWidth.value / 2,
-      startAngle,
-      Math.PI * 1.5,
-      false
-    );
-    progressCanvas.stroke();
-    if (percent === 0) {
-      progressCanvas.draw();
-      return;
-    }
-    progressCanvas.beginPath();
-    progressCanvas.setLineCap("round");
-    progressCanvas.setLineWidth(ringWidth.value);
-    progressCanvas.setStrokeStyle(activeCircleColor.value);
-    const endAngle = Math.PI * 2 * percent / 100 - Math.PI / 2;
-    progressCanvas.arc(
-      radius.value,
-      radius.value,
-      radius.value - ringWidth.value / 2,
-      startAngle,
-      endAngle,
-      false
-    );
-    progressCanvas.stroke();
-    progressCanvas.draw();
-  };
-  function easeOutCubic(t2, b, c, d) {
-    return c * ((t2 = t2 / d - 1) * t2 * t2 + 1) + b;
-  }
-  let startTime = null;
-  const progressAnimation = () => {
-    if (!startTime)
-      startTime = Date.now();
-    const elapsed = Date.now() - startTime;
-    let percent = easeOutCubic(
-      elapsed,
-      prevPercent,
-      currentPercent - prevPercent,
-      duration.value
-    );
-    if (percent < 0)
-      percent = 0;
-    drawProgressCircle(percent);
-    if (elapsed < duration.value) {
-      setTimeout(progressAnimation, 16);
-    }
-  };
-  watch(
-    () => props2.percent,
-    (nVal, oVal) => {
-      currentPercent = nVal > 100 ? 100 : nVal;
-      prevPercent = !oVal || oVal < 0 ? 0 : oVal;
-      nextTick$1(() => {
-        startTime = null;
-        progressAnimation();
-      });
-    },
-    {
-      immediate: true
-    }
-  );
-  return {
-    ns,
-    canvasId,
-    radius,
-    activeCircleColor
-  };
-};
-const scrollListProps = buildProps({
-  /**
-   * @description 是否显示指示器
-   */
-  indicator: {
-    type: Boolean,
-    default: true
-  },
-  /**
-   * @description 指示器的宽度，单位 px
-   */
-  indicatorWidth: {
-    type: Number,
-    default: 40
-  },
-  /**
-   * @description 指示器滑块的宽度，单位 px
-   */
-  indicatorBlockWidth: {
-    type: Number,
-    default: 20
-  },
-  /**
-   * @description 指示器的背景颜色，以tn开头使用图鸟内置的颜色
-   */
-  indicatorColor: String,
-  /**
-   * @description 指示器滑块的背景颜色，以tn开头使用图鸟内置的颜色
-   */
-  indicatorBlockColor: String
-});
-const scrollListEmits = {
-  /**
-   * @description 滚动到左边时触发
-   */
-  "scroll-left": () => true,
-  /**
-   * @description 滚动到右边时触发
-   */
-  "scroll-right": () => true
-};
-const useScrollListCustomStyle = (props2) => {
-  const ns = useNamespace("scroll-list");
-  const [indicatorColorClass, indicatorColorStyle] = useComponentColor(
-    toRef(props2, "indicatorColor"),
-    "bg"
-  );
-  const [indicatorBlockColorClass, indicatorBlockColorStyle] = useComponentColor(toRef(props2, "indicatorBlockColor"), "bg");
-  const indicatorClass = computed(() => {
-    const cls = [ns.e("indicator")];
-    if (indicatorColorClass.value)
-      cls.push(indicatorColorClass.value);
-    return cls.join(" ");
-  });
-  const indicatorStyle = computed(() => {
-    const style = {};
-    if (props2.indicatorWidth)
-      style.width = formatDomSizeValue(props2.indicatorWidth, "px");
-    if (!indicatorColorClass.value) {
-      style.backgroundColor = indicatorColorStyle.value || "var(--tn-color-gray-disabled)";
-    }
-    return style;
-  });
-  const indicatorBlockClass = computed(() => {
-    const cls = [ns.e("indicator-block")];
-    if (indicatorBlockColorClass.value)
-      cls.push(indicatorBlockColorClass.value);
-    return cls.join(" ");
-  });
-  const indicatorBlockStyle = computed(
-    () => {
-      return (distance) => {
-        const style = {};
-        if (props2.indicatorBlockWidth)
-          style.width = formatDomSizeValue(props2.indicatorBlockWidth, "px");
-        style.left = `${distance}px`;
-        if (!indicatorBlockColorClass.value) {
-          style.backgroundColor = indicatorBlockColorStyle.value || "var(--tn-color-primary)";
-        }
-        return style;
-      };
-    }
-  );
-  return {
-    ns,
-    indicatorClass,
-    indicatorStyle,
-    indicatorBlockClass,
-    indicatorBlockStyle
-  };
-};
-const useScrollList = (props2, emits) => {
-  const instance = getCurrentInstance();
-  if (!instance) {
-    debugWarn("TnScrollList", "请在setup函数中使用useScrollList");
-  }
-  const componentId = `tsl-${generateId()}`;
-  const componentContentId = `${componentId}-content`;
-  const { getSelectorNodeInfo } = useSelectorQuery(instance);
-  let componentWidth = 0;
-  let comoponentContentWidth = 0;
-  const indicatorBlockScrollDistance = ref(0);
-  let initCount = 0;
-  const getContentRectInfo = async () => {
-    try {
-      const componentRectInfo = await getSelectorNodeInfo(`#${componentId}`);
-      const contentRectInfo = await getSelectorNodeInfo(
-        `#${componentContentId}`
-      );
-      initCount = 0;
-      componentWidth = componentRectInfo.width || 0;
-      comoponentContentWidth = contentRectInfo.width || 0;
-    } catch (err) {
-      if (initCount > 10) {
-        initCount = 0;
-        debugWarn("TnScrollList", `获取内容容器的宽度失败: ${err}`);
-        return;
-      }
-      initCount++;
-      setTimeout(() => {
-        getContentRectInfo();
-      }, 150);
-    }
-  };
-  const scrollViewScrollEvent = (e2) => {
-    const scrollLeft = e2.detail.scrollLeft;
-    indicatorBlockScrollDistance.value = scrollLeft * (props2.indicatorWidth - props2.indicatorBlockWidth) / (comoponentContentWidth - componentWidth);
-  };
-  const scrollToLeftEvent = () => {
-    emits("scroll-left");
-  };
-  const scrollToRightEvent = () => {
-    emits("scroll-right");
-  };
-  onMounted(() => {
-    nextTick$1(() => {
-      getContentRectInfo();
-    });
-  });
-  return {
-    componentId,
-    componentContentId,
-    indicatorBlockScrollDistance,
-    scrollViewScrollEvent,
-    scrollToLeftEvent,
-    scrollToRightEvent
-  };
-};
-const props$7 = defineMixin({
-  props: {
-    // 是否显示组件
-    show: {
-      type: Boolean,
-      default: () => defProps.loadingIcon.show
-    },
-    // 颜色
-    color: {
-      type: String,
-      default: () => defProps.loadingIcon.color
-    },
-    // 提示文字颜色
-    textColor: {
-      type: String,
-      default: () => defProps.loadingIcon.textColor
-    },
-    // 文字和图标是否垂直排列
-    vertical: {
-      type: Boolean,
-      default: () => defProps.loadingIcon.vertical
-    },
-    // 模式选择，circle-圆形，spinner-花朵形，semicircle-半圆形
-    mode: {
-      type: String,
-      default: () => defProps.loadingIcon.mode
-    },
-    // 图标大小，单位默认px
-    size: {
-      type: [String, Number],
-      default: () => defProps.loadingIcon.size
-    },
-    // 文字大小
-    textSize: {
-      type: [String, Number],
-      default: () => defProps.loadingIcon.textSize
-    },
-    // 文字内容
-    text: {
-      type: [String, Number],
-      default: () => defProps.loadingIcon.text
-    },
-    // 动画模式
-    timingFunction: {
-      type: String,
-      default: () => defProps.loadingIcon.timingFunction
-    },
-    // 动画执行周期时间
-    duration: {
-      type: [String, Number],
-      default: () => defProps.loadingIcon.duration
-    },
-    // mode=circle时的暗边颜色
-    inactiveColor: {
-      type: String,
-      default: () => defProps.loadingIcon.inactiveColor
-    }
-  }
-});
 const imageExtensions = [
   "jpg",
   "jpeg",
@@ -18943,6 +16723,11 @@ const imageUploadEmits = {
    */
   preview: (url2) => true
 };
+const avatarGroupContextKey = Symbol(
+  "avatarGroupContextKey"
+);
+const formContextKey = Symbol("formContextKey");
+const formItemContextKey = Symbol("formItemContextKey");
 const formMetaProps = buildProps({
   /**
    * @description 设置表单下组件的尺寸
@@ -20395,7 +18180,7 @@ const useForm = (props2) => {
     validateField
   };
 };
-const _sfc_main$1 = /* @__PURE__ */ defineComponent({
+const _sfc_main$2 = /* @__PURE__ */ defineComponent({
   __name: "form",
   props: formProps,
   emits: formEmits,
@@ -20458,7 +18243,7 @@ const _sfc_main$1 = /* @__PURE__ */ defineComponent({
     };
   }
 });
-const Form = /* @__PURE__ */ _export_sfc(_sfc_main$1, [["__scopeId", "data-v-b2b814ec"]]);
+const Form = /* @__PURE__ */ _export_sfc(_sfc_main$2, [["__scopeId", "data-v-b2b814ec"]]);
 const formItemValidateStates = [
   "",
   "error",
@@ -20530,7 +18315,7 @@ const formItemProps = buildProps({
     values: formComponentSizes
   }
 });
-const _sfc_main = /* @__PURE__ */ defineComponent({
+const _sfc_main$1 = /* @__PURE__ */ defineComponent({
   __name: "form-item",
   props: formItemProps,
   setup(__props, { expose: __expose }) {
@@ -20629,7 +18414,7 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
     };
   }
 });
-const FormItem = /* @__PURE__ */ _export_sfc(_sfc_main, [["__scopeId", "data-v-944bef13"]]);
+const FormItem = /* @__PURE__ */ _export_sfc(_sfc_main$1, [["__scopeId", "data-v-944bef13"]]);
 withInstall(Form, {
   FormItem
 });
@@ -21116,6 +18901,2221 @@ const useImageUpload = (props2) => {
     previewImage: previewImage2
   };
 };
+const props$c = defineMixin({
+  props: {
+    // 主题颜色
+    type: {
+      type: String,
+      default: () => defProps.text.type
+    },
+    // 是否显示
+    show: {
+      type: Boolean,
+      default: () => defProps.text.show
+    },
+    // 显示的值
+    text: {
+      type: [String, Number],
+      default: () => defProps.text.text
+    },
+    // 前置图标
+    prefixIcon: {
+      type: String,
+      default: () => defProps.text.prefixIcon
+    },
+    // 后置图标
+    suffixIcon: {
+      type: String,
+      default: () => defProps.text.suffixIcon
+    },
+    // 文本处理的匹配模式
+    // text-普通文本，price-价格，phone-手机号，name-姓名，date-日期，link-超链接
+    mode: {
+      type: String,
+      default: () => defProps.text.mode
+    },
+    // mode=link下，配置的链接
+    href: {
+      type: String,
+      default: () => defProps.text.href
+    },
+    // 格式化规则
+    format: {
+      type: [String, Function],
+      default: () => defProps.text.format
+    },
+    // mode=phone时，点击文本是否拨打电话
+    call: {
+      type: Boolean,
+      default: () => defProps.text.call
+    },
+    // 小程序的打开方式
+    openType: {
+      type: String,
+      default: () => defProps.text.openType
+    },
+    // 是否粗体，默认normal
+    bold: {
+      type: Boolean,
+      default: () => defProps.text.bold
+    },
+    // 是否块状
+    block: {
+      type: Boolean,
+      default: () => defProps.text.block
+    },
+    // 文本显示的行数，如果设置，超出此行数，将会显示省略号
+    lines: {
+      type: [String, Number],
+      default: () => defProps.text.lines
+    },
+    // 文本颜色
+    color: {
+      type: String,
+      default: () => defProps.text.color
+    },
+    // 字体大小
+    size: {
+      type: [String, Number],
+      default: () => defProps.text.size
+    },
+    // 图标的样式
+    iconStyle: {
+      type: [Object, String],
+      default: () => defProps.text.iconStyle
+    },
+    // 文字装饰，下划线，中划线等，可选值 none|underline|line-through
+    decoration: {
+      tepe: String,
+      default: () => defProps.text.decoration
+    },
+    // 外边距，对象、字符串，数值形式均可
+    margin: {
+      type: [Object, String, Number],
+      default: () => defProps.text.margin
+    },
+    // 文本行高
+    lineHeight: {
+      type: [String, Number],
+      default: () => defProps.text.lineHeight
+    },
+    // 文本对齐方式，可选值left|center|right
+    align: {
+      type: String,
+      default: () => defProps.text.align
+    },
+    // 文字换行，可选值break-word|normal|anywhere
+    wordWrap: {
+      type: String,
+      default: () => defProps.text.wordWrap
+    },
+    // 占满剩余空间
+    flex1: {
+      type: Boolean,
+      default: () => defProps.text.flex1
+    }
+  }
+});
+const value = {
+  computed: {
+    // 经处理后需要显示的值
+    value() {
+      const {
+        text,
+        mode,
+        format: format2,
+        href
+      } = this;
+      if (mode === "price") {
+        if (!/^\d+(\.\d+)?$/.test(text)) {
+          error("金额模式下，text参数需要为金额格式");
+        }
+        if (test.func(format2)) {
+          return format2(text);
+        }
+        return priceFormat(text, 2);
+      }
+      if (mode === "date") {
+        !test.date(text) && error("日期模式下，text参数需要为日期或时间戳格式");
+        if (test.func(format2)) {
+          return format2(text);
+        }
+        if (format2) {
+          return timeFormat(text, format2);
+        }
+        return timeFormat(text, "yyyy-mm-dd");
+      }
+      if (mode === "phone") {
+        if (test.func(format2)) {
+          return format2(text);
+        }
+        if (format2 === "encrypt") {
+          return `${text.substr(0, 3)}****${text.substr(7)}`;
+        }
+        return text;
+      }
+      if (mode === "name") {
+        !(typeof text === "string") && error("姓名模式下，text参数需要为字符串格式");
+        if (test.func(format2)) {
+          return format2(text);
+        }
+        if (format2 === "encrypt") {
+          return this.formatName(text);
+        }
+        return text;
+      }
+      if (mode === "link") {
+        !test.url(href) && error("超链接模式下，href参数需要为URL格式");
+        return text;
+      }
+      return text;
+    }
+  },
+  methods: {
+    // 默认的姓名脱敏规则
+    formatName(name) {
+      let value2 = "";
+      if (name.length === 2) {
+        value2 = name.substr(0, 1) + "*";
+      } else if (name.length > 2) {
+        let char = "";
+        for (let i = 0, len = name.length - 2; i < len; i++) {
+          char += "*";
+        }
+        value2 = name.substr(0, 1) + char + name.substr(-1, 1);
+      } else {
+        value2 = name;
+      }
+      return value2;
+    }
+  }
+};
+const props$b = defineMixin({
+  props: {
+    color: {
+      type: String,
+      default: () => defProps.line.color
+    },
+    // 长度，竖向时表现为高度，横向时表现为长度，可以为百分比，带px单位的值等
+    length: {
+      type: [String, Number],
+      default: () => defProps.line.length
+    },
+    // 线条方向，col-竖向，row-横向
+    direction: {
+      type: String,
+      default: () => defProps.line.direction
+    },
+    // 是否显示细边框
+    hairline: {
+      type: Boolean,
+      default: () => defProps.line.hairline
+    },
+    // 线条与上下左右元素的间距，字符串形式，如"30px"、"20px 30px"
+    margin: {
+      type: [String, Number],
+      default: () => defProps.line.margin
+    },
+    // 是否虚线，true-虚线，false-实线
+    dashed: {
+      type: Boolean,
+      default: () => defProps.line.dashed
+    }
+  }
+});
+const props$a = defineMixin({
+  props: {
+    // 是否开启顶部安全区适配
+    safeAreaInsetTop: {
+      type: Boolean,
+      default: () => true
+    },
+    // 是否固定在顶部
+    fixed: {
+      type: Boolean,
+      default: () => true
+    },
+    // 左边的图标
+    leftIcon: {
+      type: String,
+      default: "arrow-leftward"
+    },
+    // 背景颜色
+    bgColor: {
+      type: String,
+      default: () => "rgba(0,0,0,.15)"
+    },
+    // 导航栏高度
+    height: {
+      type: [String, Number],
+      default: () => "32px"
+    },
+    // 图标的大小
+    iconSize: {
+      type: [String, Number],
+      default: "20px"
+    },
+    // 图标的颜色
+    iconColor: {
+      type: String,
+      default: "#fff"
+    },
+    // 点击左侧区域(返回图标)，是否自动返回上一页
+    autoBack: {
+      type: Boolean,
+      default: () => true
+    },
+    // 首页路径
+    homeUrl: {
+      type: [String],
+      default: ""
+    }
+  }
+});
+const updateUserInfoPopupProps = buildProps({
+  /**
+   * @description 控制弹框显示、隐藏
+   */
+  show: {
+    type: Boolean,
+    default: false
+  },
+  /**
+   * @description 用户头像地址
+   */
+  avatar: {
+    type: String,
+    default: ""
+  },
+  /**
+   * @description 用户昵称
+   */
+  nickname: {
+    type: String,
+    default: ""
+  },
+  /**
+   * @description 弹框标题
+   */
+  title: {
+    type: String,
+    default: "获取您的昵称、头像"
+  },
+  /**
+   * @description 弹框提示
+   */
+  tips: {
+    type: String,
+    default: "获取用户头像、昵称，主要用于向用户提供具有辨识度的用户体验"
+  },
+  /**
+   * @description 弹框确认按钮文案
+   */
+  confirmText: {
+    type: String,
+    default: "保 存"
+  },
+  /**
+   * @description 弹框按钮背景颜色，以tn开头使用图鸟内置的颜色
+   */
+  confirmBgColor: {
+    type: String,
+    default: "tn-type-primary"
+  },
+  /**
+   * @description 弹框按钮文字颜色，以tn开头使用图鸟内置的颜色
+   */
+  confirmTextColor: {
+    type: String,
+    default: "tn-white"
+  }
+});
+const updateUserInfoPopupEmits = {
+  "update:show": (val) => isBoolean(val),
+  "update:avatar": (val) => isString(val),
+  "update:nickname": (val) => isString(val),
+  /**
+   * @description 点击弹框确认按钮时触发
+   */
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  confirm: (avatar, nickname) => true,
+  /**
+   * @description 选择头像后触发
+   */
+  "choose-avatar": (val) => isString(val)
+};
+const useUpdateUserInfoPopupCustomStyle = (props2) => {
+  const ns = useNamespace("update-user-info-popup");
+  const [confirmBtnBgColorClass, confirmBtnBgColorStyle] = useComponentColor(
+    toRef(props2, "confirmBgColor"),
+    "bg"
+  );
+  const [confirmBtnTextColorClass, confirmBtnTextColorStyle] = useComponentColor(toRef(props2, "confirmTextColor"), "text");
+  const submitBtnClass = computed(() => {
+    const cls = [ns.e("submit-btn")];
+    if (confirmBtnBgColorClass.value) {
+      cls.push(confirmBtnBgColorClass.value);
+    }
+    if (confirmBtnTextColorClass.value) {
+      cls.push(confirmBtnTextColorClass.value);
+    }
+    return cls.join(" ");
+  });
+  const submitBtnStyle = computed(() => {
+    const style = {};
+    if (!confirmBtnBgColorClass.value) {
+      style.backgroundColor = confirmBtnBgColorStyle.value || "var(--tn-color-primary)";
+    }
+    if (confirmBtnTextColorStyle.value) {
+      style.color = confirmBtnTextColorStyle.value;
+    } else if (!confirmBtnBgColorClass.value) {
+      style.color = "var(--tn-color-white)";
+    }
+    if (!props2.avatar || !props2.nickname) {
+      style.backgroundColor = "var(--tn-color-gray-disabled)";
+      style.color = "var(--tn-color-gray-dark)";
+    }
+    return style;
+  });
+  return {
+    ns,
+    submitBtnClass,
+    submitBtnStyle
+  };
+};
+const useUpdateUserInfoPopup = (props2, emits) => {
+  const showUpdatePopup = ref(false);
+  const inputNickname = ref(props2.nickname);
+  watch(
+    () => props2.show,
+    (val) => {
+      showUpdatePopup.value = val;
+    },
+    {
+      immediate: true
+    }
+  );
+  const nickNameInputHandle = (e2) => {
+    const value2 = e2.detail.value;
+    inputNickname.value = value2;
+    emits("update:nickname", value2);
+  };
+  const avatarChooseHandle = (e2) => {
+    emits("choose-avatar", e2.detail.avatarUrl);
+  };
+  const submitBtnClickHandle = () => {
+    if (!inputNickname.value || !props2.avatar) {
+      return;
+    }
+    emits("confirm", props2.avatar, inputNickname.value);
+    emits("update:show", false);
+  };
+  const popupCloseHandle = () => {
+    emits("update:show", false);
+  };
+  return {
+    showUpdatePopup,
+    inputNickname,
+    nickNameInputHandle,
+    popupCloseHandle,
+    submitBtnClickHandle,
+    avatarChooseHandle
+  };
+};
+const buttonFormTypes = ["submit", "reset"];
+const buttonOpenTypes = [
+  "feedback",
+  "share",
+  "contact",
+  "getPhoneNumber",
+  "getRealtimePhoneNumber",
+  "launchApp",
+  "openSetting",
+  "getUserInfo",
+  "chooseAvatar",
+  "agreePrivacyAuthorization"
+];
+const buttonProps = buildProps({
+  /**
+   * @description 按钮宽度
+   */
+  width: {
+    type: [String, Number]
+  },
+  /**
+   * @description 按钮高度
+   */
+  height: {
+    type: [String, Number]
+  },
+  /**
+   * @description 按钮尺寸
+   */
+  size: useComponentSizeProp,
+  /**
+   * @description 按钮形状
+   */
+  shape: {
+    type: String,
+    values: componentShapes,
+    default: ""
+  },
+  /**
+   * @description 按钮颜色类型
+   */
+  type: {
+    type: String,
+    values: componentTypes,
+    default: "primary"
+  },
+  /**
+   * @description 按钮图标
+   */
+  icon: {
+    type: iconPropType
+  },
+  /**
+   * @description 是否加粗字体
+   */
+  bold: Boolean,
+  /**
+   * @description 字体大小
+   */
+  fontSize: {
+    type: [String, Number]
+  },
+  /**
+   * @description 背景颜色，以tn开头则使用图鸟内置的颜色
+   */
+  bgColor: String,
+  /**
+   * @description 文字颜色，以tn开头则使用图鸟内置的颜色
+   */
+  textColor: String,
+  /**
+   * @description 是否显示为文本按钮
+   */
+  text: Boolean,
+  /**
+   * @description 是否为朴素按钮
+   */
+  plain: Boolean,
+  /**
+   * @description 边框颜色，以tn开头则使用图鸟内置的颜色
+   */
+  borderColor: String,
+  /**
+   * @description 是否加粗边框
+   */
+  borderBold: Boolean,
+  /**
+   * @description 是否显示阴影
+   */
+  shadow: Boolean,
+  /**
+   * @description 阴影颜色，以tn开头则使用图鸟内置的颜色
+   */
+  shadowColor: String,
+  /**
+   * @description 点击时触发的类
+   */
+  hoverClass: {
+    type: String,
+    default: "tn-u-btn-hover"
+  },
+  /**
+   * @description 自定义样式
+   */
+  customStyle: useComponentCustomStyleProp,
+  /**
+   * @description 自定义类
+   */
+  customClass: String,
+  /**
+   * @description 是否禁用按钮
+   */
+  disabled: Boolean,
+  /**
+   * @description 是否只为一个按钮，不作用任何样式
+   */
+  onlyButton: Boolean,
+  /**
+   * @description 是否显示加载中
+   */
+  loading: Boolean,
+  /**
+   * @description 是否防抖
+   */
+  debounce: {
+    type: Boolean,
+    default: false
+  },
+  /**
+   * @description 触发form表单的事件类型
+   */
+  formType: {
+    type: String,
+    values: buttonFormTypes
+  },
+  /**
+   * @description 按钮开放能力，具体能力参考官网https://uniapp.dcloud.io/component/button.html
+   */
+  openType: {
+    type: String,
+    values: buttonOpenTypes
+  },
+  /**
+   * @description 打开app时向app传递的参数, 在微信、QQ小程序和openType为launchApp时生效
+   */
+  appParameter: {
+    type: String,
+    default: ""
+  },
+  /**
+   * @description 会话来源, 在微信小程序和openType为contact时生效
+   */
+  sessionFrom: {
+    type: String,
+    default: ""
+  },
+  /**
+   * @description 会话内消息卡片标题, 默认为当前标题, 在微信小程序和openType为contact时生效
+   */
+  sendMessageTitle: {
+    type: String,
+    default: ""
+  },
+  /**
+   * @description 会话内消息卡片点击跳转小程序路径, 默认为当前路径, 在微信小程序和openType为contact时生效
+   */
+  sendMessagePath: {
+    type: String,
+    default: ""
+  },
+  /**
+   * @description 会话内消息卡片图片, 默认为截图, 在微信小程序和openType为contact时生效
+   */
+  sendMessageImg: {
+    type: String,
+    default: ""
+  },
+  /**
+   * @description 是否显示会话内消息卡片, 设置此参数为true, 用户进入客服会话会在右下角显示"可能要发送的小程序"提示, 用户点击后可以快速发送小程序消息, 在微信小程序和openType为contact时生效
+   */
+  showMessageCard: {
+    type: Boolean,
+    default: false
+  },
+  /**
+   * @description 当手机号快速验证或手机号实时验证额度用尽时，是否对用户展示“申请获取你的手机号，但该功能使用次数已达当前小程序上限，暂时无法使用”的提示
+   */
+  phoneNumberNoQuotaToast: {
+    type: Boolean,
+    default: true
+  },
+  clickModifiers: {
+    type: String
+  }
+});
+const buttonEmits = {
+  /**
+   * @description 按钮点击事件
+   */
+  click: () => true,
+  /**
+   * @description 获取用户手机号码回调
+   */
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  getphonenumber: (e2) => true,
+  /**
+   * @description 获取用户手机号实时验证回调
+   */
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  getrealtimephonenumber: (e2) => true,
+  /**
+   * @description 打开权限设置面板并关闭时回调
+   */
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  opensetting: (e2) => true,
+  /**
+   * @description 打开APP成功时回调
+   */
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  launchapp: (e2) => true,
+  /**
+   * @description 获取用户信息回调
+   */
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  getuserinfo: (e2) => true,
+  /**
+   * @description 获取用户头像回调
+   */
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  chooseavatar: (e2) => true,
+  /**
+   * @description 同意隐私授权回调
+   */
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  agreeprivacyauthorization: (e2) => true,
+  /**
+   * @description 客服消息回调
+   */
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  contact: (e2) => true,
+  /**
+   * @description 开放能力调用发生错误时回调
+   */
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  error: (e2) => true
+};
+const useButtonCustomStyle = (props2) => {
+  const ns = useNamespace("button");
+  const [bgColorClass, bgColorStyle] = useComponentColor(
+    toRef(props2, "bgColor"),
+    "bg"
+  );
+  const [textColorClass, textColorStyle] = useComponentColor(
+    toRef(props2, "textColor"),
+    "text"
+  );
+  const [borderColorClass, borderColorStyle] = useComponentColor(
+    toRef(props2, "borderColor"),
+    "border"
+  );
+  const [shadowColorClass, shadowColorStyle] = useComponentColor(
+    toRef(props2, "shadowColor"),
+    "shadow"
+  );
+  const buttonClass = computed(() => {
+    const cls = [ns.b()];
+    if (props2.onlyButton) {
+      cls.push(ns.m("only-button"));
+      return cls.join(" ");
+    }
+    if (props2.text)
+      cls.push(ns.m("text"));
+    if (props2.plain) {
+      cls.push(ns.m("plain"));
+      if (props2.borderBold)
+        cls.push(ns.m("plain-bold"));
+    }
+    if (props2.type) {
+      if (props2.text) {
+        if (!props2.textColor)
+          cls.push(`tn-type-${props2.type}_text`);
+      } else if (props2.plain) {
+        if (!props2.borderColor)
+          cls.push(`tn-type-${props2.type}_border`);
+      } else {
+        if (!props2.bgColor)
+          cls.push(`tn-type-${props2.type}_bg`);
+      }
+    }
+    if (props2.size)
+      cls.push(ns.m(props2.size));
+    if (!props2.text && props2.shape)
+      cls.push(ns.m(props2.shape));
+    if (props2.bold)
+      cls.push("tn-text-bold");
+    if (!props2.text && !props2.plain) {
+      if (bgColorClass.value)
+        cls.push(bgColorClass.value);
+    }
+    if (textColorClass.value)
+      cls.push(textColorClass.value);
+    if (props2.plain) {
+      if (borderColorClass.value)
+        cls.push(borderColorClass.value);
+    }
+    if (props2.shadow) {
+      cls.push("tn-shadow");
+      if (shadowColorClass.value)
+        cls.push(shadowColorClass.value);
+    }
+    if (props2.customClass)
+      cls.push(props2.customClass);
+    return cls.join(" ");
+  });
+  const buttonStyle = computed(() => {
+    const style = {};
+    if (props2.onlyButton)
+      return style;
+    if (props2.width) {
+      style.width = formatDomSizeValue(props2.width);
+      if (props2.shape === "circle")
+        style.height = style.width;
+    }
+    if (props2.height && props2.shape !== "circle")
+      style.height = formatDomSizeValue(props2.height);
+    if (props2.fontSize)
+      style.fontSize = formatDomSizeValue(props2.fontSize);
+    if (!props2.text && !props2.plain) {
+      if (bgColorStyle.value)
+        style.backgroundColor = bgColorStyle.value;
+    }
+    if (textColorStyle.value) {
+      style.color = textColorStyle.value;
+    }
+    if (props2.plain && borderColorStyle.value) {
+      style.borderColor = borderColorStyle.value;
+    }
+    if (props2.shadow && shadowColorStyle.value)
+      style.boxShadow = shadowColorStyle.value;
+    if (!isEmpty(props2.customStyle)) {
+      Object.assign(style, props2.customStyle);
+    }
+    return style;
+  });
+  return {
+    ns,
+    buttonClass,
+    buttonStyle
+  };
+};
+const useButton = (props2, emits) => {
+  const buttonClickHandle = () => {
+    if (props2.disabled || props2.loading)
+      return;
+    emits("click");
+  };
+  const buttonClick = props2.debounce ? debounce(buttonClickHandle, 250) : buttonClickHandle;
+  const getPhoneNumber = (e2) => {
+    emits("getphonenumber", e2);
+  };
+  const getRealTimePhoneNumber = (e2) => {
+    emits("getrealtimephonenumber", e2);
+  };
+  const openSetting = (e2) => {
+    emits("opensetting", e2);
+  };
+  const launchApp = (e2) => {
+    emits("launchapp", e2);
+  };
+  const getUserInfo = (e2) => {
+    emits("getuserinfo", e2);
+  };
+  const chooseAvatar = (e2) => {
+    emits("chooseavatar", e2);
+  };
+  const agreePrivacyAuthorization = (e2) => {
+    emits("agreeprivacyauthorization", e2);
+  };
+  const contact = (e2) => {
+    emits("contact", e2);
+  };
+  const openTypeError = (e2) => {
+    emits("error", e2);
+  };
+  return {
+    buttonClick,
+    getPhoneNumber,
+    getRealTimePhoneNumber,
+    openSetting,
+    launchApp,
+    getUserInfo,
+    chooseAvatar,
+    agreePrivacyAuthorization,
+    contact,
+    openTypeError
+  };
+};
+const avatarShape = ["circle", "square"];
+const avatarProps = buildProps({
+  /**
+   * @description 头像地址(url地址和绝对地址)
+   */
+  url: String,
+  /**
+   * @descripttion 头像图标
+   */
+  icon: String,
+  /**
+   * @description 头像图标配置
+   */
+  iconConfig: {
+    type: definePropType(Object),
+    default: () => ({})
+  },
+  /**
+   * @description 头像颜色类型
+   */
+  type: {
+    type: String,
+    values: componentTypes,
+    default: ""
+  },
+  /**
+   * @description 头像大小
+   */
+  size: {
+    type: [String, Number]
+  },
+  /**
+   * @description 头像形状
+   */
+  shape: {
+    type: String,
+    values: avatarShape,
+    default: "circle"
+  },
+  /**
+   * @description 头像图片模式
+   */
+  imgMode: {
+    type: String,
+    values: componentImgModes,
+    default: "aspectFill"
+  },
+  /**
+   * @description 背景颜色
+   */
+  bgColor: String,
+  /**
+   * @description 显示边框
+   */
+  border: useComponentBoolean,
+  /**
+   * @description 边框颜色
+   */
+  borderColor: String,
+  /**
+   * @description 是否加粗边框
+   */
+  borderBold: useComponentBoolean,
+  /**
+   * @description 显示阴影
+   */
+  shadow: useComponentBoolean,
+  /**
+   * @description 阴影颜色
+   */
+  shadowColor: String,
+  /**
+   * @description 角标内容
+   */
+  badge: {
+    type: [String, Number]
+  },
+  /**
+   * @description 角标配置
+   */
+  badgeConfig: {
+    type: definePropType(Object),
+    default: () => ({})
+  }
+});
+const avatarEmits = {
+  /**
+   * @description 点击事件
+   */
+  click: () => true
+};
+const useAvatarIconConfig = (config2) => {
+  const avatarGroup = inject(avatarGroupContextKey, void 0);
+  const iconColor = computed(() => {
+    var _a;
+    return (config2 == null ? void 0 : config2.color) || ((_a = avatarGroup == null ? void 0 : avatarGroup.iconConfig) == null ? void 0 : _a.color) || "";
+  });
+  const iconSize = computed(() => {
+    var _a;
+    return (config2 == null ? void 0 : config2.size) || ((_a = avatarGroup == null ? void 0 : avatarGroup.iconConfig) == null ? void 0 : _a.size) || "";
+  });
+  const iconBold = computed(() => {
+    var _a;
+    return (config2 == null ? void 0 : config2.bold) || ((_a = avatarGroup == null ? void 0 : avatarGroup.iconConfig) == null ? void 0 : _a.bold) || false;
+  });
+  return {
+    iconColor,
+    iconSize,
+    iconBold
+  };
+};
+const useAvatarProps = (props2) => {
+  const avatarGroup = inject(avatarGroupContextKey, void 0);
+  const type2 = computed(() => {
+    return isEmptyDoubleVariableInDefault(props2 == null ? void 0 : props2.type, avatarGroup == null ? void 0 : avatarGroup.type, "");
+  });
+  const size2 = computed(() => {
+    return isEmptyDoubleVariableInDefault(props2 == null ? void 0 : props2.size, avatarGroup == null ? void 0 : avatarGroup.size, "");
+  });
+  const shape = computed(() => {
+    return isEmptyDoubleVariableInDefault(
+      props2 == null ? void 0 : props2.shape,
+      avatarGroup == null ? void 0 : avatarGroup.shape,
+      "circle"
+    );
+  });
+  const imgMode = computed(() => {
+    return isEmptyDoubleVariableInDefault(
+      props2 == null ? void 0 : props2.imgMode,
+      avatarGroup == null ? void 0 : avatarGroup.imgMode,
+      "aspectFill"
+    );
+  });
+  const bgColor = computed(() => {
+    return isEmptyDoubleVariableInDefault(
+      props2 == null ? void 0 : props2.bgColor,
+      avatarGroup == null ? void 0 : avatarGroup.bgColor,
+      "tn-gray-light"
+    );
+  });
+  const border = computed(() => {
+    return isEmptyDoubleVariableInDefault(
+      props2 == null ? void 0 : props2.border,
+      avatarGroup == null ? void 0 : avatarGroup.border,
+      false
+    );
+  });
+  const borderColor = computed(() => {
+    return isEmptyDoubleVariableInDefault(
+      props2 == null ? void 0 : props2.borderColor,
+      avatarGroup == null ? void 0 : avatarGroup.borderColor,
+      ""
+    );
+  });
+  const borderBold = computed(() => {
+    return isEmptyDoubleVariableInDefault(
+      props2 == null ? void 0 : props2.borderBold,
+      avatarGroup == null ? void 0 : avatarGroup.borderBold,
+      false
+    );
+  });
+  const shadow = computed(() => {
+    return isEmptyDoubleVariableInDefault(
+      props2 == null ? void 0 : props2.shadow,
+      avatarGroup == null ? void 0 : avatarGroup.shadow,
+      false
+    );
+  });
+  const shadowColor = computed(() => {
+    return isEmptyDoubleVariableInDefault(
+      props2 == null ? void 0 : props2.shadowColor,
+      avatarGroup == null ? void 0 : avatarGroup.shadowColor,
+      ""
+    );
+  });
+  const avatarGap = computed(() => {
+    let gap = Number(isEmptyVariableInDefault(avatarGroup == null ? void 0 : avatarGroup.gap, 0));
+    if (gap < 0)
+      gap = 0;
+    if (gap > 1)
+      gap = 1;
+    return gap;
+  });
+  return {
+    type: type2,
+    size: size2,
+    shape,
+    imgMode,
+    bgColor,
+    border,
+    borderColor,
+    borderBold,
+    shadow,
+    shadowColor,
+    avatarGap
+  };
+};
+const useAvatarCustomStyle = (props2, groupIndex, avatarWidth) => {
+  const ns = useNamespace("avatar");
+  const {
+    type: type2,
+    size: size2,
+    shape,
+    bgColor,
+    border,
+    borderColor,
+    shadow,
+    shadowColor,
+    avatarGap
+  } = useAvatarProps(props2);
+  const [bgColorClass, bgColorStyle] = useComponentColor(bgColor, "bg");
+  const [borderColorClass, borderColorStyle] = useComponentColor(
+    borderColor,
+    "border"
+  );
+  const [shadowColorClass] = useComponentColor(shadowColor, "shadow");
+  const { sizeType } = useComponentSize(size2.value);
+  const avatarClass = computed(() => {
+    const cls = [];
+    cls.push(ns.b());
+    if (type2.value)
+      cls.push(`tn-type-${type2.value}_bg`);
+    if (!type2.value && bgColorClass.value)
+      cls.push(bgColorClass.value);
+    if (sizeType.value === "inner")
+      cls.push(ns.m(size2.value));
+    if (shape.value)
+      cls.push(ns.m(shape.value));
+    if (border.value) {
+      cls.push("tn-border");
+      if (borderColorClass.value)
+        cls.push(borderColorClass.value);
+    }
+    if (shadow.value) {
+      cls.push("tn-shadow");
+      if (shadowColorClass.value)
+        cls.push(shadowColorClass.value);
+    }
+    return cls.join(" ");
+  });
+  const avatarStyle = computed(() => {
+    const style = {};
+    if (sizeType.value === "custom") {
+      style.width = formatDomSizeValue(size2.value);
+      style.height = style.width;
+    }
+    if (bgColorStyle.value)
+      style.backgroundColor = bgColorStyle.value;
+    if (border.value && borderColorStyle.value)
+      style.borderColor = borderColorStyle.value;
+    if (groupIndex.value != -1) {
+      style.zIndex = groupIndex.value + 1;
+      if (groupIndex.value > 0) {
+        style.marginLeft = `calc(-${avatarWidth.value * avatarGap.value}px)`;
+      } else {
+        style.marginLeft = "0px";
+      }
+    }
+    return style;
+  });
+  return {
+    ns,
+    avatarClass,
+    avatarStyle
+  };
+};
+const useAvatar = (props2, emits) => {
+  const instance = getCurrentInstance();
+  if (!instance) {
+    debugWarn("TnAvatarGroup", "请在 setup 中使用 useAvatarGroup");
+  }
+  const { uid: uid2 } = instance;
+  const avatarGroup = inject(avatarGroupContextKey, void 0);
+  avatarGroup == null ? void 0 : avatarGroup.addItem({ uid: uid2 });
+  const componentId = `ta-${generateId()}`;
+  const { getSelectorNodeInfo } = useSelectorQuery(instance);
+  const groupAvatarCount = computed(() => {
+    return isEmptyVariableInDefault(avatarGroup == null ? void 0 : avatarGroup.avatarItems.length, 0);
+  });
+  const avatarGroupIndex = ref(-1);
+  nextTick$1(() => {
+    const avatarIndex = avatarGroup == null ? void 0 : avatarGroup.avatarItems.findIndex(
+      (item) => item.uid === uid2
+    );
+    avatarGroupIndex.value = isEmptyVariableInDefault(avatarIndex, -1);
+    if (!avatarWidth.value && avatarGroupIndex.value !== -1) {
+      getAvatarWidthNodeInfo();
+    }
+  });
+  const avatarWidth = ref(0);
+  let initCount = 0;
+  const getAvatarWidthNodeInfo = async () => {
+    try {
+      const rectInfo = await getSelectorNodeInfo(`#${componentId}`);
+      if (!rectInfo.width) {
+        throw new Error("获取头像宽度信息失败");
+      }
+      avatarWidth.value = rectInfo.width || 0;
+    } catch (err) {
+      if (initCount > 10) {
+        initCount = 0;
+        debugWarn("TnAvatar", `获取头像宽度信息失败：${err}`);
+        return;
+      }
+      initCount++;
+      setTimeout(() => {
+        getAvatarWidthNodeInfo();
+      }, 150);
+    }
+  };
+  const avatarClick = () => {
+    avatarGroup == null ? void 0 : avatarGroup.handleItemClick(uid2);
+    emits("click");
+  };
+  onUnmounted(() => {
+    avatarGroup == null ? void 0 : avatarGroup.removeItem(uid2);
+  });
+  return {
+    componentId,
+    groupAvatarCount,
+    avatarGroupIndex,
+    avatarWidth,
+    avatarClick
+  };
+};
+const useAvatarGroup = (props2, emits) => {
+  const {
+    children: avatarItems,
+    addChild: addItem,
+    removeChild: removeItem
+  } = useOrderedChildren();
+  const handleItemClick = (uid2) => {
+    const index2 = avatarItems.value.findIndex((item) => item.uid === uid2);
+    emits("click", index2);
+  };
+  provide(
+    avatarGroupContextKey,
+    reactive({
+      ...toRefs(props2),
+      avatarItems,
+      addItem,
+      removeItem,
+      handleItemClick
+    })
+  );
+};
+const useAvatarBadgeProps = (props2) => {
+  const avatarGroup = inject(avatarGroupContextKey, void 0);
+  const max = computed(() => {
+    var _a, _b;
+    return isEmptyDoubleVariableInDefault(
+      (_a = props2 == null ? void 0 : props2.badgeConfig) == null ? void 0 : _a.max,
+      (_b = avatarGroup == null ? void 0 : avatarGroup.badgeConfig) == null ? void 0 : _b.max
+    );
+  });
+  const type2 = computed(() => {
+    var _a, _b;
+    return isEmptyDoubleVariableInDefault(
+      (_a = props2 == null ? void 0 : props2.badgeConfig) == null ? void 0 : _a.type,
+      (_b = avatarGroup == null ? void 0 : avatarGroup.badgeConfig) == null ? void 0 : _b.type,
+      "primary"
+    );
+  });
+  const bgColor = computed(() => {
+    var _a, _b;
+    return isEmptyDoubleVariableInDefault(
+      (_a = props2 == null ? void 0 : props2.badgeConfig) == null ? void 0 : _a.bgColor,
+      (_b = avatarGroup == null ? void 0 : avatarGroup.badgeConfig) == null ? void 0 : _b.bgColor
+    );
+  });
+  const textColor = computed(() => {
+    var _a, _b;
+    return isEmptyDoubleVariableInDefault(
+      (_a = props2 == null ? void 0 : props2.badgeConfig) == null ? void 0 : _a.textColor,
+      (_b = avatarGroup == null ? void 0 : avatarGroup.badgeConfig) == null ? void 0 : _b.textColor
+    );
+  });
+  const fontSize = computed(() => {
+    var _a, _b;
+    return isEmptyDoubleVariableInDefault(
+      (_a = props2 == null ? void 0 : props2.badgeConfig) == null ? void 0 : _a.fontSize,
+      (_b = avatarGroup == null ? void 0 : avatarGroup.badgeConfig) == null ? void 0 : _b.fontSize
+    );
+  });
+  const size2 = computed(() => {
+    var _a, _b;
+    return isEmptyDoubleVariableInDefault(
+      (_a = props2 == null ? void 0 : props2.badgeConfig) == null ? void 0 : _a.size,
+      (_b = avatarGroup == null ? void 0 : avatarGroup.badgeConfig) == null ? void 0 : _b.size
+    );
+  });
+  const bold = computed(() => {
+    var _a, _b;
+    return isEmptyDoubleVariableInDefault(
+      (_a = props2 == null ? void 0 : props2.badgeConfig) == null ? void 0 : _a.bold,
+      (_b = avatarGroup == null ? void 0 : avatarGroup.badgeConfig) == null ? void 0 : _b.bold,
+      false
+    );
+  });
+  const dot = computed(() => {
+    var _a, _b;
+    return isEmptyDoubleVariableInDefault(
+      (_a = props2 == null ? void 0 : props2.badgeConfig) == null ? void 0 : _a.dot,
+      (_b = avatarGroup == null ? void 0 : avatarGroup.badgeConfig) == null ? void 0 : _b.dot,
+      false
+    );
+  });
+  const absolutePosition = computed(() => {
+    var _a, _b;
+    return isEmptyDoubleVariableInDefault(
+      (_a = props2 == null ? void 0 : props2.badgeConfig) == null ? void 0 : _a.absolutePosition,
+      (_b = avatarGroup == null ? void 0 : avatarGroup.badgeConfig) == null ? void 0 : _b.absolutePosition,
+      {}
+    );
+  });
+  const absoluteCenter = computed(() => {
+    var _a, _b;
+    return isEmptyDoubleVariableInDefault(
+      (_a = props2 == null ? void 0 : props2.badgeConfig) == null ? void 0 : _a.absoluteCenter,
+      (_b = avatarGroup == null ? void 0 : avatarGroup.badgeConfig) == null ? void 0 : _b.absoluteCenter,
+      true
+    );
+  });
+  const badgeConfig = computed(() => {
+    return {
+      value: props2.badge,
+      max: max.value,
+      type: type2.value,
+      bgColor: bgColor.value,
+      textColor: textColor.value,
+      fontSize: fontSize.value,
+      size: size2.value,
+      bold: bold.value,
+      customClass: "",
+      customStyle: {},
+      dot: dot.value,
+      absolute: true,
+      absolutePosition: absolutePosition.value,
+      absoluteCenter: absoluteCenter.value,
+      index: ""
+    };
+  });
+  return {
+    badgeConfig
+  };
+};
+const avatarGroupProps = buildProps({
+  /**
+   * @description 头像图标配置
+   */
+  iconConfig: avatarProps.iconConfig,
+  /**
+   * @description 头像颜色类型
+   */
+  type: avatarProps.type,
+  /**
+   * @description 头像大小
+   */
+  size: avatarProps.size,
+  /**
+   * @description 头像形状
+   */
+  shape: avatarProps.shape,
+  /**
+   * @description 头像图片模式
+   */
+  imgMode: avatarProps.imgMode,
+  /**
+   * @description 背景颜色
+   */
+  bgColor: avatarProps.bgColor,
+  /**
+   * @description 显示边框
+   */
+  border: {
+    type: Boolean,
+    default: true
+  },
+  /**
+   * @description 边框颜色
+   */
+  borderColor: {
+    type: String,
+    default: "tn-white"
+  },
+  /**
+   * @description 是否加粗边框
+   */
+  borderBold: avatarProps.borderBold,
+  /**
+   * @description 显示阴影
+   */
+  shadow: avatarProps.shadow,
+  /**
+   * @description 阴影颜色
+   */
+  shadowColor: avatarProps.shadowColor,
+  /**
+   * @description 头像角标配置
+   */
+  badgeConfig: avatarProps.badgeConfig,
+  /**
+   * @description 头像之间遮挡比例
+   */
+  gap: {
+    type: [String, Number],
+    default: 0.4
+  }
+});
+const avatarGroupEmits = {
+  /**
+   * @description 点击头像
+   */
+  click: (index2) => typeof index2 === "number"
+};
+const props$9 = defineMixin({
+  props: {
+    // 搜索框形状，round-圆形，square-方形
+    shape: {
+      type: String,
+      default: () => defProps.search.shape
+    },
+    // 搜索框背景色，默认值#f2f2f2
+    bgColor: {
+      type: String,
+      default: () => defProps.search.bgColor
+    },
+    // 占位提示文字
+    placeholder: {
+      type: String,
+      default: () => defProps.search.placeholder
+    },
+    // 是否启用清除控件
+    clearabled: {
+      type: Boolean,
+      default: () => defProps.search.clearabled
+    },
+    // 是否自动聚焦
+    focus: {
+      type: Boolean,
+      default: () => defProps.search.focus
+    },
+    // 是否在搜索框右侧显示取消按钮
+    showAction: {
+      type: Boolean,
+      default: () => defProps.search.showAction
+    },
+    // 右边控件的样式
+    actionStyle: {
+      type: Object,
+      default: () => defProps.search.actionStyle
+    },
+    // 取消按钮文字
+    actionText: {
+      type: String,
+      default: () => defProps.search.actionText
+    },
+    // 输入框内容对齐方式，可选值为 left|center|right
+    inputAlign: {
+      type: String,
+      default: () => defProps.search.inputAlign
+    },
+    // input输入框的样式，可以定义文字颜色，大小等，对象形式
+    inputStyle: {
+      type: Object,
+      default: () => defProps.search.inputStyle
+    },
+    // 是否启用输入框
+    disabled: {
+      type: Boolean,
+      default: () => defProps.search.disabled
+    },
+    // 边框颜色
+    borderColor: {
+      type: String,
+      default: () => defProps.search.borderColor
+    },
+    // 搜索图标的颜色，默认同输入框字体颜色
+    searchIconColor: {
+      type: String,
+      default: () => defProps.search.searchIconColor
+    },
+    // 输入框字体颜色
+    color: {
+      type: String,
+      default: () => defProps.search.color
+    },
+    // placeholder的颜色
+    placeholderColor: {
+      type: String,
+      default: () => defProps.search.placeholderColor
+    },
+    // 左边输入框的图标，可以为uView图标名称或图片路径
+    searchIcon: {
+      type: String,
+      default: () => defProps.search.searchIcon
+    },
+    searchIconSize: {
+      type: [Number, String],
+      default: () => defProps.search.searchIconSize
+    },
+    // 组件与其他上下左右元素之间的距离，带单位的字符串形式，如"30px"、"30px 20px"等写法
+    margin: {
+      type: String,
+      default: () => defProps.search.margin
+    },
+    // 开启showAction时，是否在input获取焦点时才显示
+    animation: {
+      type: Boolean,
+      default: () => defProps.search.animation
+    },
+    // 输入框的初始化内容
+    modelValue: {
+      type: String,
+      default: () => defProps.search.value
+    },
+    value: {
+      type: String,
+      default: () => defProps.search.value
+    },
+    // 输入框最大能输入的长度，-1为不限制长度(来自uniapp文档)
+    maxlength: {
+      type: [String, Number],
+      default: () => defProps.search.maxlength
+    },
+    // 搜索框高度，单位px
+    height: {
+      type: [String, Number],
+      default: () => defProps.search.height
+    },
+    // 搜索框左侧文本
+    label: {
+      type: [String, Number, null],
+      default: () => defProps.search.label
+    },
+    // 键盘弹起时，是否自动上推页面	
+    adjustPosition: {
+      type: Boolean,
+      default: () => true
+    },
+    // 键盘收起时，是否自动失去焦点	
+    autoBlur: {
+      type: Boolean,
+      default: () => false
+    }
+  }
+});
+const props$8 = defineMixin({
+  props: {
+    // 滑块的移动过渡时间，单位ms
+    duration: {
+      type: Number,
+      default: () => defProps.tabs.duration
+    },
+    // tabs标签数组
+    list: {
+      type: Array,
+      default: () => defProps.tabs.list
+    },
+    // 滑块颜色
+    lineColor: {
+      type: String,
+      default: () => defProps.tabs.lineColor
+    },
+    // 菜单选择中时的样式
+    activeStyle: {
+      type: [String, Object],
+      default: () => defProps.tabs.activeStyle
+    },
+    // 菜单非选中时的样式
+    inactiveStyle: {
+      type: [String, Object],
+      default: () => defProps.tabs.inactiveStyle
+    },
+    // 滑块长度
+    lineWidth: {
+      type: [String, Number],
+      default: () => defProps.tabs.lineWidth
+    },
+    // 滑块高度
+    lineHeight: {
+      type: [String, Number],
+      default: () => defProps.tabs.lineHeight
+    },
+    // 滑块背景显示大小，当滑块背景设置为图片时使用
+    lineBgSize: {
+      type: String,
+      default: () => defProps.tabs.lineBgSize
+    },
+    // 菜单item的样式
+    itemStyle: {
+      type: [String, Object],
+      default: () => defProps.tabs.itemStyle
+    },
+    // 菜单是否可滚动
+    scrollable: {
+      type: Boolean,
+      default: () => defProps.tabs.scrollable
+    },
+    // 当前选中标签的索引
+    current: {
+      type: [Number, String],
+      default: () => defProps.tabs.current
+    },
+    // 默认读取的键名
+    keyName: {
+      type: String,
+      default: () => defProps.tabs.keyName
+    }
+  }
+});
+const overlayProps = buildProps({
+  /**
+   * @description 是否显示遮罩层
+   */
+  show: {
+    type: Boolean,
+    default: false
+  },
+  /**
+   * @description 动画时间，单位毫秒
+   */
+  duration: {
+    type: Number,
+    default: 300
+  },
+  /**
+   * @description 遮罩层透明度，有效值0-1
+   */
+  opacity: {
+    type: Number,
+    default: 0.5
+  },
+  /**
+   * @description zIndex
+   */
+  zIndex: {
+    type: Number,
+    default: ZIndex.mask
+  }
+});
+const overlayEmits = {
+  "update:show": (value2) => isBoolean(value2),
+  click: () => true
+};
+const useOverlay = (props2, emits) => {
+  const ns = useNamespace("overlay");
+  const overlayClass = computed(() => {
+    const cls = [ns.b()];
+    if (props2.show)
+      cls.push(ns.m("show"));
+    return cls.join(" ");
+  });
+  const overlayStyle = computed(() => {
+    const style = {};
+    style.transitionDuration = `${isEmptyVariableInDefault(
+      props2.duration,
+      300
+    )}ms`;
+    style.backgroundColor = `rgba(0, 0, 0, ${isEmptyVariableInDefault(
+      props2.opacity,
+      0.5
+    )})`;
+    if (props2.zIndex)
+      style.zIndex = props2.zIndex;
+    return style;
+  });
+  const overlayClick = () => {
+    emits("update:show", false);
+    emits("click");
+  };
+  return {
+    ns,
+    overlayClass,
+    overlayStyle,
+    overlayClick
+  };
+};
+const _sfc_main = /* @__PURE__ */ defineComponent({
+  __name: "overlay",
+  props: overlayProps,
+  emits: overlayEmits,
+  setup(__props, { emit: __emit }) {
+    const props2 = __props;
+    const emits = __emit;
+    const { overlayClass, overlayStyle, overlayClick } = useOverlay(props2, emits);
+    return (_ctx, _cache) => {
+      return {
+        a: n(unref(overlayClass)),
+        b: s(unref(overlayStyle)),
+        c: o(
+          //@ts-ignore
+          (...args) => unref(overlayClick) && unref(overlayClick)(...args)
+        ),
+        d: o(() => {
+        })
+      };
+    };
+  }
+});
+const Component$1 = /* @__PURE__ */ _export_sfc(_sfc_main, [["__scopeId", "data-v-40a804f4"]]);
+withNoopInstall(Component$1);
+const popupOpenDirection = [
+  "top",
+  "bottom",
+  "left",
+  "right",
+  "center"
+];
+const popupCloseBtnPosition = [
+  "left-top",
+  "right-top",
+  "left-bottom",
+  "right-bottom"
+];
+const popupProps = buildProps({
+  /**
+   * @description 控制弹框是否显示
+   */
+  modelValue: Boolean,
+  /**
+   * @description 弹框打开的方向
+   */
+  openDirection: {
+    type: String,
+    values: popupOpenDirection,
+    default: "center"
+  },
+  /**
+   * @description 弹窗的宽度，在 openDirection 为 left 或 right 或 center 时生效
+   */
+  width: {
+    type: [String, Number]
+  },
+  /**
+   * @description 弹窗的高度，在 openDirection 为 top 或 bottom 或 center 时生效
+   */
+  height: {
+    type: [String, Number]
+  },
+  /**
+   * @description 弹框的内容的背景颜色
+   */
+  bgColor: {
+    type: String,
+    default: "#fff"
+  },
+  /**
+   * @description 弹框的内容的圆角
+   */
+  radius: {
+    type: [String, Number],
+    default: 15
+  },
+  /**
+   * @description 是否显示overlay遮罩层
+   */
+  overlay: {
+    type: Boolean,
+    default: true
+  },
+  /**
+   * @description overlay遮罩层的透明度
+   */
+  overlayOpacity: overlayProps["opacity"],
+  /**
+   * @description 点击overlay关闭弹框
+   */
+  overlayCloseable: {
+    type: Boolean,
+    default: true
+  },
+  /**
+   * @description 是否显示关闭按钮
+   */
+  closeBtn: Boolean,
+  /**
+   * @description 关闭按钮的位置
+   */
+  closeBtnPosition: {
+    type: String,
+    values: popupCloseBtnPosition,
+    default: "right-top"
+  },
+  /**
+   * @description 底部是否开启安全区域
+   */
+  safeAreaInsetBottom: useComponentSafeAreaInsetBottomProp,
+  /**
+   * @description zIndex
+   */
+  zIndex: {
+    type: Number,
+    default: ZIndex.popup
+  },
+  /**
+   * @description 距离顶部的距离，在 openDirection 为 top 或 left 或 right 时生效，默认单位为`px`
+   */
+  top: {
+    type: [String, Number]
+  }
+});
+const popupEmits = {
+  [UPDATE_MODEL_EVENT]: (value2) => isBoolean(value2),
+  open: () => true,
+  close: () => true,
+  ["overlay-click"]: () => true
+};
+const usePopupCustomStyle = (props2) => {
+  const ns = useNamespace("popup");
+  const zIndex2 = computed(() => Number(props2.zIndex));
+  const overlayZIndex = computed(() => zIndex2.value - 1);
+  const [contentBgColorClass, contentBgColorStyle] = useComponentColor(
+    toRef(props2, "bgColor"),
+    "bg"
+  );
+  const popupContentClass = computed(() => {
+    const cls = [ns.e("content")];
+    if (props2.openDirection)
+      cls.push(ns.em("content", props2.openDirection));
+    if (props2.openDirection === "bottom" && props2.safeAreaInsetBottom) {
+      cls.push("tn-u-safe-area");
+    }
+    if (contentBgColorClass.value)
+      cls.push(contentBgColorClass.value);
+    return cls.join(" ");
+  });
+  const popupContentStyle = computed(() => {
+    const style = {};
+    if (contentBgColorStyle.value)
+      style.backgroundColor = contentBgColorStyle.value;
+    if (props2.radius) {
+      style.overflow = "hidden";
+      if (props2.openDirection === "center") {
+        style.borderRadius = formatDomSizeValue(props2.radius);
+      }
+      if (props2.openDirection === "top") {
+        style.borderBottomLeftRadius = formatDomSizeValue(props2.radius);
+        style.borderBottomRightRadius = formatDomSizeValue(props2.radius);
+      }
+      if (props2.openDirection === "left") {
+        style.borderTopRightRadius = formatDomSizeValue(props2.radius);
+        style.borderBottomRightRadius = formatDomSizeValue(props2.radius);
+      }
+      if (props2.openDirection === "right") {
+        style.borderTopLeftRadius = formatDomSizeValue(props2.radius);
+        style.borderBottomLeftRadius = formatDomSizeValue(props2.radius);
+      }
+      if (props2.openDirection === "bottom") {
+        style.borderTopLeftRadius = formatDomSizeValue(props2.radius);
+        style.borderTopRightRadius = formatDomSizeValue(props2.radius);
+      }
+    }
+    if (props2.top && (props2.openDirection === "top" || props2.openDirection === "left" || props2.openDirection === "right")) {
+      style.top = formatDomSizeValue(props2.top, "px");
+    }
+    if (props2.width && (props2.openDirection === "left" || props2.openDirection === "right" || props2.openDirection === "center")) {
+      style.width = formatDomSizeValue(props2.width);
+    }
+    if (props2.height && (props2.openDirection === "top" || props2.openDirection === "bottom" || props2.openDirection === "center")) {
+      style.height = formatDomSizeValue(props2.height);
+    }
+    if (props2.openDirection === "left" || props2.openDirection === "right") {
+      if (props2.top)
+        style.height = `calc(100% - ${formatDomSizeValue(props2.top, "px")})`;
+    }
+    style.zIndex = zIndex2.value;
+    return style;
+  });
+  return {
+    ns,
+    zIndex: zIndex2,
+    overlayZIndex,
+    popupContentClass,
+    popupContentStyle
+  };
+};
+const usePopup = (props2) => {
+  const { emit: emit2 } = getCurrentInstance();
+  const iosDevice = computed(() => {
+    const systemInfo = index$2.getSystemInfoSync();
+    return systemInfo.osName === "ios" || systemInfo.osName === "macos";
+  });
+  const showOverlay = ref(false);
+  const showPopup = ref(false);
+  const visiblePopup = ref(false);
+  let initPopupModelValue = false;
+  watch(
+    () => props2.modelValue,
+    (value2) => {
+      if (value2) {
+        visiblePopup.value = true;
+        if (iosDevice.value) {
+          setTimeout(() => {
+            showPopup.value = true;
+            if (props2.overlay)
+              showOverlay.value = true;
+            initPopupModelValue && emit2("open");
+          }, 0);
+        } else {
+          showPopup.value = true;
+          if (props2.overlay)
+            showOverlay.value = true;
+          initPopupModelValue && emit2("open");
+        }
+      } else {
+        showPopup.value = false;
+        showOverlay.value = false;
+        setTimeout(() => {
+          visiblePopup.value = false;
+        }, 250);
+        initPopupModelValue && emit2("close");
+      }
+      initPopupModelValue = true;
+    },
+    {
+      immediate: true
+    }
+  );
+  const updateModelValue = (value2) => {
+    emit2(UPDATE_MODEL_EVENT, value2);
+  };
+  const onClickCloseBtn = () => {
+    updateModelValue(false);
+    emit2("close");
+  };
+  const onClickOverlay = () => {
+    if (props2.overlayCloseable) {
+      updateModelValue(false);
+      emit2("close");
+      emit2("overlay-click");
+    }
+  };
+  return {
+    iosDevice,
+    showOverlay,
+    showPopup,
+    visiblePopup,
+    updateModelValue,
+    onClickCloseBtn,
+    onClickOverlay
+  };
+};
+const propgressBaseProps = buildProps({
+  /**
+   * @description 当前进度百分比
+   */
+  percent: {
+    type: Number,
+    default: 0
+  },
+  /**
+   * @description 激活时的颜色，以tn开头则使用图鸟内置的颜色，在为圆环进度条是无法使用内置的颜色
+   */
+  activeColor: String,
+  /**
+   * @description 未激活时的颜色，以tn开头则使用图鸟内置的颜色，在为圆环进度条是无法使用内置的颜色
+   */
+  inactiveColor: String,
+  /**
+   * @description 显示当前进度
+   */
+  showPercent: Boolean,
+  /**
+   * @description 动画执行时间，单位ms
+   */
+  duration: {
+    type: Number,
+    default: 1500
+  }
+});
+const circleProgressProps = buildProps({
+  ...propgressBaseProps,
+  /**
+   * @description 圆环的半径，单位 px，只支持传递固定的值
+   */
+  radius: {
+    type: Number,
+    default: 50
+  },
+  /**
+   * @description 圆环的宽度，单位 px，只支持传递固定的值
+   */
+  ringWidth: {
+    type: Number,
+    default: 7
+  }
+});
+const useCircleProgress = (props2) => {
+  const instance = getCurrentInstance();
+  const ns = useNamespace("circle-progress");
+  const radius = computed(() => {
+    return isEmptyVariableInDefault(props2 == null ? void 0 : props2.radius, 50);
+  });
+  const ringWidth = computed(() => {
+    return isEmptyVariableInDefault(props2 == null ? void 0 : props2.ringWidth, 14);
+  });
+  const circleColor = computed(() => {
+    return isEmptyVariableInDefault(props2 == null ? void 0 : props2.inactiveColor, "#e6e6e6");
+  });
+  const activeCircleColor = computed(() => {
+    return isEmptyVariableInDefault(props2 == null ? void 0 : props2.activeColor, "#01beff");
+  });
+  const duration = computed(() => {
+    return isEmptyVariableInDefault(props2 == null ? void 0 : props2.duration, 1500);
+  });
+  let currentPercent = 0;
+  let prevPercent = 0;
+  const canvasId = String(generateId());
+  let progressCanvas = null;
+  const startAngle = -90 * (Math.PI / 180);
+  const drawProgressCircle = (percent) => {
+    if (!progressCanvas) {
+      progressCanvas = index$2.createCanvasContext(canvasId, instance);
+    }
+    progressCanvas.clearRect(0, 0, radius.value * 2, radius.value * 2);
+    progressCanvas.beginPath();
+    progressCanvas.setLineWidth(ringWidth.value);
+    progressCanvas.setStrokeStyle(circleColor.value);
+    progressCanvas.arc(
+      radius.value,
+      radius.value,
+      radius.value - ringWidth.value / 2,
+      startAngle,
+      Math.PI * 1.5,
+      false
+    );
+    progressCanvas.stroke();
+    if (percent === 0) {
+      progressCanvas.draw();
+      return;
+    }
+    progressCanvas.beginPath();
+    progressCanvas.setLineCap("round");
+    progressCanvas.setLineWidth(ringWidth.value);
+    progressCanvas.setStrokeStyle(activeCircleColor.value);
+    const endAngle = Math.PI * 2 * percent / 100 - Math.PI / 2;
+    progressCanvas.arc(
+      radius.value,
+      radius.value,
+      radius.value - ringWidth.value / 2,
+      startAngle,
+      endAngle,
+      false
+    );
+    progressCanvas.stroke();
+    progressCanvas.draw();
+  };
+  function easeOutCubic(t2, b, c, d) {
+    return c * ((t2 = t2 / d - 1) * t2 * t2 + 1) + b;
+  }
+  let startTime = null;
+  const progressAnimation = () => {
+    if (!startTime)
+      startTime = Date.now();
+    const elapsed = Date.now() - startTime;
+    let percent = easeOutCubic(
+      elapsed,
+      prevPercent,
+      currentPercent - prevPercent,
+      duration.value
+    );
+    if (percent < 0)
+      percent = 0;
+    drawProgressCircle(percent);
+    if (elapsed < duration.value) {
+      setTimeout(progressAnimation, 16);
+    }
+  };
+  watch(
+    () => props2.percent,
+    (nVal, oVal) => {
+      currentPercent = nVal > 100 ? 100 : nVal;
+      prevPercent = !oVal || oVal < 0 ? 0 : oVal;
+      nextTick$1(() => {
+        startTime = null;
+        progressAnimation();
+      });
+    },
+    {
+      immediate: true
+    }
+  );
+  return {
+    ns,
+    canvasId,
+    radius,
+    activeCircleColor
+  };
+};
+const scrollListProps = buildProps({
+  /**
+   * @description 是否显示指示器
+   */
+  indicator: {
+    type: Boolean,
+    default: true
+  },
+  /**
+   * @description 指示器的宽度，单位 px
+   */
+  indicatorWidth: {
+    type: Number,
+    default: 40
+  },
+  /**
+   * @description 指示器滑块的宽度，单位 px
+   */
+  indicatorBlockWidth: {
+    type: Number,
+    default: 20
+  },
+  /**
+   * @description 指示器的背景颜色，以tn开头使用图鸟内置的颜色
+   */
+  indicatorColor: String,
+  /**
+   * @description 指示器滑块的背景颜色，以tn开头使用图鸟内置的颜色
+   */
+  indicatorBlockColor: String
+});
+const scrollListEmits = {
+  /**
+   * @description 滚动到左边时触发
+   */
+  "scroll-left": () => true,
+  /**
+   * @description 滚动到右边时触发
+   */
+  "scroll-right": () => true
+};
+const useScrollListCustomStyle = (props2) => {
+  const ns = useNamespace("scroll-list");
+  const [indicatorColorClass, indicatorColorStyle] = useComponentColor(
+    toRef(props2, "indicatorColor"),
+    "bg"
+  );
+  const [indicatorBlockColorClass, indicatorBlockColorStyle] = useComponentColor(toRef(props2, "indicatorBlockColor"), "bg");
+  const indicatorClass = computed(() => {
+    const cls = [ns.e("indicator")];
+    if (indicatorColorClass.value)
+      cls.push(indicatorColorClass.value);
+    return cls.join(" ");
+  });
+  const indicatorStyle = computed(() => {
+    const style = {};
+    if (props2.indicatorWidth)
+      style.width = formatDomSizeValue(props2.indicatorWidth, "px");
+    if (!indicatorColorClass.value) {
+      style.backgroundColor = indicatorColorStyle.value || "var(--tn-color-gray-disabled)";
+    }
+    return style;
+  });
+  const indicatorBlockClass = computed(() => {
+    const cls = [ns.e("indicator-block")];
+    if (indicatorBlockColorClass.value)
+      cls.push(indicatorBlockColorClass.value);
+    return cls.join(" ");
+  });
+  const indicatorBlockStyle = computed(
+    () => {
+      return (distance) => {
+        const style = {};
+        if (props2.indicatorBlockWidth)
+          style.width = formatDomSizeValue(props2.indicatorBlockWidth, "px");
+        style.left = `${distance}px`;
+        if (!indicatorBlockColorClass.value) {
+          style.backgroundColor = indicatorBlockColorStyle.value || "var(--tn-color-primary)";
+        }
+        return style;
+      };
+    }
+  );
+  return {
+    ns,
+    indicatorClass,
+    indicatorStyle,
+    indicatorBlockClass,
+    indicatorBlockStyle
+  };
+};
+const useScrollList = (props2, emits) => {
+  const instance = getCurrentInstance();
+  if (!instance) {
+    debugWarn("TnScrollList", "请在setup函数中使用useScrollList");
+  }
+  const componentId = `tsl-${generateId()}`;
+  const componentContentId = `${componentId}-content`;
+  const { getSelectorNodeInfo } = useSelectorQuery(instance);
+  let componentWidth = 0;
+  let comoponentContentWidth = 0;
+  const indicatorBlockScrollDistance = ref(0);
+  let initCount = 0;
+  const getContentRectInfo = async () => {
+    try {
+      const componentRectInfo = await getSelectorNodeInfo(`#${componentId}`);
+      const contentRectInfo = await getSelectorNodeInfo(
+        `#${componentContentId}`
+      );
+      initCount = 0;
+      componentWidth = componentRectInfo.width || 0;
+      comoponentContentWidth = contentRectInfo.width || 0;
+    } catch (err) {
+      if (initCount > 10) {
+        initCount = 0;
+        debugWarn("TnScrollList", `获取内容容器的宽度失败: ${err}`);
+        return;
+      }
+      initCount++;
+      setTimeout(() => {
+        getContentRectInfo();
+      }, 150);
+    }
+  };
+  const scrollViewScrollEvent = (e2) => {
+    const scrollLeft = e2.detail.scrollLeft;
+    indicatorBlockScrollDistance.value = scrollLeft * (props2.indicatorWidth - props2.indicatorBlockWidth) / (comoponentContentWidth - componentWidth);
+  };
+  const scrollToLeftEvent = () => {
+    emits("scroll-left");
+  };
+  const scrollToRightEvent = () => {
+    emits("scroll-right");
+  };
+  onMounted(() => {
+    nextTick$1(() => {
+      getContentRectInfo();
+    });
+  });
+  return {
+    componentId,
+    componentContentId,
+    indicatorBlockScrollDistance,
+    scrollViewScrollEvent,
+    scrollToLeftEvent,
+    scrollToRightEvent
+  };
+};
+const props$7 = defineMixin({
+  props: {
+    // 是否显示组件
+    show: {
+      type: Boolean,
+      default: () => defProps.loadingIcon.show
+    },
+    // 颜色
+    color: {
+      type: String,
+      default: () => defProps.loadingIcon.color
+    },
+    // 提示文字颜色
+    textColor: {
+      type: String,
+      default: () => defProps.loadingIcon.textColor
+    },
+    // 文字和图标是否垂直排列
+    vertical: {
+      type: Boolean,
+      default: () => defProps.loadingIcon.vertical
+    },
+    // 模式选择，circle-圆形，spinner-花朵形，semicircle-半圆形
+    mode: {
+      type: String,
+      default: () => defProps.loadingIcon.mode
+    },
+    // 图标大小，单位默认px
+    size: {
+      type: [String, Number],
+      default: () => defProps.loadingIcon.size
+    },
+    // 文字大小
+    textSize: {
+      type: [String, Number],
+      default: () => defProps.loadingIcon.textSize
+    },
+    // 文字内容
+    text: {
+      type: [String, Number],
+      default: () => defProps.loadingIcon.text
+    },
+    // 动画模式
+    timingFunction: {
+      type: String,
+      default: () => defProps.loadingIcon.timingFunction
+    },
+    // 动画执行周期时间
+    duration: {
+      type: [String, Number],
+      default: () => defProps.loadingIcon.duration
+    },
+    // mode=circle时的暗边颜色
+    inactiveColor: {
+      type: String,
+      default: () => defProps.loadingIcon.inactiveColor
+    }
+  }
+});
 const props$6 = defineMixin({
   props: {
     // 最小可选值

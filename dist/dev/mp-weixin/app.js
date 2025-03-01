@@ -12,6 +12,7 @@ if (!Math) {
   "./pages/Empty/Empty.js";
   "./pages/history/history_fui/history_fui.js";
   "./pages/draw/draw_info/draw_info.js";
+  "./pages/console/console.js";
 }
 const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
   __name: "App",

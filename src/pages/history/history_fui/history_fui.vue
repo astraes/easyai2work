@@ -50,7 +50,7 @@
 		getHistoryData()
 	})
 
-
+	
 	const historyData = ref<IDrawHistoryItem[]>([])
 
 	// 根据用户获取绘图历史数据

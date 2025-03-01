@@ -19,6 +19,7 @@ const refreshUserInfo = (user = getLoginInfo()) => utils_request.request(`/users
 const isLogin = common_vendor.computed(() => {
   const { user } = common_vendor.storeToRefs(stores_appStore.useAppStore());
   console.log("storeToRefs(useAppStore())", user.value);
+  common_vendor.index.setStorageSync("userInfo", user.value);
   common_vendor.index.setStorageSync("refreshToken", user.value.refresh_token);
   return !!user.value.refresh_token;
 });

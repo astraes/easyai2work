@@ -36,6 +36,7 @@ export const isLogin =computed(()=>{
 	
     const {user}=storeToRefs(useAppStore())
 	console.log("storeToRefs(useAppStore())",user.value)
+	uni.setStorageSync('userInfo', user.value)
 	uni.setStorageSync('refreshToken', user.value.refresh_token)
 	
     return !!user.value.refresh_token
