@@ -6,7 +6,7 @@ EasyAi-uniapp—前端优化（二开）版本
 ## 另外，作者还支持该小程序的定制修改，以及Comfyui的定制节点，有需要可以加作者微信咨询：hdmlgzs  
 ## 关于小程序不能链接 xxxxxxxx/websocket的报错，需要在nginx后台中再以3002端口配置一个/websocket的反向代理就可以了
 
-<img src="https://github.com/chinahu-woker/easyai2work/blob/master/%E5%BE%AE%E4%BF%A1%E6%88%AA%E5%9B%BE_20250216113853.png" width="210px">
+
 
 ## 安装教程  
 【官网文档】：https://doc.51easyai.com/getting-started/quickstart
@@ -28,6 +28,7 @@ EasyAi-uniapp—前端优化（二开）版本
 ## 2025/2/24第3次更新  
 ### 0. 优化了绘画历史图片显示，新增加画廊  
 ### 1. 优化了个人主页的ui 
+<img src="https://github.com/chinahu-woker/easyai2work/blob/master/20250224myself.png" width="210px"/><img src="https://github.com/chinahu-woker/easyai2work/blob/master/pic.png" width="210px"/>
 
   
   
@@ -39,8 +40,6 @@ EasyAi-uniapp—前端优化（二开）版本
 ### 3. 支持官方3.0.2版本的管理后台  
 ### 4. 搭建之前请按照官方文档把所有的配置都配置好！！！  
 ### 5. 支持点击消息复制消息，AI对话，模型/渠道选择（oneapi的渠道）
-<img src="https://github.com/chinahu-woker/easyai2work/blob/master/%E5%BE%AE%E4%BF%A1%E6%88%AA%E5%9B%BE_20250216113853.png" width="210px"/>
-
 
   
 ## 2025/2/8第一次更新;
