@@ -326,14 +326,12 @@
 	const role = ref(false)
 	function Kongzhitai() {
 		if (!isLogin.value) {
-			
 			role.value = false
 			return 0
 		}
 		const UserInfor = uni.getStorageSync('userInfo')
 		console.log("-----------userInfo---------------",UserInfor)
 		const roltList = ['operator', 'manager', 'admin']
-		
 		if (roltList.includes(UserInfor.role[0])) {
 			role.value = true
 		}
@@ -763,11 +761,11 @@
 		})
 		//获取平台信息
 		const { uniPlatform } = uni.getSystemInfoSync()
-
+	
 		if (uniPlatform !== 'web') {
 			// 非开发者工具环境，执行登录操作
 			handleLoginByWechat()
-			Kongzhitai()
+			
 		} else {
 			// console.log('dev')
 			// 开发者工具环境，模拟登录 todo
@@ -781,6 +779,7 @@
 		}
 		chatAiGetToken()
 		name_value.value = '我的'
+		
 
 	}
 	/** 通过微信登录 */
@@ -792,6 +791,7 @@
 				uni.hideLoading()
 				console.log("------------result--------", result)
 				uni.setStorageSync('refreshToken', result.refresh_token)
+				role.value = true
 
 			},
 			fail: function (err) {
@@ -802,6 +802,7 @@
 			}
 		})
 		chatAiGetToken()
+		Kongzhitai()
 	}
 	const { socketInit } = useWorkFlow()
 
@@ -823,11 +824,11 @@
 			title: '正在退出登录...',
 			mask: true
 		})
-		role.value = false
 		
 		loginOut()
 		
 		uni.hideLoading()
+		role.value = false
 		uni.showToast({
 			title: '退出成功',
 			icon: 'none'

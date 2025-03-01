@@ -386,7 +386,6 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
       const { uniPlatform } = common_vendor.index.getSystemInfoSync();
       if (uniPlatform !== "web") {
         handleLoginByWechat();
-        Kongzhitai();
       } else {
         const user2 = await composables_useCommon.loginByUsername({
           username: "test456",
@@ -406,6 +405,7 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
           common_vendor.index.hideLoading();
           console.log("------------result--------", result);
           common_vendor.index.setStorageSync("refreshToken", result.refresh_token);
+          role.value = true;
         },
         fail: function(err) {
           common_vendor.index.showToast({
@@ -415,6 +415,7 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
         }
       });
       chatAiGetToken();
+      Kongzhitai();
     };
     const { socketInit } = composables_useWorkFlow.useWorkFlow();
     const handlePayMessage = async (order_id) => {
@@ -433,9 +434,9 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
         title: "正在退出登录...",
         mask: true
       });
-      role.value = false;
       composables_useCommon.loginOut();
       common_vendor.index.hideLoading();
+      role.value = false;
       common_vendor.index.showToast({
         title: "退出成功",
         icon: "none"
