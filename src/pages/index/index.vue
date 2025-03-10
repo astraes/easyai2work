@@ -618,7 +618,7 @@
 		imageData.value = []
 	})
 	function img2pay() {
-		pageindex.value = 2
+		pageindex.value = 3
 		showPay.value = true
 	}
 
