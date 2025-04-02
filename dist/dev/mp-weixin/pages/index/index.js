@@ -282,7 +282,7 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
       imageData.value = [];
     });
     function img2pay() {
-      pageindex.value = 2;
+      pageindex.value = 3;
       showPay.value = true;
     }
     common_vendor.ref("fuiNavBar");
@@ -527,9 +527,7 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
           } : {}, {
             i: `items-${index}`,
             j: common_vendor.n(item.role == "user" ? "fui-chat__right" : "fui-chat__left"),
-            k: common_vendor.o(($event) => _ctx.getCopyMsg(1, item.msg, $event), index),
-            l: common_vendor.o(($event) => _ctx.getCopyMsg(2, item.content, $event), index),
-            m: index
+            k: index
           });
         }),
         n: common_vendor.unref(items),

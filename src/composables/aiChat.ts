@@ -9,7 +9,7 @@ export const getUserToken = () => {
 	// 获取用户信息
 	const refreshToken = uni.getStorageSync('refreshToken')
 	
-	console.log("refreshToken获取成功", refreshToken)
+	// console.log("refreshToken获取成功", refreshToken)
 	return new Promise((resolve, reject) => {
 		const requestTask = uni.request({
 			url: `${getBaseURL()}/auth/refreshTokens`, // 请求地址
@@ -21,7 +21,7 @@ export const getUserToken = () => {
 			success: (res) => {
 
 				resolve(res);
-				console.log('getUserToken请求成功', res.data);
+				// console.log('getUserToken请求成功', res.data);
 
 				// uni.parseStreamData(res.data)
 			}, // 请求成功回调
@@ -31,7 +31,7 @@ export const getUserToken = () => {
 			} // 请求失败回调
 		});
 
-		console.log('requestTask', requestTask)
+		// console.log('requestTask', requestTask)
 	});
 }
 
@@ -66,7 +66,7 @@ export const getModelList = (data) => {
 			} // 请求失败回调
 		});
 
-		console.log('requestTask', requestTask)
+		// console.log('requestTask', requestTask)
 	});
 }
 
@@ -104,7 +104,7 @@ export const getUserKey = (data,Rtoken_value) => {
 			} // 请求失败回调
 		});
 
-		console.log('requestTask', requestTask)
+		// console.log('requestTask', requestTask)
 	});
 }
 
@@ -136,6 +136,6 @@ export const getUserInfo = (data) => {
 			} // 请求失败回调
 		});
 
-		console.log('requestTask', requestTask)
+		// console.log('requestTask', requestTask)
 	});
 }

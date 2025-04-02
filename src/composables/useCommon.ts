@@ -38,6 +38,7 @@ export const isLogin =computed(()=>{
 	console.log("storeToRefs(useAppStore())",user.value)
 	uni.setStorageSync('userInfo', user.value)
 	uni.setStorageSync('refreshToken', user.value.refresh_token)
+	uni.setStorageSync('my_invite_code', user.value.my_invite_code)
 	
     return !!user.value.refresh_token
 })

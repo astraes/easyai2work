@@ -21,6 +21,7 @@ const isLogin = common_vendor.computed(() => {
   console.log("storeToRefs(useAppStore())", user.value);
   common_vendor.index.setStorageSync("userInfo", user.value);
   common_vendor.index.setStorageSync("refreshToken", user.value.refresh_token);
+  common_vendor.index.setStorageSync("my_invite_code", user.value.my_invite_code);
   return !!user.value.refresh_token;
 });
 const getUserVipInfo = () => utils_request.request("/member/topLevel", { method: "POST" });

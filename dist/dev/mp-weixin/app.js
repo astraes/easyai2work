@@ -2,6 +2,7 @@
 Object.defineProperty(exports, Symbol.toStringTag, { value: "Module" });
 const common_vendor = require("./common/vendor.js");
 const stores_appStore = require("./stores/appStore.js");
+const components_common_share = require("./components/common/share.js");
 if (!Math) {
   "./pages/index/index.js";
   "./pages/creative/creative.js";
@@ -40,6 +41,7 @@ function createApp() {
   const pinia = common_vendor.createPinia();
   app.use(pinia);
   app.use(common_vendor.uviewPlus);
+  app.mixin(components_common_share.share);
   return {
     app
   };

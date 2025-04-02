@@ -8562,9 +8562,15 @@ function defineStore(idOrOptions, setup, setupOptions) {
   let id;
   let options;
   const isSetupStore = typeof setup === "function";
-  {
+  if (typeof idOrOptions === "string") {
     id = idOrOptions;
     options = isSetupStore ? setupOptions : setup;
+  } else {
+    options = idOrOptions;
+    id = idOrOptions.id;
+    if (typeof id !== "string") {
+      throw new Error(`[🍍]: "defineStore()" must be passed a store id as its first argument.`);
+    }
   }
   function useStore(pinia, hot) {
     const hasContext = hasInjectionContext();
