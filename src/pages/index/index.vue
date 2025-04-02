@@ -79,7 +79,8 @@
 					<view v-for="(item,index) in msgList" :key="index">
 						<view :id="`items-${index}`" class="fui-chat__item"
 							:class="[item.role=='user'?'fui-chat__right':'fui-chat__left']"
-							@tap="getCopyMsg(1,item.msg,$event)" @longpress="getCopyMsg(2,item.content,$event)">
+							>
+							<!-- @tap="getCopyMsg(1,item?.msg,$event)" @longpress="getCopyMsg(2,item.content,$event)" -->
 							<fui-avatar background="#f9f9f9"
 								:src="item.role=='system'?'https://wangbo0808.oss-cn-shanghai.aliyuncs.com/assets/gpt4.png':user.avatar_url">
 							</fui-avatar>
@@ -261,6 +262,7 @@
 							<!--        <up-cell icon="coupon" title="卡券(暂未开放)"></up-cell>-->
 							<!--        <up-cell icon="heart" title="关注(暂未开放)"></up-cell>-->
 						</up-cell-group>
+					<!-- 	<button open-type="share">分享到微信</button> -->
 					</view>
 
 
@@ -315,13 +317,16 @@
 	import PaymentPopup from "@/components/home/PaymentPopup.vue";
 	import fuiBackgroundImage from "@/components/firstui/fui-background-image/fui-background-image.vue";
 	import { getModelList, getUserKey, getUserToken, getUserInfo, ChatAPiUrl } from "@/composables/aiChat.ts";
+ 
 	import { TextEncoder, TextDecoder } from 'text-decoding'
 	global.TextEncoder = TextEncoder
 	global.TextDecoder = TextDecoder
+	
 	function ToConsole(){
 		uni.navigateTo({
 			url: '/pages/console/console'
 		})
+		
 	}
 	const role = ref(false)
 	function Kongzhitai() {
@@ -618,7 +623,7 @@
 		imageData.value = []
 	})
 	function img2pay() {
-		pageindex.value = 2
+		pageindex.value = 3
 		showPay.value = true
 	}
 
